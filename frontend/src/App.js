@@ -9,6 +9,7 @@ import MainPage from './components/MainPage/MainPage';
 import LoginForm from './components/SessionForms/LoginForm';
 import SignupForm from './components/SessionForms/SignupForm';
 import Profile from './components/Profile/Profile';
+import Footer from './components/Footer/Footer';
 
 import { getCurrentUser } from './store/session';
 
@@ -29,6 +30,7 @@ function App() {
 
         <ProtectedRoute exact path="/profile" component={Profile} />
       </Switch>
+      <Footer />
     </>
   );
 }

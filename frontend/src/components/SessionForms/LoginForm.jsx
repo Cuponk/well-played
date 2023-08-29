@@ -27,32 +27,34 @@ function LoginForm() {
   }
 
   return (
-    <form className="session-form" onSubmit={handleSubmit}>
-      <h2>Log In Form</h2>
-      <div className="errors">{errors?.username}</div>
-      <label>
-        <span>Username</span>
-        <input type="text"
-          value={username}
-          onChange={update('username')}
-          placeholder="Username"
-        />
-      </label>
-      <div className="errors">{errors?.password}</div>
-      <label>
-        <span>Password</span>
-        <input type="password"
-          value={password}
-          onChange={update('password')}
-          placeholder="Password"
-        />
-      </label>
-      <input
-        type="submit"
-        value="Log In"
-        disabled={!username || !password}
-      />
-    </form>
+    <div className="form-container">
+      <div className="form-container-wrapper">
+
+        <form className="session-form" onSubmit={handleSubmit}>
+          <h2>Log In Form</h2>
+          <div className="errors">{errors?.username}</div>
+          <label>
+            <p>Username</p>
+          </label>
+          <input type="text"
+            value={username}
+            onChange={update('username')}
+            placeholder="Username"
+          />
+          <div className="errors">{errors?.password}</div>
+          <label>
+            <p>Password</p>
+            <input type="password"
+              value={password}
+              onChange={update('password')}
+              placeholder="Password"
+            />
+          </label>
+          <button disabled={!username || !password}>Log In</button>
+        </form>
+      </div>
+    </div>
+
   );
 }
 

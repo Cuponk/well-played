@@ -1,1 +1,68 @@
-/* TODO Add site wide styles */
+/* CSS reset */
+@import './reset.css';
+
+/* CSS variables */
+@import './variables.css';
+
+h1,
+h2,
+h3,
+h4,
+p,
+a,
+span,
+div,
+button,
+input,
+label,
+li,
+ul,
+ol,
+textarea,
+select {
+  font-family: var(--theme-font-family);
+  color: var(--theme-black);
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+p {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+button {
+  background-color: var(--theme-purple);
+  border-color: var(--theme-purple-dark);
+  padding: 0 30px 1px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1rem;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--theme-white);
+  border-radius: 4px;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: var(--theme-purple-dark);
+}
