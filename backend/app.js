@@ -7,11 +7,13 @@ const cors = require('cors');
 const csurf = require('csurf');
 const { isProduction } = require('./config/keys');
 // Models
+require('dotenv').config();
 require('./models/User.js');
 require('./models/Game.js');
 require('./config/passport');
 
 const passport = require('passport');
+const dbRouter = require('./routes/api/igdb');
 const usersRouter = require('./routes/api/users');
 const gamesRouter = require('./routes/api/games');
 const csrfRouter = require('./routes/api/csrf');
@@ -44,6 +46,7 @@ app.use(
 );
 
 // Express Routers
+app.use('/api/igdb', dbRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/games', gamesRouter);
 app.use('/api/csrf', csrfRouter);
@@ -58,8 +61,8 @@ app.use((req, res, next) => {
 
 const serverErrorLogger = debug('backend:error');
 
-// Express custom error handler that will be called whenever a route handler or
-// middleware throws an error or invokes the `next` function with a truthy value
+// // Express custom error handler that will be called whenever a route handler or
+// // middleware throws an error or invokes the `next` function with a truthy value
 app.use((err, req, res, next) => {
   serverErrorLogger(err);
   const statusCode = err.statusCode || 500;
