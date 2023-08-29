@@ -85,7 +85,8 @@ router.get('/current', restoreUser, (req, res) => {
   });
 });
 
-// Get a user's games
+// OWNED GAMES LIST
+// Get a user's owned games
 router.get('/:userId/ownedGames', async (req, res) => {
 	try {
 		const user = await User.findById(req.params.userId);
@@ -96,11 +97,11 @@ router.get('/:userId/ownedGames', async (req, res) => {
 		}	
 	} catch (err){
 		console.log(err) 
-		res.json({ message: 'error fetching ownedGames' })
+		res.json({ message: `Error fetching user's owned games list` })
 	}
 })
 
-// Add a game to user
+// Add a game to user's owned game list
 router.post('/:userId/ownedGames', async (req, res) => {
 	try {
 		if(req.body.userId !== req.params.userId) {
@@ -110,19 +111,35 @@ router.post('/:userId/ownedGames', async (req, res) => {
 		const gameId = req.body.gameId;
 
 		if(user.ownedGames.includes(gameId)) {
-			return res.json({ message: 'user already owns this game'})
+			return res.json({ message: 'User already owns this game'})
 		} 
 		user.ownedGames.push(gameId);
 		await user.save();
 
 		return res.json(user);
 	} catch (err) {
-		return res.json({ message: 'error posting' });
+		return res.json({ message: `Error posting to user's owned games list` });
 	}
 })
 
-// Remove a game from a user
+// Remove a game from a user's owned game list
+router.delete('/:userId/ownedGames/', async (req, res) => {
+	try {
+		const user = await User.findById(req.body.userId);
+		const gameId = req.body.gameId;
 
+		const index = user.ownedGames.indexOf(gameId)
+		if(index > -1) {
+			user.ownedGames.splice(index, 1);
+			console.log('Game has been removed');
+		}
+		await user.save();
+		return res.json(user);
+	} catch (err) {
+		console.log(error);
+		return res.json({ message: `Error deleting from user's owned games list`})
+	}
+})
 // get user by userId
 router.get('/:userId', async (req, res) => {
 	try {
@@ -134,7 +151,7 @@ router.get('/:userId', async (req, res) => {
 		}
 	} catch (err) {
 		console.log(err);
-		res.json({ message: 'error fetching userId'})
+		res.json({ message: 'Error fetching userId'})
 	}
 })
 

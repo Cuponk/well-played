@@ -55,6 +55,38 @@ games.push(
 	})
 )
 
+games.push(
+	new Game({
+		title: 'Starchew Valley',
+		description: 'Not a copy of Stardew Valley',
+		releaseYear: 2023,
+		genre: 'Role Playing Game',
+		genreTags: ['indie', 'rpg', 'adventure'],
+		studio: 'Fishchuckle',
+		portrait: 'portrait.image',
+		backgroundImage: 'background.image',
+		additionalImages: ['image1', 'image2'],
+		videoUrl: 'video.url',
+		maxPlayers: 4
+	})
+)
+
+games.push(
+	new Game({
+		title: 'Cities: Streetlines',
+		description: 'Not a copy of Cities: Skyline',
+		releaseYear: 2023,
+		genre: 'strategy',
+		genreTags: ['strategy', 'simulation'],
+		studio: 'Colossal Sorder',
+		portrait: 'portrait.image',
+		backgroundImage: 'background.image',
+		additionalImages: ['image1', 'image2'],
+		videoUrl: 'video.url',
+		maxPlayers: 1
+	})
+)
+
 
 // Connect to database
 mongoose
