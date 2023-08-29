@@ -3,6 +3,7 @@ const { mongoURI: db } = require('../config/keys.js');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const { faker } = require('@faker-js/faker');
+const Game = require("../models/Game");
 
 const NUM_SEED_USERS = 10;
 
@@ -29,6 +30,25 @@ for (let i = 1; i < NUM_SEED_USERS; i++) {
   )
 }
 
+// fake game seeds
+const games = [];
+
+games.push(
+	new Game({
+		title: 'Valorant 2.0',
+		description: 'Not a copy of valorant',
+		releaseYear: 2023,
+		genre: 'First Person Shooter',
+		genreTags: ['action', 'shooter'],
+		studio: 'Rito Games',
+		portrait: 'portrait.image',
+		backgroundImage: 'background.image',
+		additionalImages: ['image1', 'image2'],
+		videoUrl: 'video.url',
+		maxPlayers: 5
+	})
+)
+
 
 // Connect to database
 mongoose
@@ -45,9 +65,10 @@ mongoose
 // Insert seeds
 const insertSeeds = () => {
   console.log("Resetting db and seeding users...");
-
   User.collection.drop()
+  	.then(()=> Game.collection.drop())
     .then(() => User.insertMany(users))
+	.then(() => Game.insertMany(games))
     .then(() => {
       console.log("Done!");
       mongoose.disconnect();
