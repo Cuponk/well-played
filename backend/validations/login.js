@@ -4,10 +4,10 @@ const handleValidationErrors = require('./handleValidationErrors');
 // validateLoginInput is a combination Express middleware that uses the `check`
 // middleware to validate the keys in the body of a request to login a user
 const validateLoginInput = [
-  check('email')
+  check('username')
     .exists({ checkFalsy: true })
-    .isEmail()
-    .withMessage('Email is invalid'),
+    .isLength({ min: 2, max: 30 })
+    .withMessage('Username is invalid'),
   check('password')
     .exists({ checkFalsy: true })
     .isLength({ min: 6, max: 30 })
