@@ -4,4 +4,9 @@
   justify-content: center;
   align-items: center;
   padding: 1rem;
+  background-color: var(--theme-black);
+}
+
+.footer-container p {
+  color: var(--theme-white);
 }

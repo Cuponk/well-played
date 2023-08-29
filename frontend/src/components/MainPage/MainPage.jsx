@@ -1,10 +1,11 @@
 import "./MainPage.css";
+import wellPlayed from "../../assets/images/Well-Played.svg";
 
 function MainPage() {
   return (
     <>
       <div className="main-page-container">
-        <p>Well Played</p>
+        <img src={wellPlayed}></img>
       </div>
     </>
   );

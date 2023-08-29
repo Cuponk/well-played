@@ -48,3 +48,21 @@ p {
   font-size: 1rem;
   font-weight: 400;
 }
+
+button {
+  background-color: var(--theme-purple);
+  border-color: var(--theme-purple-dark);
+  padding: 0 30px 1px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1rem;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--theme-white);
+  border-radius: 4px;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: var(--theme-purple-dark);
+}
