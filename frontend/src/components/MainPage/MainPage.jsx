@@ -1,11 +1,11 @@
+import "./MainPage.css";
+
 function MainPage() {
   return (
     <>
-      <p>Well Played</p>
-      <footer>
-        Copyright &copy;  2023 Well Played &reg;
-
-      </footer>
+      <div className="main-page-container">
+        <p>Well Played</p>
+      </div>
     </>
   );
 }

@@ -1,0 +1,20 @@
+.nav-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid var(--theme-black-soft);
+}
+
+.link-nav,
+.link-auth {
+  display: flex;
+  flex-direction: row;
+}
+
+.link-nav,
+a,
+.link-auth,
+a {
+  padding: 0.5rem;
+}

@@ -2,5 +2,9 @@
   --theme-purple: #593CFB;
   --theme-purple-dark: #470AB4;
   --theme-black: #121214;
+  --theme-black-soft: #232323;
+  --theme-white: #FFF;
+  --theme-white-soft: #f7f7f5;
+  --theme-gray: #F4F4F4;
   --theme-font-family: BasisGrotesque, Avenir, Helvetica Neue, Helvetica, sans-serif;
 }
