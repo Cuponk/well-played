@@ -23,18 +23,18 @@ function NavBar() {
     } else {
       return (
         <div className="links-auth">
-          <Link to={'/signup'}>Signup</Link>
-          <Link to={'/login'}>Login</Link>
+          <Link to={'/signup'}><button>Signup</button></Link>
+          <Link to={'/login'}><button>Login</button></Link>
         </div>
       );
     }
   }
 
   return (
-    <>
-      <h1>Well Played</h1>
+    <div className="nav-bar">
+      <Link to="/"><h1>Well Played</h1></Link>
       {getLinks()}
-    </>
+    </div>
   );
 }
 
