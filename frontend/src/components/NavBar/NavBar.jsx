@@ -32,7 +32,7 @@ function NavBar() {
 
   return (
     <div className="nav-bar">
-      <h1>Well Played</h1>
+      <Link to="/"><h1>Well Played</h1></Link>
       {getLinks()}
     </div>
   );
