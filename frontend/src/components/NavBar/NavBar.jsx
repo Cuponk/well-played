@@ -31,10 +31,10 @@ function NavBar() {
   }
 
   return (
-    <>
+    <div className="nav-bar">
       <h1>Well Played</h1>
       {getLinks()}
-    </>
+    </div>
   );
 }
 
