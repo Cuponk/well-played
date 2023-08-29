@@ -13,9 +13,26 @@ const userSchema = new Schema({
   hashedPassword: {
     type: String,
     required: true
-  }
-}, {
-  timestamps: true
+  },
+  friends: [
+	{
+	  type: Schema.Types.ObjectId,
+	  ref: 'User',
+	}
+   ],
+  ownedGames: [
+	{
+	  type: Schema.Types.ObjectId,
+	  ref: 'Game',
+  	}
+  ],
+  wishlistGames: [
+	{
+	  type: Schema.Types.ObjectId,
+	  ref: 'Game',
+	}
+  ]}, {
+	  timestamps: true
 });
 
 module.exports = mongoose.model('User', userSchema);
