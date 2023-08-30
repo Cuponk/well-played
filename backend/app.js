@@ -9,13 +9,21 @@ const { isProduction } = require('./config/keys');
 // Models
 require('dotenv').config();
 require('./models/User.js');
+
+require('./models/Review.js');
+
 require('./models/CustomGame.js');
+
 require('./config/passport');
 
 const passport = require('passport');
 const dbRouter = require('./routes/api/igdb');
 const usersRouter = require('./routes/api/users');
+
+const reviewsRouter = require('./routes/api/reviews');
+
 const customGamesRouter = require('./routes/api/customGames');
+
 const csrfRouter = require('./routes/api/csrf');
 
 const app = express();
@@ -48,7 +56,11 @@ app.use(
 // Express Routers
 app.use('/api/igdb', dbRouter);
 app.use('/api/users', usersRouter);
+
+app.use('/api/reviews', reviewsRouter);
+
 app.use('/api/customGames', customGamesRouter);
+
 app.use('/api/csrf', csrfRouter);
 
 // Express custom middleware for catching all unmatched requests and formatting
