@@ -11,6 +11,7 @@ import SignupForm from './components/SessionForms/SignupForm';
 import Profile from './components/Profile/Profile';
 import Footer from './components/Footer/Footer';
 import GamesIndex from './components/GamesIndex/GamesIndex';
+import GameShow from './components/GameShow/GameShow';
 
 import { getCurrentUser } from './store/session';
 
@@ -28,6 +29,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route exact path="/search" component={GamesIndex} />
+        <Route exact path="/games/:id" component={GameShow} />
 
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />

@@ -40,7 +40,8 @@ router.get("/:id", async (req, res) => {
         });
         // debugger
 
-        return res.json(response.data);
+        const data = res.json(response.data);
+        return data;
     } catch (error) {
         console.error(error);
         if (error.response) {
