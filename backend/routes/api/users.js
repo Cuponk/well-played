@@ -8,7 +8,6 @@ const { loginUser, restoreUser } = require('../../config/passport');
 const { isProduction } = require('../../config/keys');
 const validateRegisterInput = require('../../validations/register');
 const validateLoginInput = require('../../validations/login');
-const e = require('express');
 
 // POST /api/users/register
 router.post('/register', validateRegisterInput, async (req, res, next) => {
@@ -94,9 +93,9 @@ router.get('/:userId/ownedGames', async (req, res) => {
 			res.json(user.ownedGames);
 		} else {
 			res.json({ message: 'userId not found' })
-		}	
+		}
 	} catch (err){
-		console.log(err) 
+		console.log(err)
 		res.json({ message: `Error fetching user's owned games list` })
 	}
 })
@@ -112,7 +111,7 @@ router.post('/:userId/ownedGames', async (req, res) => {
 
 		if(user.ownedGames.includes(gameId)) {
 			return res.json({ message: 'User already owns this game'})
-		} 
+		}
 		user.ownedGames.push(gameId);
 		await user.save();
 
@@ -152,7 +151,7 @@ router.post('/:userId/wishlistGames', async (req, res) => {
 
 		if(user.wishlistGames.includes(gameId)) {
 			return res.json({ message: 'Game already in wishlist'})
-		} 
+		}
 		user.wishlistGames.push(gameId);
 		await user.save();
 
