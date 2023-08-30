@@ -123,7 +123,7 @@ router.post('/:userId/ownedGames', async (req, res) => {
 })
 
 // Remove a game from a user's owned game list
-router.delete('/:userId/ownedGames/', async (req, res) => {
+router.delete('/:userId/ownedGames', async (req, res) => {
 	try {
 		const user = await User.findById(req.body.userId);
 		const gameId = req.body.gameId;
@@ -140,6 +140,47 @@ router.delete('/:userId/ownedGames/', async (req, res) => {
 		return res.json({ message: `Error deleting from user's owned games list`})
 	}
 })
+
+// Add a game to user's wishlist
+router.post('/:userId/wishlistGames', async (req, res) => {
+	try {
+		if(req.body.userId !== req.params.userId) {
+			return res.json({ message: 'user ids do not match' })
+		}
+		const user = await User.findById(req.body.userId);
+		const gameId = req.body.gameId;
+
+		if(user.wishlistGames.includes(gameId)) {
+			return res.json({ message: 'Game already in wishlist'})
+		} 
+		user.wishlistGames.push(gameId);
+		await user.save();
+
+		return res.json(user);
+	} catch (err) {
+		return res.json({ message: `Error posting to user's wishlist` });
+	}
+})
+
+// Remove a game from a user's wishlist
+router.delete('/:userId/wishlistGames', async (req, res) => {
+	try {
+		const user = await User.findById(req.body.userId);
+		const gameId = req.body.gameId;
+
+		const index = user.wishlistGames.indexOf(gameId)
+		if(index > -1) {
+			user.wishlistGames.splice(index, 1);
+			console.log('Game has been removed');
+		}
+		await user.save();
+		return res.json(user);
+	} catch (err) {
+		console.log(error);
+		return res.json({ message: `Error deleting from user's wishlist`})
+	}
+})
+
 // get user by userId
 router.get('/:userId', async (req, res) => {
 	try {
