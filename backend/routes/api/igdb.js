@@ -6,7 +6,6 @@ const { body } = require("express-validator");
 router.post("/", async (req, res) => {
     try {
         const response = await axios.post('https://api.igdb.com/v4/games',
-            
         {
             headers: {
                 // 'Accept': 'application/json',
@@ -15,7 +14,6 @@ router.post("/", async (req, res) => {
             },
         }
         );
-        
         return res.json(response.data);
         
     } catch (error) {
@@ -30,18 +28,20 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.post("/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
-        const response = await axios.post('https://api.igdb.com/v4/games', 
-            `fields name description release_date cover.url; where id = ${req.params.id};`,
+        const response = await axios('https://api.igdb.com/v4/games', 
             {
+                method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Client-ID': process.env.CLIENT_ID,
                     'Authorization': `Bearer ${process.env.AUTH_TOKEN}`
                 },
-            }
+                data: `fields name, cover.url, genres.name, summary, screenshots.url, videos.video_id; where id = ${req.params.id};`
+            },
         );
+        // debugger
 
         return res.json(response.data);
 
