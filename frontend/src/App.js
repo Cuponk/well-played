@@ -20,13 +20,15 @@ function App() {
   useEffect(() => {
     dispatch(getCurrentUser()).then(() => setLoaded(true));
   }, [dispatch]);
-
+  // AuthRoutes require a user to be logged out to access the component
+  // ProtectedRoutes require a user to be logged in to access the component
   return loaded && (
     <>
       <NavBar />
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route exact path="/search" component={GamesIndex} />
+
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />
 
