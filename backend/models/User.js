@@ -15,24 +15,17 @@ const userSchema = new Schema({
     required: true
   },
   friends: [
-	{
-	  type: Schema.Types.ObjectId,
-	  ref: 'User',
-	}
-   ],
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    }
+  ],
   ownedGames: [
-	{
-	  type: Schema.Types.ObjectId,
-	  ref: 'Game',
-  	}
+    { igdbId: Number }
   ],
   wishlistGames: [
-	{
-	  type: Schema.Types.ObjectId,
-	  ref: 'Game',
-	}
-  ]}, {
-	  timestamps: true
+    { igdbId: Number }
+  ]
 });
 
 module.exports = mongoose.model('User', userSchema);
