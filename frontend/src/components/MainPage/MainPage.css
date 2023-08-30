@@ -10,4 +10,5 @@
 .main-page-container img {
   width: 800px;
   height: 600px;
+  border-radius: 5px;
 }

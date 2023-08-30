@@ -5,7 +5,7 @@ function MainPage() {
   return (
     <>
       <div className="main-page-container">
-        <img src={wellPlayed}></img>
+        <img src={wellPlayed} alt="Well Played splash"></img>
       </div>
     </>
   );

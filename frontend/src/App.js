@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Switch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
 import NavBar from './components/NavBar/NavBar';
@@ -10,6 +10,7 @@ import LoginForm from './components/SessionForms/LoginForm';
 import SignupForm from './components/SessionForms/SignupForm';
 import Profile from './components/Profile/Profile';
 import Footer from './components/Footer/Footer';
+import GamesIndex from './components/GamesIndex/GamesIndex';
 
 import { getCurrentUser } from './store/session';
 
@@ -19,12 +20,15 @@ function App() {
   useEffect(() => {
     dispatch(getCurrentUser()).then(() => setLoaded(true));
   }, [dispatch]);
-
+  // AuthRoutes require a user to be logged out to access the component
+  // ProtectedRoutes require a user to be logged in to access the component
   return loaded && (
     <>
       <NavBar />
       <Switch>
-        <AuthRoute exact path="/" component={MainPage} />
+        <Route exact path="/" component={MainPage} />
+        <Route exact path="/search" component={GamesIndex} />
+
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />
 

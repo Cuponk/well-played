@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './NavBar.css';
 import { logout } from '../../store/session';
+import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 
 function NavBar() {
   const loggedIn = useSelector(state => !!state.session.user);
@@ -16,8 +17,9 @@ function NavBar() {
     if (loggedIn) {
       return (
         <div className="links-nav">
-          <Link to={'/profile'}>Profile</Link>
-          <button onClick={logoutUser}>Logout</button>
+          {/* <Link to={'/profile'}>Profile</Link>
+          <button onClick={logoutUser}>Logout</button> */}
+          <ProfileDropdown />
         </div>
       );
     } else {
