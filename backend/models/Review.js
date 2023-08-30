@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({
-	author: {
+	authorId: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',
 	},
-	game: {
+	gameId: {
 		type: String,
 		required: true
 	},
@@ -14,23 +14,18 @@ const reviewSchema = new Schema({
 		type: String,
 		required: true
 	},
-	ratings: {
-		type: {
-			gameplay: {
-				type: Number,
-				required: true
-			},
-			story: {
-				type: Number,
-				required: true
-			},
-			visuals: {
-				type: Number,
-				required: true
-			}
-		},
+	gameplayRating: {
+		type: Number,
+		required: true
+	},
+	storyRating: {
+		type: Number,
+		required: true
+	},
+	visualsRating: {
+		type: Number,
 		required: true
 	}
-})	
+})
 
 module.exports = mongoose.model('Review', reviewSchema);

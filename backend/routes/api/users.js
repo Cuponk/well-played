@@ -91,13 +91,13 @@ router.get('/:userId/ownedGames', async (req, res) => {
 	try {
 		const user = await User.findById(req.params.userId);
 		if(user.ownedGames) {
-			res.json(user.ownedGames);
+			return res.json(user.ownedGames);
 		} else {
-			res.json({ message: 'userId not found' })
+			return res.json({ message: 'userId not found' })
 		}	
 	} catch (err){
 		console.log(err) 
-		res.json({ message: `Error fetching user's owned games list` })
+		return res.json({ message: `Error fetching user's owned games list` })
 	}
 })
 
@@ -136,8 +136,23 @@ router.delete('/:userId/ownedGames', async (req, res) => {
 		await user.save();
 		return res.json(user);
 	} catch (err) {
-		console.log(error);
+		console.log(err);
 		return res.json({ message: `Error deleting from user's owned games list`})
+	}
+})
+
+// Get a user's wishlist games
+router.get('/:userId/wishlistGames', async (req, res) => {
+	try {
+		const user = await User.findById(req.params.userId);
+		if(user.wishlistGames) {
+			return res.json(user.wishlistGames);
+		} else {
+			return res.json({ message: 'userId not found' })
+		}	
+	} catch (err){
+		console.log(err) 
+		return res.json({ message: `Error fetching user's wishlist games` })
 	}
 })
 
@@ -176,7 +191,7 @@ router.delete('/:userId/wishlistGames', async (req, res) => {
 		await user.save();
 		return res.json(user);
 	} catch (err) {
-		console.log(error);
+		console.log(err);
 		return res.json({ message: `Error deleting from user's wishlist`})
 	}
 })
@@ -186,13 +201,13 @@ router.get('/:userId', async (req, res) => {
 	try {
 		const user = await User.findById(req.params.userId)
 		if (user) {
-			res.json(user);
+			return res.json(user);
 		} else {
-			res.json({ message: 'userId not found' })
+			return res.json({ message: 'userId not found' })
 		}
 	} catch (err) {
 		console.log(err);
-		res.json({ message: 'Error fetching userId'})
+		return res.json({ message: 'Error fetching userId'})
 	}
 })
 
@@ -203,7 +218,7 @@ router.get('/', async function (req, res, next) {
 
 		return res.json(users);
 	} catch (err) {
-		res.json([]);
+		return res.json([]);
 	}
 });
 module.exports = router;

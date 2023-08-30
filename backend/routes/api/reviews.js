@@ -11,31 +11,46 @@ router.get('/:reviewId', async (req, res) => {
 		if (review) {
 			res.json(review);
 		} else {
-			res.json({ message: `No review found for reviewId: ${reviewId}`})
+			res.json({ message: `No review found for reviewId: ${reviewId}` })
 		}
 	} catch (err) {
-		res.json({ message: `Error getting ${reviewId} review`})
+		res.json({ message: `Error getting ${reviewId} review` })
 	}
 })
 
+// Post a review
 router.post('/', async (req, res) => {
 	try {
 		const newReview = new Review({
-			author: req.body.authorId,
-			game: req.body.igdbId,
+			authorId: req.body.authorId,
+			gameId: req.body.gameId,
 			description: req.body.description,
-			ratings: {
-				gameplay: req.body.ratings.gameplay,
-				story: req.body.ratings.story,
-				visuals: req.body.ratings.visuals
-			}
+			gameplayRating: req.body.gameplayRating,
+			storyRating: req.body.storyRating,
+			visualsRating: req.body.visualsRating
 		});
 
 		let review = await newReview.save();
 
 		return res.json(review);
 	} catch (err) {
-		res.json({ message: `Error posting review from userId: ${req.body.userId} to gameId ${req.body.gameId}` })
+		res.json({ message: `Error posting review from authorId: ${req.body.authorId} to gameId ${req.body.gameId}` })
+	}
+})
+
+// Remove a review 
+router.delete('/:reviewId', async (req, res) => {
+	try {
+		const review = await Review.findById(req.params.reviewId)
+
+		if(!review) {
+			return res.json({ message: 'Review not found'})
+		}
+		await review.remove();
+		return res.json({ message: 'Review deleted'});
+	} catch (err) {
+		console.log(err)
+		res.json({ message: `Error removing review made by authorID: ${req.body.authorId}`})
 	}
 })
 
@@ -43,10 +58,10 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
 	try {
 		const reviews = await Review.find();
-		
+
 		return res.json(reviews);
 	} catch (err) {
-		res.json({ message: 'Error getting all reviews'})
+		res.json({ message: 'Error getting all reviews' })
 	}
 })
 
