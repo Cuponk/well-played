@@ -10,7 +10,6 @@ const { isProduction } = require('./config/keys');
 require('dotenv').config();
 require('./models/User.js');
 
-require('./models/Game.js');
 require('./models/Review.js');
 
 require('./models/CustomGame.js');
@@ -21,7 +20,6 @@ const passport = require('passport');
 const dbRouter = require('./routes/api/igdb');
 const usersRouter = require('./routes/api/users');
 
-const gamesRouter = require('./routes/api/games');
 const reviewsRouter = require('./routes/api/reviews');
 
 const customGamesRouter = require('./routes/api/customGames');
@@ -59,7 +57,6 @@ app.use(
 app.use('/api/igdb', dbRouter);
 app.use('/api/users', usersRouter);
 
-app.use('/api/games', gamesRouter);
 app.use('/api/reviews', reviewsRouter);
 
 app.use('/api/customGames', customGamesRouter);
