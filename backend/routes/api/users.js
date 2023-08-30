@@ -8,15 +8,7 @@ const { loginUser, restoreUser } = require('../../config/passport');
 const { isProduction } = require('../../config/keys');
 const validateRegisterInput = require('../../validations/register');
 const validateLoginInput = require('../../validations/login');
-
-
-
-/* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.json({
-    message: "GET /api/users"
-  })
-});
+const e = require('express');
 
 // POST /api/users/register
 router.post('/register', validateRegisterInput, async (req, res, next) => {
@@ -93,4 +85,125 @@ router.get('/current', restoreUser, (req, res) => {
   });
 });
 
+// OWNED GAMES LIST
+// Get a user's owned games
+router.get('/:userId/ownedGames', async (req, res) => {
+	try {
+		const user = await User.findById(req.params.userId);
+		if(user.ownedGames) {
+			res.json(user.ownedGames);
+		} else {
+			res.json({ message: 'userId not found' })
+		}	
+	} catch (err){
+		console.log(err) 
+		res.json({ message: `Error fetching user's owned games list` })
+	}
+})
+
+// Add a game to user's owned game list
+router.post('/:userId/ownedGames', async (req, res) => {
+	try {
+		if(req.body.userId !== req.params.userId) {
+			return res.json({ message: 'user ids do not match' })
+		}
+		const user = await User.findById(req.body.userId);
+		const gameId = req.body.gameId;
+
+		if(user.ownedGames.includes(gameId)) {
+			return res.json({ message: 'User already owns this game'})
+		} 
+		user.ownedGames.push(gameId);
+		await user.save();
+
+		return res.json(user);
+	} catch (err) {
+		return res.json({ message: `Error posting to user's owned games list` });
+	}
+})
+
+// Remove a game from a user's owned game list
+router.delete('/:userId/ownedGames', async (req, res) => {
+	try {
+		const user = await User.findById(req.body.userId);
+		const gameId = req.body.gameId;
+
+		const index = user.ownedGames.indexOf(gameId)
+		if(index > -1) {
+			user.ownedGames.splice(index, 1);
+			console.log('Game has been removed');
+		}
+		await user.save();
+		return res.json(user);
+	} catch (err) {
+		console.log(error);
+		return res.json({ message: `Error deleting from user's owned games list`})
+	}
+})
+
+// Add a game to user's wishlist
+router.post('/:userId/wishlistGames', async (req, res) => {
+	try {
+		if(req.body.userId !== req.params.userId) {
+			return res.json({ message: 'user ids do not match' })
+		}
+		const user = await User.findById(req.body.userId);
+		const gameId = req.body.gameId;
+
+		if(user.wishlistGames.includes(gameId)) {
+			return res.json({ message: 'Game already in wishlist'})
+		} 
+		user.wishlistGames.push(gameId);
+		await user.save();
+
+		return res.json(user);
+	} catch (err) {
+		return res.json({ message: `Error posting to user's wishlist` });
+	}
+})
+
+// Remove a game from a user's wishlist
+router.delete('/:userId/wishlistGames', async (req, res) => {
+	try {
+		const user = await User.findById(req.body.userId);
+		const gameId = req.body.gameId;
+
+		const index = user.wishlistGames.indexOf(gameId)
+		if(index > -1) {
+			user.wishlistGames.splice(index, 1);
+			console.log('Game has been removed');
+		}
+		await user.save();
+		return res.json(user);
+	} catch (err) {
+		console.log(error);
+		return res.json({ message: `Error deleting from user's wishlist`})
+	}
+})
+
+// get user by userId
+router.get('/:userId', async (req, res) => {
+	try {
+		const user = await User.findById(req.params.userId)
+		if (user) {
+			res.json(user);
+		} else {
+			res.json({ message: 'userId not found' })
+		}
+	} catch (err) {
+		console.log(err);
+		res.json({ message: 'Error fetching userId'})
+	}
+})
+
+/* get all users */
+router.get('/', async function (req, res, next) {
+	try {
+		const users = await User.find()
+
+		return res.json(users);
+	} catch (err) {
+		res.json([]);
+	}
+});
 module.exports = router;

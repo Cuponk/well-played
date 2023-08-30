@@ -14,7 +14,10 @@ users.push(
   new User({
     username: 'demo-user',
     email: 'demo-user@google.com',
-    hashedPassword: bcrypt.hashSync('ilikeike', 10)
+    hashedPassword: bcrypt.hashSync('ilikeike', 10),
+	friends: [],
+	ownedGames: [],
+	wishlistGames: []
   })
 )
 
@@ -25,7 +28,10 @@ for (let i = 1; i < NUM_SEED_USERS; i++) {
     new User({
       username: faker.internet.userName(firstName, lastName),
       email: faker.internet.email(firstName, lastName),
-      hashedPassword: bcrypt.hashSync(faker.internet.password(), 10)
+      hashedPassword: bcrypt.hashSync(faker.internet.password(), 10),
+	  friends: [],
+	  ownedGames: [],
+	  wishlistGames: []
     })
   )
 }
@@ -46,6 +52,38 @@ games.push(
 		additionalImages: ['image1', 'image2'],
 		videoUrl: 'video.url',
 		maxPlayers: 5
+	})
+)
+
+games.push(
+	new Game({
+		title: 'Starchew Valley',
+		description: 'Not a copy of Stardew Valley',
+		releaseYear: 2023,
+		genre: 'Role Playing Game',
+		genreTags: ['indie', 'rpg', 'adventure'],
+		studio: 'Fishchuckle',
+		portrait: 'portrait.image',
+		backgroundImage: 'background.image',
+		additionalImages: ['image1', 'image2'],
+		videoUrl: 'video.url',
+		maxPlayers: 4
+	})
+)
+
+games.push(
+	new Game({
+		title: 'Cities: Streetlines',
+		description: 'Not a copy of Cities: Skyline',
+		releaseYear: 2023,
+		genre: 'strategy',
+		genreTags: ['strategy', 'simulation'],
+		studio: 'Colossal Sorder',
+		portrait: 'portrait.image',
+		backgroundImage: 'background.image',
+		additionalImages: ['image1', 'image2'],
+		videoUrl: 'video.url',
+		maxPlayers: 1
 	})
 )
 
