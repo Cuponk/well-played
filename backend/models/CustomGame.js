@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const gameSchema = new Schema({
+const customGameSchema = new Schema({
 	title: {
 		type: String,
 		required: true,
@@ -52,4 +52,4 @@ const gameSchema = new Schema({
 	timestamps: true
 })
 
-module.exports = mongoose.model('Game', gameSchema);
+module.exports = mongoose.model('CustomGame', customGameSchema);
