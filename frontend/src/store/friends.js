@@ -5,7 +5,6 @@ const friendsReducer = (state = {}, action) => {
     case RECEIVE_CURRENT_USER:
       const newState = {};
       if (!action.currentUser) return newState;
-      console.log(action.currentUser);
       // Populate state with friendId: friendData key-value pairs.
       if (action.currentUser.friends.length > 0) {
         action.currentUser.friends.forEach((friend) => {
