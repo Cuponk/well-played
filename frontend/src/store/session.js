@@ -9,7 +9,7 @@ const receiveCurrentUser = currentUser => ({
   type: RECEIVE_CURRENT_USER,
   currentUser
 });
-  
+
 const receiveErrors = errors => ({
   type: RECEIVE_SESSION_ERRORS,
   errors
@@ -27,7 +27,7 @@ export const signup = user => startSession(user, 'api/users/register');
 export const login = user => startSession(user, 'api/users/login');
 
 const startSession = (userInfo, route) => async dispatch => {
-  try {  
+  try {
     const res = await jwtFetch(route, {
       method: "POST",
       body: JSON.stringify(userInfo)
