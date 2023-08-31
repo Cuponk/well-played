@@ -4,7 +4,8 @@
 	background-color: lightgray;
 	border: 1px solid black;
 	box-sizing: border-box;
-	height: 40vh;
+	height: 320px;
+	width: 100px;
 }
 
 .game-list-item-portrait {
