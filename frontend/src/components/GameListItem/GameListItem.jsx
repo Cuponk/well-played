@@ -7,7 +7,7 @@ const GameListItem = ({ game }) => {
 				<img src='game.photoUrl' alt='game portrait'/>
 			</div>
 			<h4>Title</h4>
-			<h4>Release Date</h4>
+			<h4>Developer</h4>
 		</div>
 	)
 }

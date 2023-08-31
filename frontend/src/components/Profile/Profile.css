@@ -16,10 +16,9 @@
 .profile-page-library {
 	display: flex;
 	flex-wrap: wrap;
-	border: 1px solid black;
-	height: 48%;
+	/* border: 1px solid black; */
 
-	> * {
+	> div {
 		margin: 0.75rem;
 	}
 }

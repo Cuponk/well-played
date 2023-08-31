@@ -12,7 +12,7 @@ function Profile() {
       <h2>Welcome, {currentUser.username}</h2>
 	  <div className='profile-page-container'>
 		<div className='profile-page-lists'> 
-			<h3>Wishlist</h3>
+			Wishlist
 			<div className='profile-page-wishlist'>
 				<GameListItem />
 				<GameListItem />
@@ -22,7 +22,7 @@ function Profile() {
 				<GameListItem />
 			</div>
 
-			<h3>Library</h3>
+			Library
 			<div className='profile-page-library'> 
 				<GameListItem />
 				<GameListItem />
