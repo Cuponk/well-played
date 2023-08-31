@@ -9,11 +9,6 @@ const FriendListItem = ({ user }) => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		// useEffect(() => {
-		// 	fetch(`/api/${currentUser._id}/requestFriendship`, {
-
-		// 	})
-		// }, [])
 	}
 
 	return (

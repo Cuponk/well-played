@@ -1,7 +1,7 @@
 import jwtFetch from './jwt';
 
 const RECEIVE_USERS = 'RECEIVE_USERS';
-const RECEIVE_FRIENDS = 'RECEIVE_FRIENDS';
+// const RECEIVE_FRIENDS = 'RECEIVE_FRIENDS';
 const RECEIVE_PENDING_FRIENDS = 'RECEIVE_PENDING_FRIENDS';
 
 const SEND_FRIEND_REQUEST = 'SEND_FRIEND_REQUEST';
@@ -16,10 +16,10 @@ const receiveUsers = users => ({
 })
 
 // Receive all friendships for user
-const receiveFriends = friendships => ({
-	type: RECEIVE_FRIENDS,
-	friendships
-})
+// const receiveFriends = friendships => ({
+// 	type: RECEIVE_FRIENDS,
+// 	friendships
+// })
 
 // Receive all pending friendships
 const receivePendingFriends = friendships => ({
@@ -28,47 +28,47 @@ const receivePendingFriends = friendships => ({
 })
 
 // Send friendship request from sender to receiver
-const sendFriendRequest = friendshipId => ({
+const sendFriendRequest = friendship => ({
 	type: SEND_FRIEND_REQUEST,
-	friendshipId
+	friendship
 })
 
 
 // Accept friendship request between sender and receiver(receiver accepts)
-const acceptFriendRequest = friendshipId => ({
+const acceptFriendRequest = friendship => ({
 	type: ACCEPT_FRIEND_REQUEST,
-	friendshipId
+	friendship
 })
 
 // Remove friendship 
-const removeFriendship = friendshipId => ({
+const removeFriendship = friendship => ({
 	type: REMOVE_FRIENDSHIP,
-	friendshipId
+	friendship
 })
 
 const fetchUsers = () => async dispatch => {
 	const res = await jwtFetch('/api/users');
 
 	if (res.ok) {
-		const users = res.json();
+		const users = await res.json();
 		dispatch(receiveUsers(users));
 	}
 }
 
-const fetchFriends = userId => async dispatch => {
-	const res = await jwtFetch(`/api/${userId}/friends`)
+// const fetchFriends = userId => async dispatch => {
+// 	const res = await jwtFetch(`/api/${userId}/friends`)
 
-	if (res.ok) {
-		const friendships = res.json();
-		dispatch(receiveFriends(friendships));
-	}
-}
+// 	if (res.ok) {
+// 		const friendships = await res.json();
+// 		dispatch(receiveFriends(friendships));
+// 	}
+// }
 
 const fetchPendingFriends = userId => async dispatch => {
 	const res = await jwtFetch(`/api/${userId}/pendingRequests`);
 
 	if (res.ok) {
-		const pendingFriendships = res.json();
+		const pendingFriendships = await res.json();
 		dispatch(receivePendingFriends(pendingFriendships));
 	}
 }
@@ -79,16 +79,16 @@ const requestFriendship = (senderId, receiverId) => async dispatch => {
 		body: JSON.stringify({ receiverId: receiverId })
 	})
 	const friendship = await res.json();
-	dispatch(sendFriendRequest(friendship._id));
+	dispatch(sendFriendRequest(friendship));
 }
 
 const acceptFriendship = (senderId, receiverId) => async dispatch => {
 	const res = await jwtFetch(`/api/${receiverId}/acceptFriendship`, {
 		method: 'POST',
-		body: JSON.stringify({ senderId: senderId})
+		body: JSON.stringify({ senderId: senderId })
 	})
 	const friendship = await res.json();
-	dispatch(acceptFriendRequest(friendship._id));
+	dispatch(acceptFriendRequest(friendship));
 }
 
 const deleteFriendship = (senderId, receiverId) => async dispatch => {
@@ -97,18 +97,21 @@ const deleteFriendship = (senderId, receiverId) => async dispatch => {
 		body: JSON.stringify({ receiverId })
 	})
 	const friendship = await res.json();
-	dispatch(removeFriendship(friendship._id));
+	dispatch(removeFriendship(friendship));
 }
 
 const FriendshipsReducer = (state = {}, action) => {
 	switch (action.type) {
 		case RECEIVE_USERS:
-		case RECEIVE_FRIENDS:
+			return {...state, users: action.users};
+		case RECEIVE_PENDING_FRIENDS:
+			return {...state, friendships: action.friendships};
 		case SEND_FRIEND_REQUEST:
-		case CANCEL_FRIEND_REQUEST:
+			return {...state, [action.friendship._id]: action.friendship};
 		case ACCEPT_FRIEND_REQUEST:
-		case DENY_FRIEND_REQUEST:
+			return {...state, [action.friendship._id]: action.friendship};
 		case REMOVE_FRIENDSHIP:
+			return {...state, [action.friendship._id]: action.friendship};
 		default:
 			return state;
 	}
