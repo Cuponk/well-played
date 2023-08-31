@@ -5,7 +5,7 @@ import { logout } from '../../store/session';
 import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 
 function NavBar() {
-  const loggedIn = useSelector(state => !!state.session.user);
+  const loggedIn = useSelector(state => !!state.user);
   const dispatch = useDispatch();
 
   const logoutUser = e => {

@@ -1,6 +1,6 @@
 import jwtFetch from './jwt';
 
-const RECEIVE_CURRENT_USER = "session/RECEIVE_CURRENT_USER";
+export const RECEIVE_CURRENT_USER = "session/RECEIVE_CURRENT_USER";
 const RECEIVE_SESSION_ERRORS = "session/RECEIVE_SESSION_ERRORS";
 const CLEAR_SESSION_ERRORS = "session/CLEAR_SESSION_ERRORS";
 export const RECEIVE_USER_LOGOUT = "session/RECEIVE_USER_LOGOUT";
@@ -35,7 +35,7 @@ const startSession = (userInfo, route) => async dispatch => {
     const { user, token } = await res.json();
     localStorage.setItem('jwtToken', token);
     return dispatch(receiveCurrentUser(user));
-  } catch(err) {
+  } catch (err) {
     const res = await err.json();
     if (res.statusCode === 400) {
       return dispatch(receiveErrors(res.errors));
@@ -57,7 +57,7 @@ export const getCurrentUser = () => async dispatch => {
 const nullErrors = null;
 
 export const sessionErrorsReducer = (state = nullErrors, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case RECEIVE_SESSION_ERRORS:
       return action.errors;
     case RECEIVE_CURRENT_USER:
@@ -75,7 +75,11 @@ const initialState = {
 const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case RECEIVE_CURRENT_USER:
-      return { user: action.currentUser };
+      return {
+        username: action.currentUser.username,
+        email: action.currentUser.email,
+        id: action.currentUser._id
+      };
     case RECEIVE_USER_LOGOUT:
       return initialState;
     default:
