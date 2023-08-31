@@ -46,7 +46,7 @@ const removeFriendship = friendship => ({
 	friendship
 })
 
-const fetchUsers = () => async dispatch => {
+export const fetchUsers = () => async dispatch => {
 	const res = await jwtFetch('/api/users');
 
 	if (res.ok) {
@@ -64,8 +64,8 @@ const fetchUsers = () => async dispatch => {
 // 	}
 // }
 
-const fetchPendingFriends = userId => async dispatch => {
-	const res = await jwtFetch(`/api/${userId}/pendingRequests`);
+export const fetchPendingFriends = userId => async dispatch => {
+	const res = await jwtFetch(`/api/friendships${userId}/pendingRequests`);
 
 	if (res.ok) {
 		const pendingFriendships = await res.json();
@@ -73,8 +73,8 @@ const fetchPendingFriends = userId => async dispatch => {
 	}
 }
 
-const requestFriendship = (senderId, receiverId) => async dispatch => {
-	const res = await jwtFetch(`/api/${senderId}/requestFriendship`, {
+export const requestFriendship = (senderId, receiverId) => async dispatch => {
+	const res = await jwtFetch(`/api/friendships/${senderId}/requestFriendship`, {
 		method: 'POST',
 		body: JSON.stringify({ receiverId: receiverId })
 	})
@@ -82,8 +82,8 @@ const requestFriendship = (senderId, receiverId) => async dispatch => {
 	dispatch(sendFriendRequest(friendship));
 }
 
-const acceptFriendship = (senderId, receiverId) => async dispatch => {
-	const res = await jwtFetch(`/api/${receiverId}/acceptFriendship`, {
+export const acceptFriendship = (senderId, receiverId) => async dispatch => {
+	const res = await jwtFetch(`/api/friendships/${receiverId}/acceptFriendship`, {
 		method: 'POST',
 		body: JSON.stringify({ senderId: senderId })
 	})
@@ -91,8 +91,17 @@ const acceptFriendship = (senderId, receiverId) => async dispatch => {
 	dispatch(acceptFriendRequest(friendship));
 }
 
-const deleteFriendship = (senderId, receiverId) => async dispatch => {
-	const res = await jwtFetch(`/api/${senderId}/deleteFriendship`, {
+export const deletePendingFriendship = (senderId, receiverId) => async dispatch => {
+	const res = await jwtFetch(`/api/friendships/${senderId}/deletePendingFriendship`, {
+		method: 'DELETE',
+		body: JSON.stringify({ receiverId })
+	})
+	const friendship = await res.json();
+	dispatch(removeFriendship(friendship));
+}
+
+export const deleteAcceptedFriendship = (senderId, receiverId) => async dispatch => {
+	const res = await jwtFetch(`/api/friendships/${senderId}/deleteAcceptedFriendship`, {
 		method: 'DELETE',
 		body: JSON.stringify({ receiverId })
 	})
