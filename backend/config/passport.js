@@ -13,7 +13,8 @@ passport.use(new LocalStrategy({
   usernameField: 'username',
   passwordField: 'password',
 }, async function (username, password, done) {
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username })
+    .populate('friends', "_id username");
   if (user) {
     bcrypt.compare(password, user.hashedPassword, (err, isMatch) => {
       if (err || !isMatch) done(null, false);
@@ -49,6 +50,7 @@ options.secretOrKey = secretOrKey;
 passport.use(new JwtStrategy(options, async (jwtPayload, done) => {
   try {
     const user = await User.findById(jwtPayload._id)
+      .populate("friends", "_id username");
     if (user) {
       // return the user to the frontend
       return done(null, user);

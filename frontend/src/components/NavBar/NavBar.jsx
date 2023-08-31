@@ -4,8 +4,8 @@ import './NavBar.css';
 import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 
 function NavBar() {
+  // When we're not logged in we'll have an empty user object.
   const loggedIn = Object.keys(useSelector(state => state.user)).length > 0;
-  console.log(loggedIn)
 
   const getLinks = () => {
     if (loggedIn) {
