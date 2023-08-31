@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useState, useEffect } from "react";
 import jwtFetch from "../../store/jwt";
 import './GameShow.css'
+import AddButton from "../../assets/images/add-to-library.svg";
+import Wishlist from "../../assets/images/wishlist.svg";
 
 const GameShow = () => {
     const { id } = useParams();
@@ -53,6 +55,11 @@ const GameShow = () => {
                             <p className="game-description">
                                 {game.summary}
                             </p>
+                            <div className="buttons">
+                                <img src={AddButton} alt="" />
+                        
+                                <img src={Wishlist} alt="" />
+                            </div>
                         </div>
                     </div>
                 </div>
