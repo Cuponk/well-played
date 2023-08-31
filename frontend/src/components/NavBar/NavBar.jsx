@@ -1,17 +1,11 @@
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './NavBar.css';
-import { logout } from '../../store/session';
 import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 
 function NavBar() {
-  const loggedIn = useSelector(state => !!state.session.user);
-  const dispatch = useDispatch();
-
-  const logoutUser = e => {
-    e.preventDefault();
-    dispatch(logout());
-  }
+  // When we're not logged in we'll have an empty user object.
+  const loggedIn = Object.keys(useSelector(state => state.user)).length > 0;
 
   const getLinks = () => {
     if (loggedIn) {
