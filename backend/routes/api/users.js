@@ -80,8 +80,37 @@ router.get('/current', restoreUser, (req, res) => {
 	res.json({
 		_id: req.user._id,
 		username: req.user.username,
-		email: req.user.email
+		email: req.user.email,
+		ownedGames: req.user.ownedGames,
+		wishlistGames: req.user.wishlistGames,
+		friends: req.user.friends
 	});
+});
+
+// get user by userId
+router.get('/:userId', async (req, res) => {
+	try {
+		const user = await User.findById(req.params.userId)
+		if (user) {
+			return res.json(user);
+		} else {
+			return res.json({ message: 'userId not found' })
+		}
+	} catch (err) {
+		console.log(err);
+		return res.json({ message: 'Error fetching userId' })
+	}
+})
+
+/* get all users */
+router.get('/', async function (req, res, next) {
+	try {
+		const users = await User.find()
+
+		return res.json(users);
+	} catch (err) {
+		return res.json([]);
+	}
 });
 
 // OWNED GAMES LIST
@@ -142,6 +171,7 @@ router.delete('/:userId/ownedGames', async (req, res) => {
 	}
 })
 
+// WISHLIST GAMES LIST
 // Get a user's wishlist games
 router.get('/:userId/wishlistGames', async (req, res) => {
 	try {
@@ -197,29 +227,5 @@ router.delete('/:userId/wishlistGames', async (req, res) => {
 	}
 })
 
-// get user by userId
-router.get('/:userId', async (req, res) => {
-	try {
-		const user = await User.findById(req.params.userId)
-		if (user) {
-			return res.json(user);
-		} else {
-			return res.json({ message: 'userId not found' })
-		}
-	} catch (err) {
-		console.log(err);
-		return res.json({ message: 'Error fetching userId' })
-	}
-})
 
-/* get all users */
-router.get('/', async function (req, res, next) {
-	try {
-		const users = await User.find()
-
-		return res.json(users);
-	} catch (err) {
-		return res.json([]);
-	}
-});
 module.exports = router;
