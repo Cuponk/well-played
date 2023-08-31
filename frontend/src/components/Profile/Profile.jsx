@@ -19,13 +19,14 @@ function Profile() {
 			})
 	}, [])
 
-	const handleUsers = () => {
-		const allUsers = Object.values(users).map(user => {
-			console.log(user.username);
-			return <FriendListItem user={user} />
-		})
-		return allUsers;
-	}
+  const handleUsers = () => {
+	const allUsers = Object.values(users).map(user => {
+		if(currentUser._id !== user._id) {
+			return <FriendListItem key={user._id}user={user}/>
+		}
+	})
+	return allUsers;
+  }
 
 	return (
 		<>

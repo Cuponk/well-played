@@ -116,8 +116,34 @@ router.post('/:userId/acceptFriendship', async (req, res) => {
   }
 });
 
+// DELETE Cancel a pending friendship
+router.delete('/:userId/deletePendingFriendship', async (req, res) => {
+  const { userId } = req.params;
+  const { otherUserId } = req.body;
+  console.log(userId);
+  console.log(otherUserId);
+  try {
+	const relation = await Friendship.find({
+		sender: userId,
+		receiver: otherUserId,
+		accepted: false
+	})
+	console.log('before delete: ', relation);
+    const friendship = await Friendship.findOneAndDelete({
+      sender: userId,
+      receiver: otherUserId,
+	  accepted: false
+    });
+	console.log('Deleted friendship: ', friendship);
+	return res.json(friendship)
+  } catch (error) {
+    console.log(error);
+    return res.json({ message: 'Error canceling pending friendship' });
+  }
+});
+
 // DELETE Delete a friendship
-router.delete('/:userId/deleteFriendship', async (req, res) => {
+router.delete('/:userId/deleteAcceptedFriendship', async (req, res) => {
   const { userId } = req.params;
   const { otherUserId } = req.body;
   try {
@@ -147,7 +173,7 @@ router.delete('/:userId/deleteFriendship', async (req, res) => {
     return res.json(friendship);
   } catch (error) {
     console.log(error);
-    return res.json({ message: 'Error canceling friendship' });
+    return res.json({ message: 'Error canceling accepted friendship ' });
   }
 });
 

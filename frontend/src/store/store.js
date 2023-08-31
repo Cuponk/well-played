@@ -5,13 +5,15 @@ import errors from './errors';
 import wishlist from './wishlist';
 import ownedGames from './ownedGames';
 import friends from './friends';
+import friendships from './friendships';
 
 const rootReducer = combineReducers({
   user: session,
   wishlist,
   ownedGames,
   friends,
-  errors
+  errors,
+  friendships
 });
 
 let enhancer;
