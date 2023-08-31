@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useState, useEffect } from "react";
 import jwtFetch from "../../store/jwt";
+import './GameShow.css'
 
 const GameShow = () => {
     const { id } = useParams();
@@ -15,6 +16,11 @@ const GameShow = () => {
         return url.replace("t_thumb", type);
     }
 
+    const parseDate = (date) => {
+        let newDate = new Date(date * 1000);
+        return newDate.getFullYear();
+    }
+
     useEffect(() => {
         jwtFetch(`/api/igdb/${id}`)
             .then((res) => res.json())
@@ -22,7 +28,7 @@ const GameShow = () => {
                 console.log(data[0]);
                 setGame(data[0]);
                 setCover(parseImages(data[0].cover.url, "t_cover_big"));
-                setBackground(parseImages(data[0].screenshots[0].url, "t_screenshot_huge"));
+                setBackground(parseImages(data[0].screenshots[0].url, "t_1080p"));
                 setScreenshots(data[0].screenshots.slice(1).map((screenshot) => parseImages(screenshot.url, "t_screenshot_big")));
                 setLoaded(true);
             });
@@ -30,14 +36,29 @@ const GameShow = () => {
 
     return (
         loaded && (
-            <div>
-                <h1>Game Show Page</h1>
-                {game.name}
-                <img src={cover} alt="" />
-                {screenshots.map((screenshot) => (
-                    <img src={screenshot} alt="" />
-                ))}
-            </div>
+            <>
+                <div className="top-half">
+                    <img src={background} className="hero-image" />
+                    <div className="game-header">
+                        <img src={cover} className="game-cover" />
+                        <div className="game-info">
+                            <h1 className="game-title">
+                                {game.name}
+                            </h1>
+                            <p className="game-dev-release">
+                                {game.involved_companies[0].company.name}
+                                &nbsp;|&nbsp;
+                                {parseDate(game.first_release_date)}
+                            </p>  
+                            <p className="game-description">
+                                {game.summary}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div className="bottom-half">
+                </div>
+            </>
         )
     );
 };
