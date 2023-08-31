@@ -68,20 +68,17 @@ export const sessionErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const initialState = {
-  user: undefined
-};
-
-const sessionReducer = (state = initialState, action) => {
+const sessionReducer = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_CURRENT_USER:
+      if (!action.currentUser) return state;
       return {
         username: action.currentUser.username,
         email: action.currentUser.email,
         id: action.currentUser._id
       };
     case RECEIVE_USER_LOGOUT:
-      return initialState;
+      return {};
     default:
       return state;
   }

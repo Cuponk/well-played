@@ -4,11 +4,13 @@ import session from './session';
 import errors from './errors';
 import wishlist from './wishlist';
 import ownedGames from './ownedGames';
+import friends from './friends';
 
 const rootReducer = combineReducers({
   user: session,
   wishlist,
   ownedGames,
+  friends,
   errors
 });
 

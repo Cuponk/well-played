@@ -28,7 +28,7 @@ export const deleteWishlistItem = (userId, gameId) => async (dispatch) => {
     method: "DELETE",
     body: JSON.stringify({ gameId }),
   });
-  const userInfo = await res.json();
+  await res.json();
   return dispatch(removeWishlistItem(gameId));
 };
 
@@ -37,6 +37,7 @@ const wishlistReducer = (state = {}, action) => {
     // Load wishlist when a user logs in or session is restored.
     case RECEIVE_CURRENT_USER:
       const newState = {};
+      if (!action.currentUser) return newState;
       // Populate state with gameId: gameData key-value pairs.
       if (action.currentUser.wishlistGames.length > 0) {
         action.currentUser.wishlistGames.forEach((wishlistItem) => {

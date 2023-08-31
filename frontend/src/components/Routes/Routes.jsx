@@ -2,7 +2,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export const AuthRoute = ({ component: Component, path, exact }) => {
-  const loggedIn = useSelector(state => !!state.user);
+  const loggedIn = Object.keys(useSelector(state => state.user)).length > 0;
 
   return (
     <Route path={path} exact={exact} render={(props) => (
@@ -16,7 +16,7 @@ export const AuthRoute = ({ component: Component, path, exact }) => {
 };
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const loggedIn = useSelector(state => !!state.user);
+  const loggedIn = Object.keys(useSelector(state => state.user)).length > 0;
 
   return (
     <Route

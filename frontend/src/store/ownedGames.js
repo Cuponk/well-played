@@ -28,7 +28,7 @@ export const deleteOwnedGamesItem = (userId, gameId) => async (dispatch) => {
     method: "DELETE",
     body: JSON.stringify({ gameId }),
   });
-  const userInfo = await res.json();
+  await res.json();
   return dispatch(removeOwnedGamesItem(gameId));
 }
 
@@ -37,6 +37,7 @@ const ownedGamesReducer = (state = {}, action) => {
     // Load ownedGames when a user logs in or session is restored.
     case RECEIVE_CURRENT_USER:
       const newState = {};
+      if (!action.currentUser) return newState;
       // Populate state with gameId: gameData key-value pairs.
       if (action.currentUser.ownedGames.length > 0) {
         action.currentUser.ownedGames.forEach((ownedGamesItem) => {
