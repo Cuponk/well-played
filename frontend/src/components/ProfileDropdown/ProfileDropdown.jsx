@@ -6,7 +6,7 @@ import "./ProfileDropdown.css";
 
 export default function ProfileDropdown() {
   const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.session.user);
+  const currentUser = useSelector(state => state.user);
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
 
