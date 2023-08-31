@@ -1,0 +1,30 @@
+.profile-page-container {
+	display: flex;
+	height: 100%;
+	width: 100%;
+	background-color: aquamarine;
+}
+
+.profile-page-lists {
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	background-color:blanchedalmond;
+}
+
+.profile-page-wishlist,
+.profile-page-library {
+	display: flex;
+	flex-wrap: wrap;
+	border: 1px solid black;
+	height: 48%;
+
+	> * {
+		margin: 0.75rem;
+	}
+}
+
+.profile-page-friends {
+	display: flex;
+	flex-direction: column;
+}

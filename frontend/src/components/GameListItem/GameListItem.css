@@ -1,0 +1,14 @@
+
+.game-list-item-container {
+	flex-basis: 18%;
+	background-color: lightgray;
+	border: 1px solid black;
+	box-sizing: border-box;
+	height: 40vh;
+}
+
+.game-list-item-portrait {
+	border-bottom: 1px solid black;
+	box-sizing: border-box;
+	height: 80%;
+}
