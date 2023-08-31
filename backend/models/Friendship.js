@@ -21,4 +21,6 @@ const friendshipSchema = new Schema(
   }
 );
 
+friendshipSchema.index({ sender: 1, receiver: 1 }, { unique: true });
+
 module.exports = mongoose.model('Friendship', friendshipSchema);

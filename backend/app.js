@@ -10,12 +10,14 @@ const { isProduction } = require('./config/keys');
 require('dotenv').config();
 require('./models/User.js');
 require('./models/CustomGame.js');
+require('./models/Friendship.js');
 require('./config/passport');
 
 const passport = require('passport');
 const dbRouter = require('./routes/api/igdb');
 const usersRouter = require('./routes/api/users');
 const customGamesRouter = require('./routes/api/customGames');
+const friendshipsRouter = require('./routes/api/friendships');
 const csrfRouter = require('./routes/api/csrf');
 
 const app = express();
@@ -50,6 +52,7 @@ app.use('/api/igdb', dbRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/customGames', customGamesRouter);
 app.use('/api/csrf', csrfRouter);
+app.use('/api/friendships', friendshipsRouter);
 
 // Express custom middleware for catching all unmatched requests and formatting
 // a 404 error to be sent as the response.
