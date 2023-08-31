@@ -94,8 +94,6 @@ router.get('/:userId/ownedGames', async (req, res) => {
 		} else {
 			res.json({ message: 'userId not found' })
 		}
-			return res.json({ message: 'userId not found' })
-		}
 	} catch (err){
 		console.log(err)
 		res.json({ message: `Error fetching user's owned games list` })
