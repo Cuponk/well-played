@@ -133,19 +133,41 @@ router.get('/:userId/ownedGames', async (req, res) => {
 
 // Add a game to user's owned game list
 router.post('/:userId/ownedGames', async (req, res) => {
-	try {
-		if (req.body.userId !== req.params.userId) {
-			return res.json({ message: 'user ids do not match' })
+	/*
+	Here's the expected req body structure for all POST games list routes.
+		Expected req.body:
+		{
+			gameData: {
+				gameId: Number,
+				name: String,
+				coverUrl: String,
+				releaseYear: Number
+			}
 		}
-		const user = await User.findById(req.body.userId);
-		const gameId = req.body.gameId;
+	*/
+	try {
+		const { userId } = req.params;
+		const user = await User.findById(userId);
+		const { gameData } = req.body;
 
-		if (user.ownedGames.includes(gameId)) {
+		// We can't do .includes with the object because the mongoDB _id isn't just
+		// a string. It looks something like " _id: new ObjectId("5f9a3b3b1c9d440000d1c9d4")"
+		// Instead, find the game by the gameId.
+		const index = user.ownedGames.findIndex(
+			game => game.gameId === gameData.gameId
+		)
+		if (index > -1) {
 			return res.json({ message: 'User already owns this game' })
 		}
-		user.ownedGames.push(gameId);
+		user.ownedGames.push(gameData);
+		// Remove from wishlist if it exists there.
+		const wishlistIndex = user.wishlistGames.findIndex(
+			game => game.gameId === gameData.gameId
+		)
+		if (wishlistIndex > -1) {
+			user.wishlistGames.splice(wishlistIndex, 1);
+		}
 		await user.save();
-
 		return res.json(user);
 	} catch (err) {
 		return res.json({ message: `Error posting to user's owned games list` });
@@ -155,15 +177,18 @@ router.post('/:userId/ownedGames', async (req, res) => {
 // Remove a game from a user's owned game list
 router.delete('/:userId/ownedGames', async (req, res) => {
 	try {
-		const user = await User.findById(req.body.userId);
-		const gameId = req.body.gameId;
+		const { userId } = req.params;
+		const user = await User.findById(userId);
+		const { gameId } = req.body;
 
-		const index = user.ownedGames.indexOf(gameId)
+		const index = user.ownedGames.findIndex(game => game.gameId === gameId)
 		if (index > -1) {
 			user.ownedGames.splice(index, 1);
-			console.log('Game has been removed');
+			await user.save();
+			console.log('Game has been removed from owned games');
+		} else {
+			console.log('Game not found');
 		}
-		await user.save();
 		return res.json(user);
 	} catch (err) {
 		console.log(err);
@@ -175,7 +200,8 @@ router.delete('/:userId/ownedGames', async (req, res) => {
 // Get a user's wishlist games
 router.get('/:userId/wishlistGames', async (req, res) => {
 	try {
-		const user = await User.findById(req.params.userId);
+		const { userId } = req.params;
+		const user = await User.findById(userId);
 		if (user.wishlistGames) {
 			return res.json(user.wishlistGames);
 		} else {
@@ -190,18 +216,19 @@ router.get('/:userId/wishlistGames', async (req, res) => {
 // Add a game to user's wishlist
 router.post('/:userId/wishlistGames', async (req, res) => {
 	try {
-		if (req.body.userId !== req.params.userId) {
-			return res.json({ message: 'user ids do not match' })
-		}
-		const user = await User.findById(req.body.userId);
-		const gameId = req.body.gameId;
+		const { userId } = req.params;
+		const user = await User.findById(userId);
+		const { gameData } = req.body;
 
-		if (user.wishlistGames.includes(gameId)) {
+		// Check presence of games by gameId instead of array membership.
+		const index = user.wishlistGames.findIndex(
+			game => game.gameId === gameData.gameId
+		)
+		if (index > -1) {
 			return res.json({ message: 'Game already in wishlist' })
 		}
-		user.wishlistGames.push(gameId);
+		user.wishlistGames.push(gameData);
 		await user.save();
-
 		return res.json(user);
 	} catch (err) {
 		return res.json({ message: `Error posting to user's wishlist` });
@@ -211,21 +238,23 @@ router.post('/:userId/wishlistGames', async (req, res) => {
 // Remove a game from a user's wishlist
 router.delete('/:userId/wishlistGames', async (req, res) => {
 	try {
-		const user = await User.findById(req.body.userId);
-		const gameId = req.body.gameId;
+		const { userId } = req.params;
+		const user = await User.findById(userId);
+		const { gameId } = req.body;
 
-		const index = user.wishlistGames.indexOf(gameId)
+		const index = user.wishlistGames.findIndex(game => game.gameId === gameId)
 		if (index > -1) {
 			user.wishlistGames.splice(index, 1);
-			console.log('Game has been removed');
+			await user.save();
+			console.log('Game has been removed from wishlist');
+		} else {
+			console.log('Game not found');
 		}
-		await user.save();
 		return res.json(user);
 	} catch (err) {
 		console.log(err);
 		return res.json({ message: `Error deleting from user's wishlist` })
 	}
 })
-
 
 module.exports = router;
