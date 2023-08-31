@@ -1,0 +1,22 @@
+.fa-caret-up {
+  transition: transform 0.3s ease;  /* Rotation will take 0.3s */
+}
+
+.rotate {
+  transform: rotate(-180deg);  /* 180 degree rotation */
+}
+
+.checkbox {
+  cursor:pointer;
+}
+
+.actual-checkbox {
+  cursor:pointer;
+  opacity: 0;
+  z-index: 9999;
+  position: absolute;
+}
+
+.dropdown {
+  /* Your dropdown styles */
+}
