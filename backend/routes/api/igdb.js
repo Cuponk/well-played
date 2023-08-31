@@ -36,11 +36,12 @@ router.get("/:id", async (req, res) => {
                 "Client-ID": process.env.CLIENT_ID,
                 Authorization: `Bearer ${process.env.AUTH_TOKEN}`,
             },
-            data: `fields name,summary,genres,first_release_date,involved_companies,cover.url,screenshots.url,videos; where id = ${req.params.id};`,
+            data: `fields name,summary,genres,first_release_date,involved_companies.company.name,cover.url,screenshots.url,videos; where id = ${req.params.id};`,
         });
         // debugger
 
-        return res.json(response.data);
+        const data = res.json(response.data);
+        return data;
     } catch (error) {
         console.error(error);
         if (error.response) {
