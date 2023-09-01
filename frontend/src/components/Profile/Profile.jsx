@@ -2,25 +2,15 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GameListItem from '../GameListItem/GameListItem';
 import './Profile.css';
-import { useState } from 'react';
 import FriendListItem from '../FriendListItem/FriendListItem';
 
 function Profile() {
 	const dispatch = useDispatch();
-	const currentUser = useSelector(state => state.session.user);
-	const [users, setUsers] = useState({})
-
-	useEffect(() => {
-		fetch('/api/users')
-			.then(res => res.json())
-			.then(data => {
-				// console.log(data)
-				setUsers(data)
-			})
-	}, [])
+	const currentUser = useSelector(state => state.user);
+	const friends = useSelector(state => state.friends)
 
   const handleUsers = () => {
-	const allUsers = Object.values(users).map(user => {
+	const allUsers = Object.values(friends).map(user => {
 		if(currentUser._id !== user._id) {
 			return <FriendListItem key={user._id}user={user}/>
 		}
