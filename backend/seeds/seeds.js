@@ -4,6 +4,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const { faker } = require('@faker-js/faker');
 const CustomGame = require("../models/CustomGame");
+const Friendship = require("../models/Friendship");
 
 const NUM_SEED_USERS = 10;
 
@@ -105,6 +106,7 @@ const insertSeeds = () => {
 	console.log("Resetting db and seeding users...");
 	User.collection.drop()
 		.then(() => CustomGame.collection.drop())
+		.then(() => Friendship.collection.drop())
 		.then(() => User.insertMany(users))
 		.then(() => CustomGame.insertMany(customGames))
 		.then(() => {

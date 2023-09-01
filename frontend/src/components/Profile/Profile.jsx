@@ -2,10 +2,21 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GameListItem from '../GameListItem/GameListItem';
 import './Profile.css';
+import FriendListItem from '../FriendListItem/FriendListItem';
 
 function Profile() {
 	const dispatch = useDispatch();
 	const currentUser = useSelector(state => state.user);
+	const friends = useSelector(state => state.friends)
+
+  const handleUsers = () => {
+	const allUsers = Object.values(friends).map(user => {
+		if(currentUser._id !== user._id) {
+			return <FriendListItem key={user._id}user={user}/>
+		}
+	})
+	return allUsers;
+  }
 
 	return (
 		<>
@@ -34,14 +45,11 @@ function Profile() {
 				</div>
 				<div className='profile-page-friends'>
 					<h3>Friends</h3>
-					<div>Friend 1</div>
-					<div>Friend 2</div>
-					<div>Friend 3</div>
-					<div>Friend 4</div>
+					{handleUsers()}
 				</div>
 			</div>
-		</>
-	);
+    </>
+  );
 }
 
 export default Profile;
