@@ -63,7 +63,7 @@ router.get("/search/:query", async (req, res) => {
                 "Client-ID": process.env.CLIENT_ID,
                 Authorization: `Bearer ${process.env.AUTH_TOKEN}`,
             },
-            data: `fields name,involved_companies.company.name,cover.url,genres.name,first_release_date; search "${req.params.query}"; where parent_game=null;`
+            data: `fields name,involved_companies.company.name,cover.url,genres.name,first_release_date; search "${req.params.query}"; where parent_game=null; limit 20;`,
 
     });
     return res.json(response.data)

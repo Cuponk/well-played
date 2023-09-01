@@ -5,6 +5,7 @@ import { fetchGames } from "../../store/games";
 import GameIndexItem from "../GameIndexItem/GameIndexItem";
 import jwtFetch from "../../store/jwt";
 
+
 function GamesIndex() {
   // const dispatch = useDispatch();
   // const games = Object.values(useSelector((state) => state.games));
@@ -22,8 +23,8 @@ function GamesIndex() {
     jwtFetch(`/api/igdb/search/${search}`)
       .then((res) => res.json())
       .then((fin) => {
-        console.log(fin)
         setGames(fin);
+        setSearch("");
       })
   }
 
@@ -34,7 +35,7 @@ function GamesIndex() {
   }
 
   // games.map((game) => {
-  //   console.log(game);
+  //   console.log(game.involved_companies ? game.involved_companies[0].company.name : '');
   // })
 
   return (
@@ -42,19 +43,22 @@ function GamesIndex() {
       <div className="games-index-container">
         <h2>Search for a game</h2>
         <form className="search-form" onSubmit={handleSubmit}>
-          <input
-            className="search-input"
-            type="text"
-            placeholder="Search for a game"
-            onChange={(e) => setSearch(e.target.value)}
-            value={search}
-          />
-          <span className="checkbox">
-            <input type="checkbox" className="actual-checkbox" id="dropdown-checkbox" onClick={handleDrop}/>
-            <label htmlFor="dropdown-checkbox">
-              <i className={`fa-solid fa-caret-up ${dropdown ? "rotate" : ""}`}/>
-            </label>
-          </span>
+              <div className="search-form-top">
+                <button onClick={handleSubmit} className="submit-button"><i className="fa-solid fa-search"/></button>
+                <input
+                  className="search-input"
+                  type="text"
+                  placeholder="Search for a game"
+                  onChange={(e) => setSearch(e.target.value)}
+                  value={search}
+                />
+                          <span className="checkbox">
+                            <input type="checkbox" className="actual-checkbox" id="dropdown-checkbox" onClick={handleDrop}/>
+                            <label htmlFor="dropdown-checkbox">
+                <i className={`fa-solid fa-caret-left ${dropdown ? "rotate" : ""}`}/>
+                            </label>
+                          </span>
+              </div>
           { dropdown && (
             <div className="dropdown">
               not yet
@@ -65,6 +69,7 @@ function GamesIndex() {
               <GameIndexItem game={game} key={game.id}/>
             )}
         </ul>
+        {/* <button onClick={handleSubmit} className="load-more">Load More Results</button> */}
       </div>
     </>
   )

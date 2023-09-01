@@ -1,0 +1,18 @@
+.game-item {
+    border: none;
+    all: unset;
+    width: 400px;
+    height: 128px;
+    background-color: var(--theme-gray);
+    display: flex;
+}
+
+.game-item:hover {
+    all: unset;
+    border: none;
+    width: 400px;
+    height: 128px;
+    background-color: var(--theme-gray);
+    display: flex;
+    cursor: pointer;
+}
