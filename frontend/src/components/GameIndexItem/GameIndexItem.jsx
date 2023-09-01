@@ -24,7 +24,7 @@ function GameIndexItem({ game, id }) {
     } else {
       return 'No Date Found'
     }
-}
+  }
 
   return (
     <button onClick={handleRedirect} className="game-item">
@@ -32,7 +32,7 @@ function GameIndexItem({ game, id }) {
       <div className="game-readable">
         <div className="game-details">
           <p>{game.name}</p>
-          <p>{game.involved_companies ? game.involved_companies[0].company.name : ''}</p>
+          <p>{game.involved_companies ? game.involved_companies[0].company.name : 'No Company Found'}</p>
           <p>{game.genres ? game.genres[0].name : ''}</p>
           <p>{parseDate(game.first_release_date)}</p>
         </div>

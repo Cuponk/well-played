@@ -7,6 +7,7 @@
     display: flex;
     cursor: pointer;
     border-radius: 3px;
+    margin-bottom: 10px;
 }
 
 .game-item:hover {
@@ -17,6 +18,8 @@
     background-color: var(--theme-gray);
     display: flex;
     cursor: pointer;
+    border-radius: 3px;
+    margin-bottom: 10px;
 }
 
 .game-buttons {
