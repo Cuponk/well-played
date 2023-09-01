@@ -31,3 +31,7 @@
 	width: 20%;
 	background-color: var(--theme-purple);
 }
+
+.empty-game-link {
+	display: contents;
+}

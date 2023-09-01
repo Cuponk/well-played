@@ -46,7 +46,7 @@
   cursor: pointer;
 }
 
-.dropdown-content>li {
+.dropdown-content>li{
   text-align: left;
   padding: 10px;
   color: var(--theme-black);
@@ -55,4 +55,8 @@
 
 .dropdown-content:hover {
   cursor: pointer;
+}
+
+.dropdown-profile {
+	display: contents;
 }
