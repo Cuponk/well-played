@@ -3,11 +3,9 @@ import './GameListItem.css'
 const GameListItem = ({ game }) => {
 	return (
 		<div className='game-list-item-container'>
-			<div className='game-list-item-portrait'>
-				<img src='game.photoUrl' alt='game portrait'/>
-			</div>
-			<h4>Title</h4>
-			<h4>Developer</h4>
+			<img src={game?.coverUrl} alt='game portrait' className='game-list-item-portrait'/>
+			<h4>{game?.name}</h4>
+			<p>Release Year: {game?.releaseYear}</p>
 		</div>
 	)
 }

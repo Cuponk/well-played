@@ -7,16 +7,17 @@ import FriendListItem from '../FriendListItem/FriendListItem';
 function Profile() {
 	const dispatch = useDispatch();
 	const currentUser = useSelector(state => state.user);
-	const friends = useSelector(state => state.friends)
+	const friends = useSelector(state => state.friends);
+	const ownedGames = Object.values(useSelector(state => state.ownedGames));
 
-  const handleUsers = () => {
-	const allUsers = Object.values(friends).map(user => {
-		if(currentUser._id !== user._id) {
-			return <FriendListItem key={user._id}user={user}/>
-		}
-	})
-	return allUsers;
-  }
+	const handleFriends = () => {
+		const allFriends = Object.values(friends).map(friend => {
+			if (currentUser._id !== friend._id) {
+				return <FriendListItem key={friend._id} user={friend} />
+			}
+		})
+		return allFriends;
+	}
 
 	return (
 		<>
@@ -25,12 +26,9 @@ function Profile() {
 				<div className='profile-page-lists'>
 					Wishlist
 					<div className='profile-page-wishlist'>
-						<GameListItem />
-						<GameListItem />
-						<GameListItem />
-						<GameListItem />
-						<GameListItem />
-						<GameListItem />
+						{ownedGames.map(game => {
+							return <GameListItem game={game}/>
+						})}
 					</div>
 
 					Library
@@ -45,11 +43,11 @@ function Profile() {
 				</div>
 				<div className='profile-page-friends'>
 					<h3>Friends</h3>
-					{handleUsers()}
+					{handleFriends()}
 				</div>
 			</div>
-    </>
-  );
+		</>
+	);
 }
 
 export default Profile;
