@@ -65,7 +65,11 @@ function GamesIndex() {
         </form>
         <ul className="games-index">
             {games.map((game) => 
-              <GameIndexItem game={game} key={game.id}/>
+              <>
+            
+                <GameIndexItem game={game} key={game.id}/>
+                
+              </>
             )}
         </ul>
         {/* <button onClick={handleSubmit} className="load-more">Load More Results</button> */}
