@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import './NavBar.css';
 import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
@@ -17,8 +17,8 @@ function NavBar() {
     } else {
       return (
         <div className="links-auth">
-          <Link to={'/signup'}><button>Signup</button></Link>
-          <Link to={'/login'}><button>Login</button></Link>
+          <NavLink to={'/signup'}><button>Signup</button></NavLink>
+          <NavLink to={'/login'}><button>Login</button></NavLink>
         </div>
       );
     }
@@ -26,7 +26,7 @@ function NavBar() {
 
   return (
     <div className="nav-bar">
-      <Link to="/"><h1>Well Played</h1></Link>
+      <NavLink to="/"><h1>Well Played</h1></NavLink>
       {getLinks()}
     </div>
   );
