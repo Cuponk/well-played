@@ -1,9 +1,9 @@
-.fa-caret-up {
+.fa-caret-left {
   transition: transform 0.3s ease;  /* Rotation will take 0.3s */
 }
 
 .rotate {
-  transform: rotate(-180deg);  /* 180 degree rotation */
+  transform: rotate(-90deg);  /* 180 degree rotation */
 }
 
 .checkbox {
@@ -17,6 +17,60 @@
   position: absolute;
 }
 
-.dropdown {
-  /* Your dropdown styles */
+.games-index {
+  min-height: 75vh;
+  width: 100%;
+  background-color: var(--theme-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+
+.submit-button {
+  all: unset;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  all: unset;
+  border: none;
+  cursor: pointer;
+}
+
+.search-input {
+  width: 600px;
+  border: none;
+  background-color: var(--theme-gray);
+}
+
+.search-form-top {
+  width: 700px;
+  height: 35px;
+  background-color: var(--theme-gray);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+  /* margin-bottom: 20px; */
+  border-radius: 5px;
+}
+
+.background {
+  width: 400px;
+  height: 128px;
+  background-color: var(--theme-purple);
+  position: absolute;
+  /* z-index: -1; */
+}
+
+.search-form {
+  margin-top: 5px;
+  margin-bottom: 15px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

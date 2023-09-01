@@ -63,3 +63,10 @@
     margin-top: 10px;
     gap: 10px;
 }
+
+.game-cover {
+    width: 300px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 3px;
+}
