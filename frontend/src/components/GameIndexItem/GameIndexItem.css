@@ -5,6 +5,8 @@
     height: 128px;
     background-color: var(--theme-gray);
     display: flex;
+    cursor: pointer;
+    border-radius: 3px;
 }
 
 .game-item:hover {
@@ -15,4 +17,33 @@
     background-color: var(--theme-gray);
     display: flex;
     cursor: pointer;
+}
+
+.game-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100px;
+    height: 128px;
+    padding: 0 10px 0 0;
+}
+
+.game-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 200px;
+    height: 128px;
+    padding: 0 0 0 10px;
+}
+
+.game-readable {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    height: 128px;
+    padding: 0 0 0 10px;
 }

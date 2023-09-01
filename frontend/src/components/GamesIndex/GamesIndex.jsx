@@ -24,7 +24,6 @@ function GamesIndex() {
       .then((res) => res.json())
       .then((fin) => {
         setGames(fin);
-        setSearch("");
       })
   }
 
@@ -41,8 +40,8 @@ function GamesIndex() {
   return (
     <>
       <div className="games-index-container">
-        <h2>Search for a game</h2>
         <form className="search-form" onSubmit={handleSubmit}>
+              <h2>Search for a game</h2>
               <div className="search-form-top">
                 <button onClick={handleSubmit} className="submit-button"><i className="fa-solid fa-search"/></button>
                 <input
@@ -52,12 +51,12 @@ function GamesIndex() {
                   onChange={(e) => setSearch(e.target.value)}
                   value={search}
                 />
-                          <span className="checkbox">
-                            <input type="checkbox" className="actual-checkbox" id="dropdown-checkbox" onClick={handleDrop}/>
-                            <label htmlFor="dropdown-checkbox">
-                <i className={`fa-solid fa-caret-left ${dropdown ? "rotate" : ""}`}/>
-                            </label>
-                          </span>
+                <span className="checkbox">
+                  <input type="checkbox" className="actual-checkbox" id="dropdown-checkbox" onClick={handleDrop}/>
+                  <label htmlFor="dropdown-checkbox">
+                  <i className={`fa-solid fa-caret-left ${dropdown ? "rotate" : ""}`}/>
+                  </label>
+                </span>
               </div>
           { dropdown && (
             <div className="dropdown">

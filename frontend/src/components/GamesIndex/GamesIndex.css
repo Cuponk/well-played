@@ -18,6 +18,7 @@
 }
 
 .games-index {
+  min-height: 75vh;
   width: 100%;
   background-color: var(--theme-white);
   display: flex;
@@ -39,20 +40,27 @@
 }
 
 .search-input {
-  width: 400px;
+  width: 600px;
   border: none;
   background-color: var(--theme-gray);
 }
 
 .search-form-top {
+  width: 700px;
+  height: 35px;
+  background-color: var(--theme-gray);
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   gap: 10px;
+  /* margin-bottom: 20px; */
+  border-radius: 5px;
 }
 
 .search-form {
+  margin-top: 5px;
+  margin-bottom: 15px;
+  gap: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
