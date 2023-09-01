@@ -11,11 +11,6 @@ export default function ProfileDropdown() {
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
 
-
-  const handleProfile = () => {
-	return 
-  }
-
   const logoutUser = (e) => {
     e.preventDefault();
     dispatch(logout());
@@ -34,9 +29,9 @@ export default function ProfileDropdown() {
       </li>
       {isOpen && (
         <div className="dropdown-content">
-		  <li className="dropdown-profile">
-			<NavLink to={'/profile'}>View Profile</NavLink>
-		  </li>
+		  <li><NavLink to="/profile">View Profile</NavLink></li>
+          <li><NavLink to="/search">Search Games</NavLink></li>
+
           <li onClick={logoutUser}>Log Out</li>
         </div>
       )}
