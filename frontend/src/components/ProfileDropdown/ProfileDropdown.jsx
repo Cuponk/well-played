@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from '../../store/session';
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import "./ProfileDropdown.css";
+import { NavLink } from "react-router-dom";
 
 export default function ProfileDropdown() {
   const dispatch = useDispatch();
@@ -28,10 +29,9 @@ export default function ProfileDropdown() {
       </li>
       {isOpen && (
         <div className="dropdown-content">
-          <li>View Profile</li>
-          <li>Friends</li>
-          <li>Owned Games</li>
-          <li>Wishlist</li>
+          <li><NavLink to="/profile">View Profile</NavLink></li>
+          <li><NavLink to="/search">Search Games</NavLink></li>
+        
           <li onClick={logoutUser}>Log Out</li>
         </div>
       )}
