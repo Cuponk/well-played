@@ -13,9 +13,6 @@
   flex-direction: row;
 }
 
-.link-nav,
-a,
-.link-auth,
-a {
+.links-auth a {
   padding: 0.5rem;
 }
