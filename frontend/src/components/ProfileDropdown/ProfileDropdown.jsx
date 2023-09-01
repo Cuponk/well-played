@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from '../../store/session';
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import { NavLink } from "react-router-dom";
 import "./ProfileDropdown.css";
 import { NavLink } from "react-router-dom";
 
