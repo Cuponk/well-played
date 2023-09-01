@@ -18,7 +18,7 @@ function Profile() {
 		return games;
 	}
 
-	const handleFriends = () => {
+	const handleFriends = friendsList => {
 		const allUsers = Object.values(friends).map(friend => {
 			if (currentUser._id !== friend._id) {
 				return <FriendListItem key={friend._id} user={friend} />
@@ -34,17 +34,19 @@ function Profile() {
 				<div className='profile-page-lists'>
 					<h3>Wishlist</h3>
 					<div className='profile-page-wishlist'>
+						{wishlist.length === 0 && <GameListItem />}
 						{handleGamesList(wishlist)}
 					</div>
 
 					<h3>Library</h3>
 					<div className='profile-page-library'>
+						{ownedGames.length === 0 && <GameListItem />}
 						{handleGamesList(ownedGames)}
 					</div>
 				</div>
 				<div className='profile-page-friends'>
 					<h3>Friends</h3>
-					{handleFriends()}
+					{handleFriends(friends)}
 				</div>
 			</div>
 		</>

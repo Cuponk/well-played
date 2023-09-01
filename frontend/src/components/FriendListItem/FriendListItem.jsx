@@ -31,7 +31,7 @@ const FriendListItem = ({ user }) => {
 	return (
 		<div className='friend-item-container'>
 			<h4>{user.username}</h4>
-			<button className='add-friend-button' onClick={handleSubmit}>{status ? 'pending' : 'add friend'}</button>
+			{/* <button className='add-friend-button' onClick={handleSubmit}>{status ? 'pending' : 'add friend'}</button> */}
 		</div>
 	)
 }

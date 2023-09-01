@@ -2,15 +2,31 @@
 .game-list-item-container {
 	flex-basis: 18%;
 	background-color: lightgray;
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	box-sizing: border-box;
 	height: 320px;
 	width: 100px;
+	box-shadow: 0 0 10px lightgray;
+}
+
+.game-portrait-link {
+	display: contents;
 }
 
 .game-list-item-portrait {
-	border-bottom: 1px solid black;
+	/* border-bottom: 1px solid black; */
 	box-sizing: border-box;
 	height: 80%;
 	width: 100%;
+	cursor: pointer;
+}
+
+.game-tile-name {
+	font-weight: 700;
+	font-size: 18px;
+}
+
+.game-tile-year {
+	font-weight: 400;
+	font-size: 16px;
 }
