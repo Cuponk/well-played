@@ -56,7 +56,7 @@ function SignupForm() {
       <div className="form-container-wrapper">
         <form className="session-form" onSubmit={handleSubmit}>
           <h2>Sign Up Form</h2>
-          <div className="inputErrors">{errors?.email}</div>
+          <div className="inputErrors"><p>{errors?.email}</p></div>
           <label>
             <p>Email</p>
             <input type="text"
@@ -65,7 +65,7 @@ function SignupForm() {
               placeholder="Email"
             />
           </label>
-          <div className="inputErrors">{errors?.username}</div>
+          <div className="inputErrors"><p>{errors?.username}</p></div>
           <label>
             <p>Username</p>
             <input type="text"

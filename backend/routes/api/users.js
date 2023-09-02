@@ -61,7 +61,7 @@ router.post('/login', validateLoginInput, async (req, res, next) => {
 		if (!user) {
 			const err = new Error('Invalid credentials');
 			err.statusCode = 400;
-			err.errors = { email: "Invalid credentials" };
+			err.errors = { username: "Invalid credentials" };
 			return next(err);
 		}
 		return res.json(await loginUser(user));

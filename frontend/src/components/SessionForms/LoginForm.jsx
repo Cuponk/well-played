@@ -32,7 +32,6 @@ function LoginForm() {
 
         <form className="session-form" onSubmit={handleSubmit}>
           <h2>Log In Form</h2>
-          <div className="inputErrors">{errors?.username}</div>
           <label>
             <p>Username</p>
           </label>
@@ -41,7 +40,6 @@ function LoginForm() {
             onChange={update('username')}
             placeholder="Username"
           />
-          <div className="inputErrors">{errors?.password}</div>
           <label>
             <p>Password</p>
             <input type="password"
@@ -49,6 +47,8 @@ function LoginForm() {
               onChange={update('password')}
               placeholder="Password"
             />
+            <div className="inputErrors"><p>{errors?.username}</p></div>
+            <div className="inputErrors"><p>{errors?.password}</p></div>
           </label>
           <button disabled={!username || !password}>Log In</button>
         </form>
