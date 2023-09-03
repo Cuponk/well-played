@@ -11,6 +11,7 @@ function GamesIndex() {
   const [search, setSearch] = useState("");
   const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
+  const [pageButton, setPageButton] = useState(false);
 
   const handleSubmit = (e) => {
     //adding the fetch method here for now, will add to redux later
@@ -20,6 +21,7 @@ function GamesIndex() {
       .then((fin) => {
         setGames(fin);
       })
+    setPageButton(true);
   }
 
   const handleDrop = (e) => {
@@ -28,6 +30,7 @@ function GamesIndex() {
     console.log("clicked");
   }
 
+  //igdb has offset option for pagination :D
   const handlePaginate = (e) => {
     e.preventDefault();
     setPage(page + 1);
@@ -73,7 +76,7 @@ function GamesIndex() {
               </>
             )}
         </ul>
-        <button onClick={handlePaginate} className="load-more">Load More Results</button>
+        <button onClick={handlePaginate} className={"load-more " + (pageButton ? "" : "hidden")}>Load More Results</button>
       </div>
     </>
   )
