@@ -7,15 +7,10 @@ import jwtFetch from "../../store/jwt";
 
 
 function GamesIndex() {
-  // const dispatch = useDispatch();
-  // const games = Object.values(useSelector((state) => state.games));
   const [dropdown, setDropdown] = useState(false);
   const [search, setSearch] = useState("");
   const [games, setGames] = useState([]);
-
-  // useEffect(() => {
-  //   // dispatch(fetchGames());
-  // }, []);
+  const [page, setPage] = useState(1);
 
   const handleSubmit = (e) => {
     //adding the fetch method here for now, will add to redux later
@@ -33,9 +28,15 @@ function GamesIndex() {
     console.log("clicked");
   }
 
-  // games.map((game) => {
-  //   console.log(game.involved_companies ? game.involved_companies[0].company.name : '');
-  // })
+  const handlePaginate = (e) => {
+    e.preventDefault();
+    setPage(page + 1);
+    jwtFetch(`/api/igdb/search/${search}/${page}`)
+      .then((res) => res.json())
+      .then((fin) => {
+        setGames([...games, ...fin]);
+      })
+  }
 
   return (
     <>
@@ -72,7 +73,7 @@ function GamesIndex() {
               </>
             )}
         </ul>
-        {/* <button onClick={handleSubmit} className="load-more">Load More Results</button> */}
+        <button onClick={handlePaginate} className="load-more">Load More Results</button>
       </div>
     </>
   )
