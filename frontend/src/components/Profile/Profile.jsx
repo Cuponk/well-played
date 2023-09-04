@@ -7,11 +7,9 @@ import './Profile.css';
 import FriendsList from '../FriendsList/FriendsList';
 
 function Profile() {
-	const dispatch = useDispatch();
 	const user = useSelector(state => state.user);
 	const wishlist = Object.values(useSelector(state => state.wishlist));
 	const ownedGames = Object.values(useSelector(state => state.ownedGames));
-	const friends = Object.values(useSelector(state => state.friends));
 
 	const handleGamesList = list => {
 		const games = list.map(game => {
@@ -19,15 +17,6 @@ function Profile() {
 		})
 		return games;
 	}
-
-	// const handleFriends = friendsList => {
-	// 	const allUsers = Object.values(friends).map(friend => {
-	// 		if (currentUser._id !== friend._id) {
-	// 			return <FriendListItem key={friend._id} user={friend} />
-	// 		}
-	// 	})
-	// 	return allUsers;
-	// }
 
 	return (
 		<>
