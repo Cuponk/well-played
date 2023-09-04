@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Friendship = mongoose.model('Friendship');
 const passport = require('passport');
 const { loginUser, restoreUser } = require('../../config/passport');
 const { isProduction } = require('../../config/keys');
@@ -112,6 +113,31 @@ router.get('/', async function (req, res, next) {
 		return res.json([]);
 	}
 });
+
+// Get all other users not including the current user and the current user's friends
+router.get('/:userId/otherUsers', async (req, res) => {
+	try {
+		const { userId } = req.params;
+
+		// Find friendships with current user as sender or receiver.
+		const sentFriendships = await Friendship.find({ sender: userId });
+		const receivedFriendships = await Friendship.find({ receiver: userId });
+
+		// Get list of user ids for each list of friendships and combine them.
+		const sentToUserIds = sentFriendships.map(f => f.receiver);
+		const receivedFromUserIds = receivedFriendships.map(f => f.sender);
+		const friendshipUserIds = [...sentToUserIds, ...receivedFromUserIds, userId];
+
+		// Find users that don't have any sort of friendship with the current user.
+		const users = await User.find({
+			_id: { $nin: friendshipUserIds }
+		});
+		return res.json(users);
+	} catch (err) {
+		console.log(err);
+		return res.json([]);
+	}
+})
 
 // OWNED GAMES LIST
 // Get a user's owned games

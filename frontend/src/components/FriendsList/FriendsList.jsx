@@ -10,10 +10,12 @@ export default function FriendsList() {
   const friends = Object.values(useSelector(state => state.friends));
   const friendRequests = useSelector(state => state.friendships.friendRequests);
   const pendingRequests = useSelector(state => state.friendships.pendingRequests);
+  const otherUsers = useSelector(state => state.friendships.otherUsers);
 
   useEffect(() => {
-    dispatch(friendshipActions.fetchFriendRequests(currentUser.id))
-    dispatch(friendshipActions.fetchPendingRequests(currentUser.id))
+    dispatch(friendshipActions.fetchFriendRequests(currentUser.id));
+    dispatch(friendshipActions.fetchPendingRequests(currentUser.id));
+    dispatch(friendshipActions.fetchOtherUsers(currentUser.id));
   }, [dispatch])
 
   return (
@@ -31,6 +33,9 @@ export default function FriendsList() {
         return <FriendListItem key={request.receiver._id} user={request} friendship={false} status='pending' />
       })}
       <h3>Search for Friends</h3>
+      {otherUsers?.map(user => {
+        return <FriendListItem key={user._id} user={user} friendship={false} status='none' />
+      })}
     </div>
   )
 }

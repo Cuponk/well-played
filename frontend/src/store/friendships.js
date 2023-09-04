@@ -1,6 +1,6 @@
 import jwtFetch from './jwt';
 
-const RECEIVE_USERS = 'RECEIVE_USERS';
+const RECEIVE_OTHER_USERS = 'RECEIVE_OTHER_USERS';
 const RECEIVE_FRIEND_REQUESTS = 'RECEIVE_FRIEND_REQUESTS';
 const RECEIVE_PENDING_REQUESTS = 'RECEIVE_PENDING_REQUESTS';
 
@@ -10,9 +10,9 @@ const REMOVE_FRIENDSHIP = 'REMOVE_FRIENDSHIP';
 
 // ACTIONS
 // Receive all users
-const receiveUsers = users => ({
-	type: RECEIVE_USERS,
-	users
+const receiveOtherUsers = otherUsers => ({
+	type: RECEIVE_OTHER_USERS,
+	otherUsers
 })
 
 // Receive friends request, users is the receiver.
@@ -46,12 +46,12 @@ const removeFriendship = friendship => ({
 	friendship
 })
 
-export const fetchUsers = () => async dispatch => {
-	const res = await jwtFetch('/api/users');
+export const fetchOtherUsers = userId => async dispatch => {
+	const res = await jwtFetch(`/api/users/${userId}/otherUsers`);
 
 	if (res.ok) {
-		const users = await res.json();
-		dispatch(receiveUsers(users));
+		const otherUsers = await res.json();
+		dispatch(receiveOtherUsers(otherUsers));
 	}
 }
 
@@ -111,8 +111,8 @@ export const deleteAcceptedFriendship = (senderId, receiverId) => async dispatch
 
 const FriendshipsReducer = (state = {}, action) => {
 	switch (action.type) {
-		case RECEIVE_USERS:
-			return { ...state, users: action.users };
+		case RECEIVE_OTHER_USERS:
+			return { ...state, otherUsers: action.otherUsers };
 		case RECEIVE_FRIEND_REQUESTS:
 			return { ...state, friendRequests: action.friendRequests };
 		case RECEIVE_PENDING_REQUESTS:

@@ -37,6 +37,14 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 					</div>
 				</>
 			)}
+			{!friendship && status === 'none' && (
+				<>
+					<h4>{user.username}</h4>
+					<div className='friendButtons'>
+						<button className='accept-friend-button'>Request</button>
+					</div>
+				</>
+			)}
 		</div>
 	)
 }
