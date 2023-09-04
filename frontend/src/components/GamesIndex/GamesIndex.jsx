@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./GamesIndex.css";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchGames } from "../../store/games";
 import GameIndexItem from "../GameIndexItem/GameIndexItem";
 import jwtFetch from "../../store/jwt";
+// import axios from "axios";
 
 
 function GamesIndex() {
@@ -12,9 +11,13 @@ function GamesIndex() {
   const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
   const [pageButton, setPageButton] = useState(false);
+  const [genre, setGenre] = useState("");
+  const [year, setYear] = useState("");
+  const [wishlist, setWishlist] = useState(false);
+  const [library, setLibrary] = useState(false);
+
 
   const handleSubmit = (e) => {
-    //adding the fetch method here for now, will add to redux later
     e.preventDefault();
     jwtFetch(`/api/igdb/search/${search}`)
       .then((res) => res.json())
@@ -63,8 +66,33 @@ function GamesIndex() {
                 </span>
               </div>
           { dropdown && (
-            <div className="dropdown">
-              not yet
+            <div className="advanced-dropdown">
+              <div className="advanced-dropdown-content">
+                <label className="genre"> 
+                  <select className="genre-select" onChange={(e) => setGenre(e.target.value)}>
+                    <option value="">Genre</option>
+                    <option value="4">Action</option>
+                    <option value="5">Adventure</option>
+                    <option value="7">Puzzle</option>
+                    <option value="8">Platform</option>
+                    <option value="9">Racing</option>
+                    <option value="10">Role-playing (RPG)</option>
+                    <option value="11">Shooter</option>
+                  </select>
+                </label>
+                <label className="year">
+                  <input type="text" className="year-input" placeholder="Year" onChange={(e) => setYear(e.target.value)}/>
+                </label>
+                <label className="wishlist">
+                  <input type="checkbox" className="wishlist-checkbox" onClick={() => setWishlist(!wishlist)}/>
+                  <span className="wishlist-span">Wishlist</span>
+                </label>
+                <label className="library">
+                  <input type="checkbox" className="library-checkbox" onClick={() => setLibrary(!library)}/>
+                  <span className="library-span">Library</span>
+                </label>
+
+              </div>
             </div>)}
         </form>
         <ul className="games-index">
