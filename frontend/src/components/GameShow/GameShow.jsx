@@ -6,6 +6,9 @@ import jwtFetch from "../../store/jwt";
 import "./GameShow.css";
 import AddButton from "../../assets/images/add-to-library.svg";
 import Wishlist from "../../assets/images/wishlist.svg";
+import { useDispatch, useSelector } from 'react-redux';
+import { addOwnedGamesItem } from "../../store/ownedGames";
+import { addWishlistItem } from "../../store/wishlist";
 
 const GameShow = () => {
     const { id } = useParams();
@@ -14,7 +17,8 @@ const GameShow = () => {
     const [cover, setCover] = useState("");
     const [background, setBackground] = useState("");
     const [screenshots, setScreenshots] = useState([]);
-
+	const dispatch = useDispatch();
+	const user = useSelector(state => state.user);
     const parseImages = (url, type) => {
         if (!url) {
           return defaultImage;
@@ -31,11 +35,32 @@ const GameShow = () => {
         }
     };
 
+	const handleAddToGamesList = e => {
+		const gameData = {
+			gameId: game?.id,
+			name: game?.name,
+			coverUrl: game?.cover.url,
+			releaseYear: parseDate(game?.first_release_date)
+		}
+		dispatch(addOwnedGamesItem(user.id, gameData));
+	}
+
+	const handleAddtoWishlist = e => {
+		const gameData = {
+			gameId: game?.id,
+			name: game?.name,
+			coverUrl: game?.cover.url,
+			releaseYear: parseDate(game?.first_release_date)
+		}
+		dispatch(addWishlistItem(user.id, gameData));
+	}
+
+
     useEffect(() => {
         jwtFetch(`/api/igdb/${id}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data[0]);
+                // console.log(data[0]);
                 setGame(data[0]);
                 setCover(parseImages(data[0].cover?.url, "t_cover_big"));
                 if (data[0].screenshots) {
@@ -74,9 +99,9 @@ const GameShow = () => {
                             </p>
                             <p className="game-description">{game.summary}</p>
                             <div className="buttons">
-                                <img src={AddButton} alt="" />
+                                <img src={AddButton} alt="" className="owned-game-button" onClick={handleAddToGamesList}/>
 
-                                <img src={Wishlist} alt="" />
+                                <img src={Wishlist} alt="" className="wishlist-button" onClick={handleAddtoWishlist}/>
                             </div>
                         </div>
                     </div>

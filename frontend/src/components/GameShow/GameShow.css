@@ -70,3 +70,13 @@
     object-fit: cover;
     border-radius: 3px;
 }
+
+.owned-game-button,
+.wishlist-button {
+	cursor: pointer;
+}
+
+.owned-game-button:hover, 
+.wishlist-button:hover {
+	background-color: lightgray;
+}

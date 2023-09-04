@@ -174,7 +174,8 @@ router.post('/:userId/ownedGames', async (req, res) => {
 		const { userId } = req.params;
 		const user = await User.findById(userId);
 		const { gameData } = req.body;
-
+		console.log(userId)
+		console.log(gameData)
 		// We can't do .includes with the object because the mongoDB _id isn't just
 		// a string. It looks something like " _id: new ObjectId("5f9a3b3b1c9d440000d1c9d4")"
 		// Instead, find the game by the gameId.

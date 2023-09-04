@@ -17,7 +17,7 @@ const removeOwnedGamesItem = (gameId) => ({
 export const addOwnedGamesItem = (userId, gameData) => async (dispatch) => {
   const res = await jwtFetch(`/api/users/${userId}/ownedGames`, {
     method: "POST",
-    body: JSON.stringify(gameData),
+    body: JSON.stringify({ gameData }),
   });
   const ownedGamesItem = await res.json();
   return dispatch(receiveOwnedGamesItem(ownedGamesItem));
