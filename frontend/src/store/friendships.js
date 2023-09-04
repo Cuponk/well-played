@@ -41,9 +41,9 @@ const acceptFriendRequest = friendship => ({
 })
 
 // Remove friendship
-const removeFriendship = friendship => ({
+const removeFriendship = friendshipId => ({
 	type: REMOVE_FRIENDSHIP,
-	friendship
+	friendshipId
 })
 
 export const fetchOtherUsers = userId => async dispatch => {
@@ -109,8 +109,9 @@ export const deleteAcceptedFriendship = (senderId, otherUserId) => async dispatc
 		method: 'DELETE',
 		body: JSON.stringify({ otherUserId })
 	})
-	const friendship = await res.json();
-	dispatch(removeFriendship(friendship));
+	if (res.ok) {
+		dispatch(removeFriendship(otherUserId));
+	}
 }
 
 const FriendshipsReducer = (state = {}, action) => {
