@@ -122,7 +122,6 @@ router.get('/:userId/otherUsers', async (req, res) => {
 		// Find friendships with current user as sender or receiver.
 		const sentFriendships = await Friendship.find({ sender: userId });
 		const receivedFriendships = await Friendship.find({ receiver: userId });
-
 		// Get list of user ids for each list of friendships and combine them.
 		const sentToUserIds = sentFriendships.map(f => f.receiver);
 		const receivedFromUserIds = receivedFriendships.map(f => f.sender);
@@ -131,10 +130,10 @@ router.get('/:userId/otherUsers', async (req, res) => {
 		// Find users that don't have any sort of friendship with the current user.
 		const users = await User.find({
 			_id: { $nin: friendshipUserIds }
-		});
+		}).select('_id username');
 		return res.json(users);
-	} catch (err) {
-		console.log(err);
+	} catch (error) {
+		console.log(error);
 		return res.json([]);
 	}
 })

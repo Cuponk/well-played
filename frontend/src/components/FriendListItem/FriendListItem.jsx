@@ -1,47 +1,66 @@
-import { useEffect, useState } from 'react';
 import './FriendListItem.css';
 import { useDispatch, useSelector } from 'react-redux';
 import * as friendshipActions from '../../store/friendships';
 
 const FriendListItem = ({ user, friendship = false, status = '' }) => {
 	const dispatch = useDispatch();
-	const [acceptedFriendship, setStatus] = useState(friendship);
+	const currentUser = useSelector(state => state.user);
 
 	const removeFriend = e => {
 		e.preventDefault();
-		dispatch(friendshipActions.deleteAcceptedFriendship(user._id));
+		dispatch(friendshipActions.deleteAcceptedFriendship(user._id, currentUser.id));
+	}
+
+	const acceptFriendRequest = e => {
+		e.preventDefault();
+		dispatch(friendshipActions.acceptFriendship(currentUser.id, user.sender._id));
+	}
+
+	const declineFriendRequest = e => {
+		e.preventDefault();
+		dispatch(friendshipActions.deletePendingFriendship(currentUser.id, user.sender._id));
+	}
+
+	const cancelFriendRequest = e => {
+		e.preventDefault();
+		dispatch(friendshipActions.deletePendingFriendship(currentUser.id, user.receiver._id));
+	}
+
+	const sendFriendRequest = e => {
+		e.preventDefault();
+		dispatch(friendshipActions.requestFriendship(user._id));
 	}
 
 	return (
 		<div className='friend-item-container'>
 			{friendship && (
 				<>
-					<h4>{user.username}</h4>
+					<p>{user.username}</p>
 					<button className='negative-friend-button' onClick={removeFriend}>Remove</button>
 				</>
 			)}
 			{!friendship && status === 'request' && (
 				<>
-					<h4>{user.sender.username}</h4>
+					<p>{user.sender.username}</p>
 					<div className='friendButtons'>
-						<button className='accept-friend-button'>Accept</button>
-						<button className='negative-friend-button'>Decline</button>
+						<button className='accept-friend-button' onClick={acceptFriendRequest}>Accept</button>
+						<button className='negative-friend-button' onClick={declineFriendRequest}>Decline</button>
 					</div>
 				</>
 			)}
 			{!friendship && status === 'pending' && (
 				<>
-					<h4>{user.receiver.username}</h4>
+					<p>{user.receiver.username}</p>
 					<div className='friendButtons'>
-						<button className='negative-friend-button'>Cancel</button>
+						<button className='negative-friend-button' onClick={cancelFriendRequest}>Cancel</button>
 					</div>
 				</>
 			)}
 			{!friendship && status === 'none' && (
 				<>
-					<h4>{user.username}</h4>
+					<p>{user.username}</p>
 					<div className='friendButtons'>
-						<button className='accept-friend-button'>Request</button>
+						<button className='accept-friend-button' onClick={sendFriendRequest}>Request</button>
 					</div>
 				</>
 			)}
@@ -50,20 +69,3 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 }
 
 export default FriendListItem;
-
-
-/*
-Friends are accepted
-- accepted true
-- remove friend
-
-New friend requests
-- decline
-
-Pending requests
-- cancel request
-
-Search for friends
-- add friend
-
-*/

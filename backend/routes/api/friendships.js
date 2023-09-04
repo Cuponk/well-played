@@ -118,44 +118,45 @@ router.post('/:userId/acceptFriendship', async (req, res) => {
 
 // DELETE Cancel a pending friendship
 router.delete('/:userId/deletePendingFriendship', async (req, res) => {
-  const { userId } = req.params;
-  const { otherUserId } = req.body;
-  console.log(userId);
-  console.log(otherUserId);
-  try {
-	const relation = await Friendship.find({
-		sender: userId,
-		receiver: otherUserId,
-		accepted: false
-	})
-	console.log('before delete: ', relation);
-    const friendship = await Friendship.findOneAndDelete({
-      sender: userId,
-      receiver: otherUserId,
-	  accepted: false
-    });
-	console.log('Deleted friendship: ', friendship);
-	return res.json(friendship)
-  } catch (error) {
-    console.log(error);
-    return res.json({ message: 'Error canceling pending friendship' });
-  }
-});
-
-// DELETE Delete a friendship
-router.delete('/:userId/deleteAcceptedFriendship', async (req, res) => {
+  // We'll check for friendships in both directions. Works for friend requests
+  // and pending requests.
   const { userId } = req.params;
   const { otherUserId } = req.body;
   try {
     const senderFriendships = await Friendship.findOneAndDelete({
       sender: userId,
-      receiver: otherUserId
+      receiver: otherUserId,
+      accepted: false
     });
     const receiverFriendships = await Friendship.findOneAndDelete({
       sender: otherUserId,
-      receiver: userId
+      receiver: userId,
+      accepted: false
     });
-    console.log(senderFriendships, receiverFriendships)
+    const friendship = senderFriendships || receiverFriendships;
+    return res.json(friendship);
+  } catch (error) {
+    console.log(error);
+    return res.json({ message: 'Error canceling pending friendship ' });
+  }
+});
+
+// DELETE Delete a friendship
+router.delete('/:userId/deleteAcceptedFriendship', async (req, res) => {
+  // We'll check current user as sender and receiver.
+  const { userId } = req.params;
+  const { otherUserId } = req.body;
+  try {
+    const senderFriendships = await Friendship.findOneAndDelete({
+      sender: userId,
+      receiver: otherUserId,
+      accepted: true
+    });
+    const receiverFriendships = await Friendship.findOneAndDelete({
+      sender: otherUserId,
+      receiver: userId,
+      accepted: true
+    });
     const friendship = senderFriendships || receiverFriendships;
     const userOne = await User.findById(userId);
     const userTwo = await User.findById(otherUserId);

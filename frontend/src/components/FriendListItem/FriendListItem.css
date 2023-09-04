@@ -1,5 +1,5 @@
 .friend-item-container {
-	padding: 1rem;
+	padding: 0.5rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -7,6 +7,7 @@
 
 .friend-item-container button {
 	padding: 0 10px;
+	font-size: 1rem;
 }
 
 .negative-friend-button {

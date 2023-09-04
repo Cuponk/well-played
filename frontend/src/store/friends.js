@@ -1,4 +1,5 @@
 import { RECEIVE_CURRENT_USER } from "./session";
+import { ACCEPT_FRIEND_REQUEST, REMOVE_FRIENDSHIP } from "./friendships";
 
 const friendsReducer = (state = {}, action) => {
   switch (action.type) {
@@ -12,6 +13,12 @@ const friendsReducer = (state = {}, action) => {
         });
       }
       return newState;
+    case ACCEPT_FRIEND_REQUEST:
+      return { ...state, [action.friendship._id]: action.friendship };
+    case REMOVE_FRIENDSHIP:
+      const nextState = { ...state };
+      delete nextState[action.friendship._id];
+      return nextState;
     default:
       return state;
   }
