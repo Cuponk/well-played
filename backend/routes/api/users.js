@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Friendship = mongoose.model('Friendship');
 const passport = require('passport');
 const { loginUser, restoreUser } = require('../../config/passport');
 const { isProduction } = require('../../config/keys');
@@ -61,7 +62,7 @@ router.post('/login', validateLoginInput, async (req, res, next) => {
 		if (!user) {
 			const err = new Error('Invalid credentials');
 			err.statusCode = 400;
-			err.errors = { email: "Invalid credentials" };
+			err.errors = { username: "Invalid credentials" };
 			return next(err);
 		}
 		return res.json(await loginUser(user));
@@ -112,6 +113,30 @@ router.get('/', async function (req, res, next) {
 		return res.json([]);
 	}
 });
+
+// Get all other users not including the current user and the current user's friends
+router.get('/:userId/otherUsers', async (req, res) => {
+	try {
+		const { userId } = req.params;
+
+		// Find friendships with current user as sender or receiver.
+		const sentFriendships = await Friendship.find({ sender: userId });
+		const receivedFriendships = await Friendship.find({ receiver: userId });
+		// Get list of user ids for each list of friendships and combine them.
+		const sentToUserIds = sentFriendships.map(f => f.receiver);
+		const receivedFromUserIds = receivedFriendships.map(f => f.sender);
+		const friendshipUserIds = [...sentToUserIds, ...receivedFromUserIds, userId];
+
+		// Find users that don't have any sort of friendship with the current user.
+		const users = await User.find({
+			_id: { $nin: friendshipUserIds }
+		}).select('_id username').sort('username');
+		return res.json(users);
+	} catch (error) {
+		console.log(error);
+		return res.json([]);
+	}
+})
 
 // OWNED GAMES LIST
 // Get a user's owned games

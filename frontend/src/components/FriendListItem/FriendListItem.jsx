@@ -1,37 +1,69 @@
-import { useEffect, useState } from 'react';
 import './FriendListItem.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestFriendship, deletePendingFriendship } from '../../store/friendships';
+import * as friendshipActions from '../../store/friendships';
 
-const FriendListItem = ({ user }) => {
-	const currentUser = useSelector(state => state.session.user);
-	const friendship = useSelector(state => Object.values(state.friendships).find(friendship => 
-		friendship.sender === currentUser._id && friendship.receiver === user._id
-	));
-	const [status, setStatus] = useState(friendship?.accepted);
+const FriendListItem = ({ user, friendship = false, status = '' }) => {
 	const dispatch = useDispatch();
+	const currentUser = useSelector(state => state.user);
 
-	useEffect(() => {
-
-	}, [friendship])
-
-	const handleSubmit = e => {
+	const removeFriend = e => {
 		e.preventDefault();
-		// console.log('current user: ', currentUser._id)
-		// console.log('user id: ', user._id)
-		if (status) {
-			// dispatch(deletePendingFriendship(currentUser._id, user._id));
-			// setStatus(false);
-		} else {
-			dispatch(requestFriendship(currentUser._id, user._id));
-			setStatus(true);
-		}
+		dispatch(friendshipActions.deleteAcceptedFriendship(currentUser.id, user._id));
+	}
+
+	const acceptFriendRequest = e => {
+		e.preventDefault();
+		dispatch(friendshipActions.acceptFriendship(currentUser.id, user.sender._id));
+	}
+
+	const declineFriendRequest = e => {
+		e.preventDefault();
+		dispatch(friendshipActions.deletePendingFriendship(currentUser.id, user.sender._id));
+	}
+
+	const cancelFriendRequest = e => {
+		e.preventDefault();
+		dispatch(friendshipActions.deletePendingFriendship(currentUser.id, user.receiver._id));
+	}
+
+	const sendFriendRequest = e => {
+		e.preventDefault();
+		dispatch(friendshipActions.requestFriendship(currentUser.id, user._id));
 	}
 
 	return (
 		<div className='friend-item-container'>
-			<h4>{user.username}</h4>
-			{/* <button className='add-friend-button' onClick={handleSubmit}>{status ? 'pending' : 'add friend'}</button> */}
+			{friendship && (
+				<>
+					<p>{user.username}</p>
+					<button className='negative-friend-button' onClick={removeFriend}>Remove</button>
+				</>
+			)}
+			{!friendship && status === 'request' && (
+				<>
+					<p>{user.sender.username}</p>
+					<div className='friend-buttons double-button'>
+						<button className='accept-friend-button' onClick={acceptFriendRequest}>Accept</button>
+						<button className='negative-friend-button' onClick={declineFriendRequest}>Decline</button>
+					</div>
+				</>
+			)}
+			{!friendship && status === 'pending' && (
+				<>
+					<p>{user.receiver.username}</p>
+					<div className='friend-buttons'>
+						<button className='negative-friend-button' onClick={cancelFriendRequest}>Cancel</button>
+					</div>
+				</>
+			)}
+			{!friendship && status === 'none' && (
+				<>
+					<p>{user.username}</p>
+					<div className='friend-buttons'>
+						<button className='accept-friend-button' onClick={sendFriendRequest}>Request</button>
+					</div>
+				</>
+			)}
 		</div>
 	)
 }

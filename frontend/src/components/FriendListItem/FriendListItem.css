@@ -1,9 +1,28 @@
-
 .friend-item-container {
-	padding: 1rem;
+	padding: 0.5rem;
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
-/* .add-friend-button {
-	
-} */
+.friend-item-container button {
+	padding: 0 10px;
+	font-size: 1rem;
+}
+
+.negative-friend-button {
+	background-color: red;
+	border-color: red;
+	color: var(--theme-white);
+}
+
+.negative-friend-button:hover {
+	background-color: rgb(214, 0, 0);
+	border-color: rgb(214, 0, 0);
+	color: var(--theme-white);
+}
+
+.double-button {
+	display: flex;
+	gap: 5px;
+}
