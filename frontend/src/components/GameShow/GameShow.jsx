@@ -7,8 +7,8 @@ import "./GameShow.css";
 import AddButton from "../../assets/images/add-to-library.svg";
 import Wishlist from "../../assets/images/wishlist.svg";
 import { useDispatch, useSelector } from 'react-redux';
-import { addOwnedGamesItem } from "../../store/ownedGames";
-import { addWishlistItem } from "../../store/wishlist";
+import { addOwnedGamesItem, deleteOwnedGamesItem } from "../../store/ownedGames";
+import { addWishlistItem, deleteWishlistItem } from "../../store/wishlist";
 
 const GameShow = () => {
     const { id } = useParams();
@@ -19,6 +19,9 @@ const GameShow = () => {
     const [screenshots, setScreenshots] = useState([]);
 	const dispatch = useDispatch();
 	const user = useSelector(state => state.user);
+	const ownedGames = useSelector(state => state.ownedGames);
+	const wishlist = useSelector(state => state.wishlist);
+
     const parseImages = (url, type) => {
         if (!url) {
           return defaultImage;
@@ -35,24 +38,32 @@ const GameShow = () => {
         }
     };
 
-	const handleAddToGamesList = e => {
+	const handleGamesList = e => {
 		const gameData = {
 			gameId: game?.id,
 			name: game?.name,
 			coverUrl: game?.cover.url,
 			releaseYear: parseDate(game?.first_release_date)
 		}
-		dispatch(addOwnedGamesItem(user.id, gameData));
+		if (game?.id.toString() in ownedGames) {
+			dispatch(deleteOwnedGamesItem(user.id, game.id))
+		} else {
+			dispatch(addOwnedGamesItem(user.id, gameData));
+		}
 	}
 
-	const handleAddtoWishlist = e => {
+	const handleWishlist = e => {
 		const gameData = {
 			gameId: game?.id,
 			name: game?.name,
 			coverUrl: game?.cover.url,
 			releaseYear: parseDate(game?.first_release_date)
 		}
-		dispatch(addWishlistItem(user.id, gameData));
+		if (game?.id.toString() in wishlist) {
+			dispatch(deleteWishlistItem(user.id, game.id));
+		} else {
+			dispatch(addWishlistItem(user.id, gameData));
+		}
 	}
 
 
@@ -99,9 +110,9 @@ const GameShow = () => {
                             </p>
                             <p className="game-description">{game.summary}</p>
                             <div className="buttons">
-                                <img src={AddButton} alt="" className="owned-game-button" onClick={handleAddToGamesList}/>
+                                <img src={AddButton} alt="" className="owned-game-button" onClick={handleGamesList}/>
 
-                                <img src={Wishlist} alt="" className="wishlist-button" onClick={handleAddtoWishlist}/>
+                                <img src={Wishlist} alt="" className="wishlist-button" onClick={handleWishlist}/>
                             </div>
                         </div>
                     </div>
