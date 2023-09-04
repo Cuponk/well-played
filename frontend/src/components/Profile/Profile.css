@@ -3,7 +3,7 @@
 	height: 100%;
 	width: 100%;
 
-	> div {
+	>div {
 		padding: 0.75rem;
 	}
 }
@@ -20,7 +20,7 @@
 	flex-wrap: wrap;
 	/* border: 1px solid black; */
 
-	> div {
+	>div {
 		margin: 0.75rem;
 	}
 }
@@ -28,8 +28,8 @@
 .profile-page-friends {
 	display: flex;
 	flex-direction: column;
-	width: 20%;
-	background-color: var(--theme-purple);
+	width: 33%;
+	background-color: var(--theme-gray);
 }
 
 .empty-game-link {

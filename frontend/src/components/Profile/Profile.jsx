@@ -4,13 +4,14 @@ import { NavLink } from "react-router-dom";
 import GameListItem from '../GameListItem/GameListItem';
 import FriendListItem from '../FriendListItem/FriendListItem';
 import './Profile.css';
+import FriendsList from '../FriendsList/FriendsList';
 
 function Profile() {
 	const dispatch = useDispatch();
-	const currentUser = useSelector(state => state.user);
+	const user = useSelector(state => state.user);
 	const wishlist = Object.values(useSelector(state => state.wishlist));
 	const ownedGames = Object.values(useSelector(state => state.ownedGames));
-	const friends = useSelector(state => state.friends);
+	const friends = Object.values(useSelector(state => state.friends));
 
 	const handleGamesList = list => {
 		const games = list.map(game => {
@@ -19,18 +20,18 @@ function Profile() {
 		return games;
 	}
 
-	const handleFriends = friendsList => {
-		const allUsers = Object.values(friends).map(friend => {
-			if (currentUser._id !== friend._id) {
-				return <FriendListItem key={friend._id} user={friend} />
-			}
-		})
-		return allUsers;
-	}
+	// const handleFriends = friendsList => {
+	// 	const allUsers = Object.values(friends).map(friend => {
+	// 		if (currentUser._id !== friend._id) {
+	// 			return <FriendListItem key={friend._id} user={friend} />
+	// 		}
+	// 	})
+	// 	return allUsers;
+	// }
 
 	return (
 		<>
-			<h2>Welcome, {currentUser.username}</h2>
+			<h2>Welcome, {user.username}</h2>
 			<div className='profile-page-container'>
 				<div className='profile-page-lists'>
 					<h3>Wishlist</h3>
@@ -54,8 +55,7 @@ function Profile() {
 					</div>
 				</div>
 				<div className='profile-page-friends'>
-					<h3>Friends</h3>
-					{handleFriends(friends)}
+					<FriendsList />
 				</div>
 			</div>
 		</>

@@ -1,7 +1,7 @@
 import jwtFetch from './jwt';
 
 const RECEIVE_USERS = 'RECEIVE_USERS';
-// const RECEIVE_FRIENDS = 'RECEIVE_FRIENDS';
+const RECEIVE_FRIEND_REQUESTS = 'RECEIVE_FRIEND_REQUESTS';
 const RECEIVE_PENDING_FRIENDS = 'RECEIVE_PENDING_FRIENDS';
 
 const SEND_FRIEND_REQUEST = 'SEND_FRIEND_REQUEST';
@@ -15,11 +15,11 @@ const receiveUsers = users => ({
 	users
 })
 
-// Receive all friendships for user
-// const receiveFriends = friendships => ({
-// 	type: RECEIVE_FRIENDS,
-// 	friendships
-// })
+// Receive friends request, users is the receiver.
+const receiveFriendRequests = friendRequests => ({
+	type: RECEIVE_FRIEND_REQUESTS,
+	friendRequests
+})
 
 // Receive all pending friendships
 const receivePendingFriends = friendships => ({
@@ -40,7 +40,7 @@ const acceptFriendRequest = friendship => ({
 	friendship
 })
 
-// Remove friendship 
+// Remove friendship
 const removeFriendship = friendship => ({
 	type: REMOVE_FRIENDSHIP,
 	friendship
@@ -55,17 +55,17 @@ export const fetchUsers = () => async dispatch => {
 	}
 }
 
-// const fetchFriends = userId => async dispatch => {
-// 	const res = await jwtFetch(`/api/${userId}/friends`)
+export const fetchFriendRequests = userId => async dispatch => {
+	const res = await jwtFetch(`/api/friendships/${userId}/friendRequests`)
 
-// 	if (res.ok) {
-// 		const friendships = await res.json();
-// 		dispatch(receiveFriends(friendships));
-// 	}
-// }
+	if (res.ok) {
+		const friendships = await res.json();
+		dispatch(receiveFriendRequests(friendships));
+	}
+}
 
 export const fetchPendingFriends = userId => async dispatch => {
-	const res = await jwtFetch(`/api/friendships${userId}/pendingRequests`);
+	const res = await jwtFetch(`/api/friendships/${userId}/pendingRequests`);
 
 	if (res.ok) {
 		const pendingFriendships = await res.json();
@@ -112,15 +112,17 @@ export const deleteAcceptedFriendship = (senderId, receiverId) => async dispatch
 const FriendshipsReducer = (state = {}, action) => {
 	switch (action.type) {
 		case RECEIVE_USERS:
-			return {...state, users: action.users};
+			return { ...state, users: action.users };
+		case RECEIVE_FRIEND_REQUESTS:
+			return { ...state, friendRequests: action.friendRequests };
 		case RECEIVE_PENDING_FRIENDS:
-			return {...state, friendships: action.friendships};
+			return { ...state, friendships: action.friendships };
 		case SEND_FRIEND_REQUEST:
-			return {...state, [action.friendship._id]: action.friendship};
+			return { ...state, [action.friendship._id]: action.friendship };
 		case ACCEPT_FRIEND_REQUEST:
-			return {...state, [action.friendship._id]: action.friendship};
+			return { ...state, [action.friendship._id]: action.friendship };
 		case REMOVE_FRIENDSHIP:
-			return {...state, [action.friendship._id]: action.friendship};
+			return { ...state, [action.friendship._id]: action.friendship };
 		default:
 			return state;
 	}
