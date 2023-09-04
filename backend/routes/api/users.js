@@ -130,7 +130,7 @@ router.get('/:userId/otherUsers', async (req, res) => {
 		// Find users that don't have any sort of friendship with the current user.
 		const users = await User.find({
 			_id: { $nin: friendshipUserIds }
-		}).select('_id username');
+		}).select('_id username').sort('username');
 		return res.json(users);
 	} catch (error) {
 		console.log(error);

@@ -8,7 +8,7 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 
 	const removeFriend = e => {
 		e.preventDefault();
-		dispatch(friendshipActions.deleteAcceptedFriendship(user._id, currentUser.id));
+		dispatch(friendshipActions.deleteAcceptedFriendship(currentUser.id, user._id));
 	}
 
 	const acceptFriendRequest = e => {
@@ -28,7 +28,7 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 
 	const sendFriendRequest = e => {
 		e.preventDefault();
-		dispatch(friendshipActions.requestFriendship(user._id));
+		dispatch(friendshipActions.requestFriendship(currentUser.id, user._id));
 	}
 
 	return (

@@ -146,6 +146,7 @@ router.delete('/:userId/deleteAcceptedFriendship', async (req, res) => {
   // We'll check current user as sender and receiver.
   const { userId } = req.params;
   const { otherUserId } = req.body;
+  console.log(userId, otherUserId)
   try {
     const senderFriendships = await Friendship.findOneAndDelete({
       sender: userId,

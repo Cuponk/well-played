@@ -16,7 +16,7 @@ export default function FriendsList() {
     dispatch(friendshipActions.fetchFriendRequests(currentUser.id));
     dispatch(friendshipActions.fetchPendingRequests(currentUser.id));
     dispatch(friendshipActions.fetchOtherUsers(currentUser.id));
-  }, [dispatch])
+  }, [dispatch, currentUser.id])
 
   return (
     <div className="friends-section">
