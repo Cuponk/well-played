@@ -21,3 +21,8 @@
 	border-color: rgb(214, 0, 0);
 	color: var(--theme-white);
 }
+
+.double-button {
+	display: flex;
+	gap: 5px;
+}

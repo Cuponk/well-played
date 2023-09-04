@@ -42,7 +42,7 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 			{!friendship && status === 'request' && (
 				<>
 					<p>{user.sender.username}</p>
-					<div className='friendButtons'>
+					<div className='friend-buttons double-button'>
 						<button className='accept-friend-button' onClick={acceptFriendRequest}>Accept</button>
 						<button className='negative-friend-button' onClick={declineFriendRequest}>Decline</button>
 					</div>
@@ -51,7 +51,7 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 			{!friendship && status === 'pending' && (
 				<>
 					<p>{user.receiver.username}</p>
-					<div className='friendButtons'>
+					<div className='friend-buttons'>
 						<button className='negative-friend-button' onClick={cancelFriendRequest}>Cancel</button>
 					</div>
 				</>
@@ -59,7 +59,7 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 			{!friendship && status === 'none' && (
 				<>
 					<p>{user.username}</p>
-					<div className='friendButtons'>
+					<div className='friend-buttons'>
 						<button className='accept-friend-button' onClick={sendFriendRequest}>Request</button>
 					</div>
 				</>
