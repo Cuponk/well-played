@@ -106,7 +106,19 @@ router.get("/search/:query/:page", async (req, res) => {
 
 router.post("/search/advanced/", async (req, res) => {
     try {
-        req.body.genre ||= '';
+        if (req.body.genre === '') {
+            const response = await axios("https://api.igdb.com/v4/games", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Client-ID": process.env.CLIENT_ID,
+                    Authorization: `Bearer ${process.env.AUTH_TOKEN}`,
+                },
+                data: `fields name,involved_companies.company.name,cover.url,genres.name,first_release_date; search "${req.body.search}"; where parent_game=null; limit 20;`,
+            });
+            return res.json(response.data);
+        }
+        
         const response = await axios("https://api.igdb.com/v4/games", {
             method: "POST",
             headers: {
