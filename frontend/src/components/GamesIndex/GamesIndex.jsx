@@ -19,9 +19,22 @@ function GamesIndex() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    jwtFetch(`/api/igdb/search/${search}`)
+    const payload = {
+      search: search,
+      genre: genre,
+      year: parseYear(year),
+    }
+    console.log(payload); 
+    jwtFetch(`/api/igdb/search/advanced/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
       .then((res) => res.json())
       .then((fin) => {
+        console.log(fin)
         setGames(fin);
       })
     setPageButton(true);
@@ -42,6 +55,16 @@ function GamesIndex() {
       .then((fin) => {
         setGames([...games, ...fin]);
       })
+  }
+
+  const parseYear = (year) => {
+    if (!year) {
+      return ['', ''];
+    }
+    const start = new Date(year, 0, 1).getTime(); 
+    const end = new Date(year, 11, 31).getTime(); 
+
+    return [start, end];
   }
 
   return (
@@ -69,19 +92,27 @@ function GamesIndex() {
             <div className="advanced-dropdown">
               <div className="advanced-dropdown-content">
                 <label className="genre"> 
-                  <select className="genre-select" onChange={(e) => setGenre(e.target.value)}>
+                  <select className="genre-select" onChange={(e) => setGenre(e.target.value)} value={genre}>
                     <option value="">Genre</option>
-                    <option value="4">Action</option>
-                    <option value="5">Adventure</option>
-                    <option value="7">Puzzle</option>
+                    <option value="4">Fighting</option>
+                    <option value="5">Shooter</option>
+                    <option value="7">Music</option>
                     <option value="8">Platform</option>
-                    <option value="9">Racing</option>
-                    <option value="10">Role-playing (RPG)</option>
-                    <option value="11">Shooter</option>
+                    <option value="9">Puzzle</option>
+                    <option value="10">Racing</option>
+                    <option value="12">Role-playing (RPG)</option>
+                    <option value="14">Sports</option>
+                    <option value="15">Strategy</option>
+                    <option value="25">Hack and slash/Beat 'em up</option>
+                    <option value="31">Adventure</option>
+                    <option value="32">Indie</option>
+                    <option value="34">Visual Novel</option>
+                    <option value="33">Arcade</option>
+                    <option value="36">MOBA</option>
                   </select>
                 </label>
                 <label className="year">
-                  <input type="text" className="year-input" placeholder="Year" onChange={(e) => setYear(e.target.value)}/>
+                  <input type="text" className="year-input" placeholder="Year" onChange={(e) => setYear(e.target.value)} value={year}/>
                 </label>
                 <label className="wishlist">
                   <input type="checkbox" className="wishlist-checkbox" onClick={() => setWishlist(!wishlist)}/>
