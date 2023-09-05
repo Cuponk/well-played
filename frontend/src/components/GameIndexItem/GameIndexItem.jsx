@@ -37,7 +37,7 @@ function GameIndexItem({ game, id }) {
     <div className="game-item-all">
       <button className="game-item">
         <div className="game-content">
-          <img src={parseImages(game.cover?.url, 't_cover_small')} className="index-cover" onClick={handleRedirect}/>
+          <img src={parseImages(game.cover?.url, 't_1080p')} className="index-cover" onClick={handleRedirect}/>
           <div className="game-readable">
             <div className="game-details">
               <p>{game.name}</p>
