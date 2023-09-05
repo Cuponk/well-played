@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import Wishlist from "../../assets/images/wishlist.svg";
+import wishlistButton from "../../assets/images/wishlist.svg";
+import FilledWishlistButton from "../../assets/images/filled-heart.svg";
 import { addWishlistItem, deleteWishlistItem } from "../../store/wishlist";
 import './WishlistButton.css';
 import { deleteOwnedGamesItem } from "../../store/ownedGames";
@@ -28,9 +29,16 @@ const WishlistButton = ({ gameData }) => {
 			dispatch(addWishlistItem(currentUser.id, gameData));
 		}
 	}
-	
+
+	const iconButton = () => {
+		if (gameData.gameId.toString() in wishlist) {
+			return FilledWishlistButton;
+		} else {
+			return wishlistButton;
+		}
+	}
 	return (
-		<img src={Wishlist} alt='' className="wishlist-button" onClick={handleWishlist}/>
+		<img src={iconButton()} alt='' className="wishlist-button" onClick={handleWishlist}/>
 	)
 }
 

@@ -1,7 +1,5 @@
 import "./GameIndexItem.css";
 import defaultImage from "../../assets/images/drawing.jpg";
-import { ReactComponent as LibraryAdd } from "../../assets/images/add-to-library.svg";
-import { ReactComponent as Wishlist } from "../../assets/images/wishlist.svg";
 import OwnedGamesButton from "../OwnedGamesButton/OwnedGamesButton";
 import WishlistButton from "../WishlistButton/WishlistButton";
 

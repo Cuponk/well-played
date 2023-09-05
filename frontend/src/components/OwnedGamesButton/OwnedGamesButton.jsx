@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import AddButton from "../../assets/images/add-to-library.svg";
+import LibraryButton from "../../assets/images/add-to-library.svg";
+import FilledLibraryButton from "../../assets/images/filled-library.svg";
 import { addOwnedGamesItem, deleteOwnedGamesItem } from "../../store/ownedGames";
 import { deleteWishlistItem } from "../../store/wishlist";
 import './OwnedGamesButton.css';
@@ -9,7 +10,7 @@ const OwnedGamesButton = ({ gameData }) => {
 	const dispatch = useDispatch();
 	const currentUser = useSelector(state => state.user);
 	const ownedGames = useSelector(state => state.ownedGames);
-	const wishlist = useSelector(state => state.wishlist);
+	const wishlist = useSelector(state => state.wishlist) ;
 
 	useEffect(() => {
 
@@ -29,8 +30,16 @@ const OwnedGamesButton = ({ gameData }) => {
 		}
 	}
 
+	const iconButton = () => {
+		if (gameData.gameId.toString() in ownedGames) {
+			return FilledLibraryButton;
+		} else {
+			return LibraryButton;
+		}
+	}
+
 	return (
-		<img src={AddButton} alt='' className='owned-game-button' onClick={handleGamesList}/>
+		<img src={iconButton()} alt='' className='owned-game-button' onClick={handleGamesList}/>
 	)
 }
 
