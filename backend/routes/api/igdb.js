@@ -79,5 +79,30 @@ router.get("/search/:query", async (req, res) => {
     }
 });
 
+router.get("/search/:query/:page", async (req, res) => {
+    try {
+        const response = await axios("https://api.igdb.com/v4/games", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Client-ID": process.env.CLIENT_ID,
+                Authorization: `Bearer ${process.env.AUTH_TOKEN}`,
+            },
+            data: `fields name,involved_companies.company.name,cover.url,genres.name,first_release_date; search "${req.params.query}"; where parent_game=null; limit 20; offset ${req.params.page * 20 + 1};`,
+        });
+        return res.json(response.data);
+    } catch (error) {
+        console.error(error);
+        if (error.response) {
+            return res
+                .status(error.response.status)
+                .json({ error: "Failed to fetch data" });
+        } else {
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+});
+
+
 
 module.exports = router;

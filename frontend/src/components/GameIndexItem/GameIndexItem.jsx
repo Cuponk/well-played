@@ -27,28 +27,33 @@ function GameIndexItem({ game, id }) {
   }
 
   const gameData = {
-	gameId: game?.id,
-	name: game?.name,
-	coverUrl: parseImages(game?.cover?.url, "t_1080p"),
-	releaseYear: parseDate(game?.first_release_date)
-}
+    gameId: game?.id,
+    name: game?.name,
+    coverUrl: parseImages(game?.cover?.url, "t_1080p"),
+    releaseYear: parseDate(game?.first_release_date)
+  }
 
   return (
-    <button className="game-item">
-      <img src={parseImages(game.cover?.url, 't_cover_small')} className="index-cover" onClick={handleRedirect} />
-      <div className="game-readable">
-        <div className="game-details">
-          <p>{game.name}</p>
-          <p>{game.involved_companies ? game.involved_companies[0].company.name : 'No Company Found'}</p>
-          <p>{game.genres ? game.genres[0].name : ''}</p>
-          <p>{parseDate(game.first_release_date)}</p>
+    <div className="game-item-all">
+      <button className="game-item">
+        <div className="game-content">
+          <img src={parseImages(game.cover?.url, 't_cover_small')} className="index-cover" onClick={handleRedirect}/>
+          <div className="game-readable">
+            <div className="game-details">
+              <p>{game.name}</p>
+              <p>{game.involved_companies ? game.involved_companies[0].company.name : 'No Company Found'}</p>
+              <p>{game.genres ? game.genres[0].name : ''}</p>
+              <p>{parseDate(game.first_release_date)}</p>
+            </div>
+          </div>
+            <div className="game-buttons">
+              <OwnedGamesButton gameData={gameData}/>
+              <WishlistButton gameData={gameData} />
+            </div>
         </div>
-        <div className="game-buttons">
-		  <OwnedGamesButton gameData={gameData}/>
-		  <WishlistButton gameData={gameData} />
-        </div>
-      </div>
-    </button>
+        <div className="game-border"/>
+      </button>
+    </div>
   )
 }
 
