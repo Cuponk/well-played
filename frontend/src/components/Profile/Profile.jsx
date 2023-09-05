@@ -18,6 +18,10 @@ function Profile() {
 		return games;
 	}
 
+	useEffect(() => {
+		
+	}, [wishlist, ownedGames])
+
 	return (
 		<>
 			<h2>Welcome, {user.username}</h2>

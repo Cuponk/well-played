@@ -1,0 +1,8 @@
+
+.wishlist-button {
+	cursor: pointer;
+}
+
+.wishlist-button:hover {
+	background-color: lightgray;
+}
