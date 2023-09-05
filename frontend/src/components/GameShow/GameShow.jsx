@@ -4,11 +4,8 @@ import defaultImage from "../../assets/images/drawing-large.png";
 import { useState, useEffect } from "react";
 import jwtFetch from "../../store/jwt";
 import "./GameShow.css";
-import AddButton from "../../assets/images/add-to-library.svg";
-import Wishlist from "../../assets/images/wishlist.svg";
-import { useDispatch, useSelector } from 'react-redux';
-import { addOwnedGamesItem, deleteOwnedGamesItem } from "../../store/ownedGames";
-import { addWishlistItem, deleteWishlistItem } from "../../store/wishlist";
+import OwnedGamesButton from "../OwnedGamesButton/OwnedGamesButton";
+import WishlistButton from "../WishlistButton/WishlistButton";
 
 const GameShow = () => {
     const { id } = useParams();
@@ -17,10 +14,6 @@ const GameShow = () => {
     const [cover, setCover] = useState("");
     const [background, setBackground] = useState("");
     const [screenshots, setScreenshots] = useState([]);
-	const dispatch = useDispatch();
-	const user = useSelector(state => state.user);
-	const ownedGames = useSelector(state => state.ownedGames);
-	const wishlist = useSelector(state => state.wishlist);
 
     const parseImages = (url, type) => {
         if (!url) {
@@ -38,34 +31,12 @@ const GameShow = () => {
         }
     };
 
-	const handleGamesList = e => {
-		const gameData = {
-			gameId: game?.id,
-			name: game?.name,
-			coverUrl: game?.cover.url,
-			releaseYear: parseDate(game?.first_release_date)
-		}
-		if (game?.id.toString() in ownedGames) {
-			dispatch(deleteOwnedGamesItem(user.id, game.id))
-		} else {
-			dispatch(addOwnedGamesItem(user.id, gameData));
-		}
+	const gameData = {
+		gameId: game?.id,
+		name: game?.name,
+		coverUrl: game?.cover?.url,
+		releaseYear: parseDate(game?.first_release_date)
 	}
-
-	const handleWishlist = e => {
-		const gameData = {
-			gameId: game?.id,
-			name: game?.name,
-			coverUrl: game?.cover.url,
-			releaseYear: parseDate(game?.first_release_date)
-		}
-		if (game?.id.toString() in wishlist) {
-			dispatch(deleteWishlistItem(user.id, game.id));
-		} else {
-			dispatch(addWishlistItem(user.id, gameData));
-		}
-	}
-
 
     useEffect(() => {
         jwtFetch(`/api/igdb/${id}`)
@@ -110,9 +81,8 @@ const GameShow = () => {
                             </p>
                             <p className="game-description">{game.summary}</p>
                             <div className="buttons">
-                                <img src={AddButton} alt="" className="owned-game-button" onClick={handleGamesList}/>
-
-                                <img src={Wishlist} alt="" className="wishlist-button" onClick={handleWishlist}/>
+								<OwnedGamesButton gameData={gameData}/>
+								<WishlistButton gameData={gameData} />
                             </div>
                         </div>
                     </div>
