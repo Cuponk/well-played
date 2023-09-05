@@ -2,6 +2,8 @@ import "./GameIndexItem.css";
 import defaultImage from "../../assets/images/drawing.jpg";
 import { ReactComponent as LibraryAdd } from "../../assets/images/add-to-library.svg";
 import { ReactComponent as Wishlist } from "../../assets/images/wishlist.svg";
+import OwnedGamesButton from "../OwnedGamesButton/OwnedGamesButton";
+import WishlistButton from "../WishlistButton/WishlistButton";
 
 function GameIndexItem({ game, id }) {
 
@@ -26,9 +28,16 @@ function GameIndexItem({ game, id }) {
     }
   }
 
+  const gameData = {
+	gameId: game?.id,
+	name: game?.name,
+	coverUrl: parseImages(game?.cover?.url, "t_1080p"),
+	releaseYear: parseDate(game?.first_release_date)
+}
+
   return (
-    <button onClick={handleRedirect} className="game-item">
-      <img src={parseImages(game.cover?.url, 't_cover_small')} className="index-cover" />
+    <button className="game-item">
+      <img src={parseImages(game.cover?.url, 't_cover_small')} className="index-cover" onClick={handleRedirect} />
       <div className="game-readable">
         <div className="game-details">
           <p>{game.name}</p>
@@ -37,8 +46,8 @@ function GameIndexItem({ game, id }) {
           <p>{parseDate(game.first_release_date)}</p>
         </div>
         <div className="game-buttons">
-          <LibraryAdd className="game-button" />
-          <Wishlist className="game-button" />
+		  <OwnedGamesButton gameData={gameData}/>
+		  <WishlistButton gameData={gameData} />
         </div>
       </div>
     </button>

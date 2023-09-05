@@ -34,7 +34,7 @@ const GameShow = () => {
 	const gameData = {
 		gameId: game?.id,
 		name: game?.name,
-		coverUrl: game?.cover?.url,
+		coverUrl: parseImages(game?.cover?.url, "t_1080p"),
 		releaseYear: parseDate(game?.first_release_date)
 	}
 

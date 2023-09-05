@@ -19,7 +19,7 @@ function Profile() {
 	}
 
 	useEffect(() => {
-
+		
 	}, [wishlist, ownedGames])
 
 	return (
