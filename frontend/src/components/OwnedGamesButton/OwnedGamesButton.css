@@ -1,0 +1,7 @@
+.owned-game-button {
+	cursor: pointer;
+}
+
+.owned-game-button:hover {
+	background-color: lightgray;
+}

@@ -5,7 +5,7 @@
     height: 128px;
     background-color: var(--theme-gray);
     display: flex;
-    cursor: pointer;
+    /* cursor: pointer; */
     border-radius: 3px;
     margin-bottom: 10px;
     position: relative;
@@ -33,7 +33,7 @@
     height: 128px;
     background-color: var(--theme-gray);
     display: flex;
-    cursor: pointer;
+    /* cursor: pointer; */
     border-radius: 3px;
     margin-bottom: 10px;
     position: relative;
@@ -73,6 +73,11 @@
     padding: 0 0 0 10px;
 }
 
+
+.index-cover {
+	cursor: pointer;
+}
+
 .game-item-all {
     width: 450px;
     height: 128px;
@@ -92,5 +97,6 @@
     top: 0;
     left: 0;
 }
+
 
 

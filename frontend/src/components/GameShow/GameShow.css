@@ -13,6 +13,7 @@
     height: 50vh;
     object-fit: cover;
     position: relative;
+	z-index: -1;
 }
 
 .game-header {
@@ -69,4 +70,12 @@
     height: 350px;
     object-fit: cover;
     border-radius: 3px;
+}
+
+.wishlist-button {
+	cursor: pointer;
+}
+
+.wishlist-button:hover {
+	background-color: lightgray;
 }

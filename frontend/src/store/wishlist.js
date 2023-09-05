@@ -17,7 +17,7 @@ const removeWishlistItem = (gameId) => ({
 export const addWishlistItem = (userId, gameData) => async (dispatch) => {
   const res = await jwtFetch(`/api/users/${userId}/wishlistGames`, {
     method: "POST",
-    body: JSON.stringify(gameData),
+    body: JSON.stringify({ gameData }),
   });
   const wishlistItem = await res.json();
   return dispatch(receiveWishlistItem(wishlistItem));

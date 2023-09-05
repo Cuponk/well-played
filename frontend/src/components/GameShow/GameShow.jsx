@@ -4,8 +4,8 @@ import defaultImage from "../../assets/images/drawing-large.png";
 import { useState, useEffect } from "react";
 import jwtFetch from "../../store/jwt";
 import "./GameShow.css";
-import AddButton from "../../assets/images/add-to-library.svg";
-import Wishlist from "../../assets/images/wishlist.svg";
+import OwnedGamesButton from "../OwnedGamesButton/OwnedGamesButton";
+import WishlistButton from "../WishlistButton/WishlistButton";
 
 const GameShow = () => {
     const { id } = useParams();
@@ -31,11 +31,18 @@ const GameShow = () => {
         }
     };
 
+	const gameData = {
+		gameId: game?.id,
+		name: game?.name,
+		coverUrl: parseImages(game?.cover?.url, "t_1080p"),
+		releaseYear: parseDate(game?.first_release_date)
+	}
+
     useEffect(() => {
         jwtFetch(`/api/igdb/${id}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data[0]);
+                // console.log(data[0]);
                 setGame(data[0]);
                 setCover(parseImages(data[0].cover?.url, "t_cover_big"));
                 if (data[0].screenshots) {
@@ -74,9 +81,8 @@ const GameShow = () => {
                             </p>
                             <p className="game-description">{game.summary}</p>
                             <div className="buttons">
-                                <img src={AddButton} alt="" />
-
-                                <img src={Wishlist} alt="" />
+								<OwnedGamesButton gameData={gameData}/>
+								<WishlistButton gameData={gameData} />
                             </div>
                         </div>
                     </div>
