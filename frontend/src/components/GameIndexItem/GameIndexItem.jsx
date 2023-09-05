@@ -26,22 +26,32 @@ function GameIndexItem({ game, id }) {
     }
   }
 
+  const handleclick = (e) => {
+    e.stopPropagation();
+    console.log('clicked');
+  }
+
   return (
-    <button onClick={handleRedirect} className="game-item">
-      <img src={parseImages(game.cover?.url, 't_cover_small')} className="index-cover" />
-      <div className="game-readable">
-        <div className="game-details">
-          <p>{game.name}</p>
-          <p>{game.involved_companies ? game.involved_companies[0].company.name : 'No Company Found'}</p>
-          <p>{game.genres ? game.genres[0].name : ''}</p>
-          <p>{parseDate(game.first_release_date)}</p>
+    <div className="game-item-all">
+      <button onClick={handleRedirect} className="game-item">
+        <div className="game-content">
+          <img src={parseImages(game.cover?.url, 't_cover_small')} className="index-cover" />
+          <div className="game-readable">
+            <div className="game-details">
+              <p>{game.name}</p>
+              <p>{game.involved_companies ? game.involved_companies[0].company.name : 'No Company Found'}</p>
+              <p>{game.genres ? game.genres[0].name : ''}</p>
+              <p>{parseDate(game.first_release_date)}</p>
+            </div>
+          </div>
+            <div className="game-buttons">
+              <LibraryAdd onClick={handleclick} className="game-button" />
+              <Wishlist onClick={handleclick} className="game-button" />
+            </div>
         </div>
-        <div className="game-buttons">
-          <LibraryAdd className="game-button" />
-          <Wishlist className="game-button" />
-        </div>
-      </div>
-    </button>
+        <div className="game-border"/>
+      </button>
+    </div>
   )
 }
 
