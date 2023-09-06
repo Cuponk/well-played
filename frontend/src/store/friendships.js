@@ -51,7 +51,11 @@ export const fetchOtherUsers = userId => async dispatch => {
 
 	if (res.ok) {
 		const otherUsers = await res.json();
-		dispatch(receiveOtherUsers(otherUsers));
+		const otherUsersObj = {};
+		otherUsers.forEach(user => {
+			otherUsersObj[user._id] = user;
+		})
+		dispatch(receiveOtherUsers(otherUsersObj));
 	}
 }
 
@@ -114,7 +118,13 @@ export const deleteAcceptedFriendship = (senderId, otherUserId) => async dispatc
 	}
 }
 
-const FriendshipsReducer = (state = {}, action) => {
+const initialState = {
+	otherUsers: {},
+	// friendRequests: {},
+	// pendingRequests: {}
+}
+
+const FriendshipsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case RECEIVE_OTHER_USERS:
 			return { ...state, otherUsers: action.otherUsers };
@@ -128,6 +138,7 @@ const FriendshipsReducer = (state = {}, action) => {
 				newState.friendRequests = [];
 			}
 			newState.friendRequests.push(action.friendship);
+			delete newState.otherUsers[action.friendship.receiver];
 			return newState;
 		case ACCEPT_FRIEND_REQUEST:
 			const nextState = { ...state };
