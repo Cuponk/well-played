@@ -5,6 +5,8 @@ const RECEIVE_FRIEND_REQUESTS = 'RECEIVE_FRIEND_REQUESTS';
 const RECEIVE_PENDING_REQUESTS = 'RECEIVE_PENDING_REQUESTS';
 
 const SEND_FRIEND_REQUEST = 'SEND_FRIEND_REQUEST';
+const CANCEL_FRIEND_REQUEST = 'CANCEL_FRIEND_REQUEST';
+const DECLINE_FRIEND_REQUEST = 'DECLINE_FRIEND_REQUEST';
 export const ACCEPT_FRIEND_REQUEST = 'ACCEPT_FRIEND_REQUEST';
 export const REMOVE_FRIENDSHIP = 'REMOVE_FRIENDSHIP';
 
@@ -46,6 +48,16 @@ const removeFriendship = friendshipId => ({
 	friendshipId
 })
 
+const cancelFriendRequest = friendshipId => ({
+	type: CANCEL_FRIEND_REQUEST,
+	friendshipId
+})
+
+const declineFriendRequest = friendshipId => ({
+	type: DECLINE_FRIEND_REQUEST,
+	friendshipId
+})
+
 export const fetchOtherUsers = userId => async dispatch => {
 	const res = await jwtFetch(`/api/users/${userId}/otherUsers`);
 
@@ -64,7 +76,11 @@ export const fetchFriendRequests = userId => async dispatch => {
 
 	if (res.ok) {
 		const friendships = await res.json();
-		dispatch(receiveFriendRequests(friendships));
+		const friendshipsObj = {};
+		friendships.forEach(friendship => {
+			friendshipsObj[friendship._id] = friendship;
+		})
+		dispatch(receiveFriendRequests(friendshipsObj));
 	}
 }
 
@@ -73,7 +89,11 @@ export const fetchPendingRequests = userId => async dispatch => {
 
 	if (res.ok) {
 		const pendingFriendships = await res.json();
-		dispatch(receivePendingRequests(pendingFriendships));
+		const pendingFriendshipsObj = {};
+		pendingFriendships.forEach(friendship => {
+			pendingFriendshipsObj[friendship._id] = friendship;
+		})
+		dispatch(receivePendingRequests(pendingFriendshipsObj));
 	}
 }
 
@@ -95,7 +115,8 @@ export const acceptFriendship = (currentUserId, senderId) => async dispatch => {
 	dispatch(acceptFriendRequest(friendship));
 }
 
-export const deletePendingFriendship = (currentUserId, otherUserId) => async dispatch => {
+// Cancel a friend request that you sent.
+export const cancelSentRequest = (currentUserId, otherUserId) => async dispatch => {
 	// Doesn't matter what order we request sender/reciever. Backend routes looks
 	// for both sender/receiver and receiver/sender.
 	const res = await jwtFetch(`/api/friendships/${currentUserId}/deletePendingFriendship`, {
@@ -103,7 +124,19 @@ export const deletePendingFriendship = (currentUserId, otherUserId) => async dis
 		body: JSON.stringify({ otherUserId: otherUserId })
 	})
 	const friendship = await res.json();
-	dispatch(removeFriendship(friendship));
+	dispatch(cancelFriendRequest(friendship));
+}
+
+// Decline a friend request that you received.
+export const declineReceivedRequest = (currentUserId, otherUserId) => async dispatch => {
+	// Doesn't matter what order we request sender/reciever. Backend routes looks
+	// for both sender/receiver and receiver/sender.
+	const res = await jwtFetch(`/api/friendships/${currentUserId}/deletePendingFriendship`, {
+		method: 'DELETE',
+		body: JSON.stringify({ otherUserId: otherUserId })
+	})
+	const friendship = await res.json();
+	dispatch(declineFriendRequest(friendship));
 }
 
 export const deleteAcceptedFriendship = (senderId, otherUserId) => async dispatch => {
@@ -120,30 +153,33 @@ export const deleteAcceptedFriendship = (senderId, otherUserId) => async dispatc
 
 const initialState = {
 	otherUsers: {},
-	// friendRequests: {},
-	// pendingRequests: {}
+	pendingRequests: {},
+	friendRequests: {}
 }
 
 const FriendshipsReducer = (state = initialState, action) => {
+	const newState = { ...state };
 	switch (action.type) {
 		case RECEIVE_OTHER_USERS:
 			return { ...state, otherUsers: action.otherUsers };
-		case RECEIVE_FRIEND_REQUESTS:
-			return { ...state, friendRequests: action.friendRequests };
 		case RECEIVE_PENDING_REQUESTS:
 			return { ...state, pendingRequests: action.pendingRequests };
+		case RECEIVE_FRIEND_REQUESTS:
+			return { ...state, friendRequests: action.friendRequests };
 		case SEND_FRIEND_REQUEST:
-			const newState = { ...state };
-			if (!newState.hasOwnProperty('friendRequests')) {
-				newState.friendRequests = [];
-			}
-			newState.friendRequests.push(action.friendship);
+			// Add friendship to pending requests and remove from other users.
+			newState.pendingRequests[action.friendship._id] = action.friendship;
 			delete newState.otherUsers[action.friendship.receiver];
 			return newState;
 		case ACCEPT_FRIEND_REQUEST:
-			const nextState = { ...state };
-			delete nextState.friendRequests[action.friendship._id];
-			return nextState
+			delete newState.friendRequests[action.friendship._id];
+			return newState
+		case CANCEL_FRIEND_REQUEST:
+			delete newState.pendingRequests[action.friendshipId];
+			return newState;
+		case DECLINE_FRIEND_REQUEST:
+			delete newState.friendRequests[action.friendshipId];
+			return newState;
 		default:
 			return state;
 	}

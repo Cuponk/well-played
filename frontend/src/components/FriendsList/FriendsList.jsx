@@ -8,8 +8,8 @@ export default function FriendsList() {
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.user);
   const friends = Object.values(useSelector(state => state.friends));
-  const friendRequests = useSelector(state => state.friendships.friendRequests);
-  const pendingRequests = useSelector(state => state.friendships.pendingRequests);
+  const friendRequests = Object.values(useSelector(state => state.friendships.friendRequests));
+  const pendingRequests = Object.values(useSelector(state => state.friendships.pendingRequests));
   const otherUsers = Object.values(useSelector(state => state.friendships.otherUsers));
 
   useEffect(() => {
