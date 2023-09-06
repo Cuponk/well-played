@@ -48,9 +48,9 @@ const removeFriendship = friendshipId => ({
 	friendshipId
 })
 
-const cancelFriendRequest = friendshipId => ({
+const cancelFriendRequest = friendship => ({
 	type: CANCEL_FRIEND_REQUEST,
-	friendshipId
+	friendship
 })
 
 const declineFriendRequest = friendshipId => ({
@@ -175,6 +175,12 @@ const FriendshipsReducer = (state = initialState, action) => {
 			delete newState.friendRequests[action.friendship._id];
 			return newState
 		case CANCEL_FRIEND_REQUEST:
+			// Need ID of the user to get user info from pendingRequests.
+			// Or we can fetch the user info from the backend and attach it to the response
+			// Make the action have friendship info and user info.
+			const userId = newState.pendingRequests[action.friendship._id].receiver._id;
+			const userInfo = newState.pendingRequests[action.friendship_id].receiver;
+			newState.otherUsers[userId] = userInfo;
 			delete newState.pendingRequests[action.friendshipId];
 			return newState;
 		case DECLINE_FRIEND_REQUEST:
