@@ -14,36 +14,28 @@ const OwnedGamesButton = ({ gameData, icon, setIcon }) => {
 	// const wishlist = useSelector(state => state.wishlist);
 
 	const gameIdString = gameData?.gameId.toString();
-	const isGameOwned =  gameIdString in ownedGames;
-	// const [icon, setIcon] = useState(isGameOwned ? FilledLibraryButton : LibraryButton);
-
-	// useEffect(() => {
-	// 	setIcon(isGameOwned ? FilledLibraryButton : LibraryButton);
-	// }, [ownedGames, gameIdString])
-
-	// useEffect(() => {
-	// 	if (currentUser?.id) {
-	// 		dispatch(fetchOwnedGames(currentUser.id));
-	// 	}
-	// }, [dispatch, currentUser?.id])
+	const isGameOwned = gameIdString in ownedGames;
 
 	const handleGamesList = (e) => {
 		e.stopPropagation();
-		
-		if (isGameOwned) {
-			setIcon(LibraryButton);
-			dispatch(deleteOwnedGamesItem(currentUser?.id, gameData?.gameId))
-		} else {
-			// if (gameIdString in wishlist) {
-			// 	dispatch(deleteWishlistItem(currentUser?.id, gameData.gameId));
-			// }
-			setIcon(FilledLibraryButton);
-			dispatch(addOwnedGamesItem(currentUser?.id, gameData))
-		}	
+
+		if (currentUser) {
+			if (isGameOwned) {
+				setIcon(LibraryButton);
+				dispatch(deleteOwnedGamesItem(currentUser?.id, gameData?.gameId))
+			} else {
+				// if (gameIdString in wishlist) {
+				// 	dispatch(deleteWishlistItem(currentUser?.id, gameData.gameId));
+				// }
+				setIcon(FilledLibraryButton);
+				dispatch(addOwnedGamesItem(currentUser?.id, gameData))
+			}
+		}
+
 	}
 
 	return (
-		<img src={icon} alt='' className='owned-game-button' onClick={handleGamesList}/>
+		<img src={icon} alt='' className='owned-game-button' onClick={handleGamesList} />
 	)
 }
 

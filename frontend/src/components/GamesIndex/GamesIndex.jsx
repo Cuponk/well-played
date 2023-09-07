@@ -72,10 +72,12 @@ function GamesIndex() {
     return [start, end];
   }
 
-  useEffect(() => {
-	dispatch(fetchWishlist(currentUser?.id));
-	dispatch(fetchOwnedGames(currentUser?.id));
-  }, [])
+//   useEffect(() => {
+// 	if (currentUser) {
+// 		dispatch(fetchWishlist(currentUser?.id));
+// 		dispatch(fetchOwnedGames(currentUser?.id));
+// 	}
+//   }, [])
 
   return (
     <>
