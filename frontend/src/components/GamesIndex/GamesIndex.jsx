@@ -129,9 +129,7 @@ function GamesIndex() {
         <ul className="games-index">
             {games.map((game) => 
               <>
-            
                 <GameIndexItem game={game} key={game.id} wishlist={userWishlist} ownedGames={userOwnedGames}/>
-                
               </>
             )}
         </ul>
