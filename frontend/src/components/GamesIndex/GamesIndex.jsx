@@ -72,13 +72,6 @@ function GamesIndex() {
     return [start, end];
   }
 
-//   useEffect(() => {
-// 	if (currentUser) {
-// 		dispatch(fetchWishlist(currentUser?.id));
-// 		dispatch(fetchOwnedGames(currentUser?.id));
-// 	}
-//   }, [])
-
   return (
     <>
       <div className="games-index-container">
