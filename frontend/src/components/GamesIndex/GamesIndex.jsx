@@ -81,14 +81,7 @@ function GamesIndex() {
                   onChange={(e) => setSearch(e.target.value)}
                   value={search}
                 />
-                <span className="checkbox">
-                  <input type="checkbox" className="actual-checkbox" id="dropdown-checkbox" onClick={handleDrop}/>
-                  <label htmlFor="dropdown-checkbox">
-                  <i className={`fa-solid fa-caret-left ${dropdown ? "rotate" : ""}`}/>
-                  </label>
-                </span>
               </div>
-          { dropdown && (
             <div className="advanced-dropdown">
               <div className="advanced-dropdown-content">
                 <label className="genre"> 
@@ -122,9 +115,8 @@ function GamesIndex() {
                   <input type="checkbox" className="library-checkbox" onClick={() => setLibrary(!library)}/>
                   <span className="library-span">Library</span>
                 </label>
-
               </div>
-            </div>)}
+            </div>
         </form>
         <ul className="games-index">
             {games.map((game) => 
