@@ -24,7 +24,6 @@ function GamesIndex() {
       genre: genre,
       year: parseYear(year),
     }
-    console.log(payload); 
     jwtFetch(`/api/igdb/search/advanced/`, {
       method: "POST",
       headers: {
@@ -34,23 +33,27 @@ function GamesIndex() {
     })
       .then((res) => res.json())
       .then((fin) => {
-        console.log(fin)
         setGames(fin);
       })
     setPageButton(true);
-  }
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setDropdown(!dropdown);
-    console.log("clicked");
   }
 
   //igdb has offset option for pagination :D
   const handlePaginate = (e) => {
     e.preventDefault();
     setPage(page + 1);
-    jwtFetch(`/api/igdb/search/${search}/${page}`)
+    const payload = {
+      search: search,
+      genre: genre,
+      year: parseYear(year),
+    }
+    jwtFetch(`/api/igdb/search/advanced/${page}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
       .then((res) => res.json())
       .then((fin) => {
         setGames([...games, ...fin]);
