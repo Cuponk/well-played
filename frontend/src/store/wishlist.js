@@ -1,14 +1,8 @@
 import jwtFetch from "./jwt";
 import { RECEIVE_CURRENT_USER } from "./session";
 
-const RECEIVE_WISHLIST = "RECEIVE_WISHLIST";
 const RECEIVE_WISHLIST_ITEM = "RECEIVE_WISHLIST_ITEM";
 const REMOVE_WISHLIST_ITEM = "REMOVE_WISHLIST_ITEM";
-
-const receiveWishlist = wishlist => ({
-	type: RECEIVE_WISHLIST,
-	wishlist
-})
 
 const receiveWishlistItem = (wishlistItem) => ({
   type: RECEIVE_WISHLIST_ITEM,
@@ -19,12 +13,6 @@ const removeWishlistItem = (gameId) => ({
   type: REMOVE_WISHLIST_ITEM,
   gameId,
 });
-
-export const fetchWishlist = (userId) => async (dispatch) => {
-	const res = await jwtFetch(`/api/users/${userId}/wishlistGames`);
-	const wishlist = await res.json();
-	return dispatch(receiveWishlist(wishlist));
-}
 
 export const addWishlistItem = (userId, gameData) => async (dispatch) => {
   const res = await jwtFetch(`/api/users/${userId}/wishlistGames`, {
@@ -60,18 +48,12 @@ const wishlistReducer = (state = {}, action) => {
     case RECEIVE_WISHLIST_ITEM:
       return {
         ...state,
-        [action.wishlistItem.id]: action.wishlistItem,
+        [action.wishlistItem.gameId]: action.wishlistItem,
       }
     case REMOVE_WISHLIST_ITEM:
       const nextState = { ...state };
       delete nextState[action.gameId];
       return nextState;
-	case RECEIVE_WISHLIST:
-		const wishlistState = {};
-		action.wishlist.forEach(wishlistGame => {
-			wishlistState[wishlistGame.gameId] = wishlistGame;
-		})
-		return wishlistState;
     default:
       return state;
   }

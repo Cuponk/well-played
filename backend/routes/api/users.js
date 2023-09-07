@@ -194,7 +194,7 @@ router.post('/:userId/ownedGames', async (req, res) => {
 			user.wishlistGames.splice(wishlistIndex, 1);
 		}
 		await user.save();
-		return res.json(user);
+		return res.json(gameData);
 	} catch (err) {
 		return res.json({ message: `Error posting to user's owned games list` });
 	}
@@ -255,7 +255,7 @@ router.post('/:userId/wishlistGames', async (req, res) => {
 		}
 		user.wishlistGames.push(gameData);
 		await user.save();
-		return res.json(user);
+		return res.json(gameData);
 	} catch (err) {
 		return res.json({ message: `Error posting to user's wishlist` });
 	}

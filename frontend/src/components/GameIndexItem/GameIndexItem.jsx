@@ -14,11 +14,6 @@ import FilledWishlistButton from "../../assets/images/filled-heart.svg";
 
 
 function GameIndexItem({ game, id, wishlist, ownedGames }) {
-//   const ownedGames = useSelector(state => state.ownedGames);
-//   const wishlist = useSelector(state => state.wishlist);
-  const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.user);
-
   const [ownedIcon, setOwnedIcon] = useState(() => {
     return game?.id.toString() in ownedGames ? FilledLibraryButton : LibraryButton;
   });

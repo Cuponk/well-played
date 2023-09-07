@@ -5,8 +5,6 @@ import GameListItem from '../GameListItem/GameListItem';
 import FriendListItem from '../FriendListItem/FriendListItem';
 import './Profile.css';
 import FriendsList from '../FriendsList/FriendsList';
-import { fetchWishlist } from '../../store/wishlist';
-import { fetchOwnedGames } from '../../store/ownedGames';
 
 function Profile() {
 	const currentUser = useSelector(state => state.user);
@@ -20,11 +18,6 @@ function Profile() {
 		})
 		return games;
 	}
-
-	useEffect(() => {
-		dispatch(fetchWishlist(currentUser?.id));
-		dispatch(fetchOwnedGames(currentUser?.id));
-	}, [])
 
 	return (
 		<>
