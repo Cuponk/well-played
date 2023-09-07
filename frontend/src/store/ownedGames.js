@@ -1,8 +1,14 @@
 import jwtFetch from "./jwt";
 import { RECEIVE_CURRENT_USER } from "./session";
 
+const RECEIVE_OWNED_GAMES = "RECEIVE_OWNED_GAMES";
 const RECEIVE_OWNED_GAMES_ITEM = "RECEIVE_OWNED_GAMES_ITEM";
 const REMOVE_OWNED_GAMES_ITEM = "REMOVE_OWNED_GAMES_ITEM";
+
+const receiveOwnedGames = ownedGames => ({
+	type: RECEIVE_OWNED_GAMES,
+	ownedGames
+})
 
 const receiveOwnedGamesItem = (ownedGamesItem) => ({
   type: RECEIVE_OWNED_GAMES_ITEM,
@@ -13,6 +19,12 @@ const removeOwnedGamesItem = (gameId) => ({
   type: REMOVE_OWNED_GAMES_ITEM,
   gameId,
 });
+
+export const fetchOwnedGames = (userId) => async (dispatch) => {
+	const res = await jwtFetch(`/api/users/${userId}/ownedGames`);
+	const ownedGames = await res.json();
+	return dispatch(receiveOwnedGames(ownedGames));
+}
 
 export const addOwnedGamesItem = (userId, gameData) => async (dispatch) => {
   const res = await jwtFetch(`/api/users/${userId}/ownedGames`, {
@@ -52,8 +64,14 @@ const ownedGamesReducer = (state = {}, action) => {
       }
     case REMOVE_OWNED_GAMES_ITEM:
       const nextState = { ...state };
-      delete nextState[action.ownedGamesItemId];
+      delete nextState[action.gameId];
       return nextState;
+	case RECEIVE_OWNED_GAMES:
+		const ownedGamesState = {};
+		action.ownedGames.forEach(ownedGame => {
+			ownedGamesState[ownedGame.gameId] = ownedGame;
+		})
+		return ownedGamesState;
     default:
       return state;
   }

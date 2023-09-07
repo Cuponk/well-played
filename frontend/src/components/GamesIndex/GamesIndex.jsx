@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./GamesIndex.css";
 import GameIndexItem from "../GameIndexItem/GameIndexItem";
 import jwtFetch from "../../store/jwt";
+import { useDispatch, useSelector } from "react-redux";
 // import axios from "axios";
-
+import { fetchWishlist } from "../../store/wishlist";
+import { fetchOwnedGames } from "../../store/ownedGames";
 
 function GamesIndex() {
   const [dropdown, setDropdown] = useState(false);
@@ -15,7 +17,10 @@ function GamesIndex() {
   const [year, setYear] = useState("");
   const [wishlist, setWishlist] = useState(false);
   const [library, setLibrary] = useState(false);
-
+  const userWishlist = useSelector(state => state.wishlist);
+  const userOwnedGames = useSelector(state => state.ownedGames); 
+  const currentUser = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,6 +74,11 @@ function GamesIndex() {
 
     return [start, end];
   }
+
+  useEffect(() => {
+	dispatch(fetchWishlist(currentUser?.id));
+	dispatch(fetchOwnedGames(currentUser?.id));
+  }, [])
 
   return (
     <>
@@ -125,7 +135,7 @@ function GamesIndex() {
             {games.map((game) => 
               <>
             
-                <GameIndexItem game={game} key={game.id}/>
+                <GameIndexItem game={game} key={game.id} wishlist={userWishlist} ownedGames={userOwnedGames}/>
                 
               </>
             )}

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux"
+import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import FriendListItem from "../FriendListItem/FriendListItem";
 import { useEffect } from "react";
 import * as friendshipActions from '../../store/friendships';
@@ -8,9 +8,9 @@ export default function FriendsList() {
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.user);
   const friends = Object.values(useSelector(state => state.friends));
-  const friendRequests = useSelector(state => state.friendships.friendRequests);
-  const pendingRequests = useSelector(state => state.friendships.pendingRequests);
-  const otherUsers = useSelector(state => state.friendships.otherUsers);
+  const friendRequests = Object.values(useSelector(state => state.friendships.friendRequests));
+  const pendingRequests = Object.values(useSelector(state => state.friendships.pendingRequests));
+  const otherUsers = Object.values(useSelector(state => state.friendships.otherUsers));
 
   useEffect(() => {
     dispatch(friendshipActions.fetchFriendRequests(currentUser.id));

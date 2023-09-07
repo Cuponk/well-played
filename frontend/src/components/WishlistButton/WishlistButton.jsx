@@ -1,44 +1,49 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import wishlistButton from "../../assets/images/wishlist.svg";
 import FilledWishlistButton from "../../assets/images/filled-heart.svg";
-import { addWishlistItem, deleteWishlistItem } from "../../store/wishlist";
+import { addWishlistItem, deleteWishlistItem, fetchWishlist } from "../../store/wishlist";
 import './WishlistButton.css';
-import { deleteOwnedGamesItem } from "../../store/ownedGames";
+import { deleteOwnedGamesItem, fetchOwnedGames } from "../../store/ownedGames";
 import { useEffect } from "react";
 
-const WishlistButton = ({ gameData }) => {
+const WishlistButton = ({ gameData, icon, setIcon  }) => {
 	const dispatch = useDispatch();
 	const currentUser = useSelector(state => state.user);
 	const wishlist = useSelector(state => state.wishlist);
-	const ownedGames = useSelector(state => state.ownedGames)
-	
-	useEffect(() => {
+	// const ownedGames = useSelector(state => state.ownedGames);
 
-	}, [gameData, wishlist, ownedGames, currentUser])
+	const gameIdString = gameData?.gameId.toString();
+	const isWishlisted = gameIdString in wishlist;
+	// const [icon, setIcon] = useState(isWishlisted ? FilledWishlistButton : wishlistButton);
+
+	// useEffect(() => {
+	// 	setIcon(isWishlisted ? FilledWishlistButton : wishlistButton);
+	// }, [wishlist, gameIdString])
+
+	// useEffect(() => {
+	// 	if (currentUser?.id) {
+	// 		dispatch(fetchWishlist(currentUser.id));
+	// 	}
+	// }, [dispatch, currentUser?.id])
 
 	const handleWishlist = (e) => {
-		e.preventDefault();
-		// Remove game from wishlist
-		if (gameData.gameId.toString() in wishlist) {
-			dispatch(deleteWishlistItem(currentUser.id, gameData.gameId));
+		e.stopPropagation()
+
+		if (isWishlisted) {
+			setIcon(wishlistButton);
+			dispatch(deleteWishlistItem(currentUser?.id, gameData.gameId));
 		} else {
-			// If game is in ownedGames, remove, then add to wishlist
-			if(gameData.gameId.toString() in ownedGames) {
-				dispatch(deleteOwnedGamesItem(currentUser.id, gameData.gameId));
-			}
-			dispatch(addWishlistItem(currentUser.id, gameData));
+			// if(gameIdString in ownedGames) {
+			// 	dispatch(deleteOwnedGamesItem(currentUser?.id, gameData.gameId));
+			// }
+			setIcon(FilledWishlistButton);
+			dispatch(addWishlistItem(currentUser?.id, gameData));
 		}
 	}
 
-	const iconButton = () => {
-		if (gameData.gameId.toString() in wishlist) {
-			return FilledWishlistButton;
-		} else {
-			return wishlistButton;
-		}
-	}
 	return (
-		<img src={iconButton()} alt='' className="wishlist-button" onClick={handleWishlist}/>
+		<img src={icon} alt='' className="wishlist-button" onClick={handleWishlist}/>
 	)
 }
 

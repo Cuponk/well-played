@@ -16,14 +16,14 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 		dispatch(friendshipActions.acceptFriendship(currentUser.id, user.sender._id));
 	}
 
-	const declineFriendRequest = e => {
-		e.preventDefault();
-		dispatch(friendshipActions.deletePendingFriendship(currentUser.id, user.sender._id));
-	}
-
 	const cancelFriendRequest = e => {
 		e.preventDefault();
-		dispatch(friendshipActions.deletePendingFriendship(currentUser.id, user.receiver._id));
+		dispatch(friendshipActions.cancelSentRequest(currentUser.id, user.receiver._id));
+	}
+
+	const declineFriendRequest = e => {
+		e.preventDefault();
+		dispatch(friendshipActions.declineReceivedRequest(currentUser.id, user.sender._id));
 	}
 
 	const sendFriendRequest = e => {

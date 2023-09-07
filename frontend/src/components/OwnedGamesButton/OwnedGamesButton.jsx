@@ -2,46 +2,44 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LibraryButton from "../../assets/images/add-to-library.svg";
 import FilledLibraryButton from "../../assets/images/filled-library.svg";
-import { addOwnedGamesItem, deleteOwnedGamesItem } from "../../store/ownedGames";
-import { deleteWishlistItem } from "../../store/wishlist";
+import { addOwnedGamesItem, deleteOwnedGamesItem, fetchOwnedGames } from "../../store/ownedGames";
+import { deleteWishlistItem, fetchWishlist } from "../../store/wishlist";
 import './OwnedGamesButton.css';
 import { useEffect } from "react";
 
-const OwnedGamesButton = ({ gameData }) => {
+const OwnedGamesButton = ({ gameData, icon, setIcon }) => {
 	const dispatch = useDispatch();
 	const currentUser = useSelector(state => state.user);
 	const ownedGames = useSelector(state => state.ownedGames);
-	const wishlist = useSelector(state => state.wishlist);
-	const [icon, setIcon] = useState(() => {
-		if (gameData.gameId.toString() in ownedGames) {
-			return FilledLibraryButton;
-		} else {
-			return LibraryButton;
-		}
-	});
+	// const wishlist = useSelector(state => state.wishlist);
 
-	useEffect(() => {
-		if (gameData.gameId.toString() in ownedGames) {
-			setIcon(FilledLibraryButton);
-		} else {
-			setIcon(LibraryButton);
-		}
-	}, [dispatch])
+	const gameIdString = gameData?.gameId.toString();
+	const isGameOwned =  gameIdString in ownedGames;
+	// const [icon, setIcon] = useState(isGameOwned ? FilledLibraryButton : LibraryButton);
+
+	// useEffect(() => {
+	// 	setIcon(isGameOwned ? FilledLibraryButton : LibraryButton);
+	// }, [ownedGames, gameIdString])
+
+	// useEffect(() => {
+	// 	if (currentUser?.id) {
+	// 		dispatch(fetchOwnedGames(currentUser.id));
+	// 	}
+	// }, [dispatch, currentUser?.id])
 
 	const handleGamesList = (e) => {
-		e.preventDefault();
-		// Remove game from ownedGames
-		if (gameData.gameId.toString() in ownedGames) {
-			dispatch(deleteOwnedGamesItem(currentUser.id, gameData.gameId))
-			setIcon(LibraryButton)
+		e.stopPropagation();
+		
+		if (isGameOwned) {
+			setIcon(LibraryButton);
+			dispatch(deleteOwnedGamesItem(currentUser?.id, gameData?.gameId))
 		} else {
-			// If game is in wishlist, remove, then add to ownedGames
-			if(gameData.gameId.toString() in wishlist) {
-				dispatch(deleteWishlistItem(currentUser.id, gameData.gameId));
-			}
-			dispatch(addOwnedGamesItem(currentUser.id, gameData))
-			setIcon(FilledLibraryButton)
-		}
+			// if (gameIdString in wishlist) {
+			// 	dispatch(deleteWishlistItem(currentUser?.id, gameData.gameId));
+			// }
+			setIcon(FilledLibraryButton);
+			dispatch(addOwnedGamesItem(currentUser?.id, gameData))
+		}	
 	}
 
 	return (
