@@ -8,7 +8,6 @@ import { fetchWishlist } from "../../store/wishlist";
 import { fetchOwnedGames } from "../../store/ownedGames";
 
 function GamesIndex() {
-  const [dropdown, setDropdown] = useState(false);
   const [search, setSearch] = useState("");
   const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
@@ -20,6 +19,7 @@ function GamesIndex() {
   const userWishlist = useSelector(state => state.wishlist);
   const userOwnedGames = useSelector(state => state.ownedGames); 
   const currentUser = useSelector(state => state.user);
+  const friends = useSelector(state => state.friends);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -40,7 +40,11 @@ function GamesIndex() {
       .then((fin) => {
         setGames(fin);
       })
+
     setPageButton(true);
+    
+    parseFriends(fin);
+
   }
 
   //igdb has offset option for pagination :D
@@ -73,6 +77,25 @@ function GamesIndex() {
     const end = new Date(year, 11, 31).getTime(); 
 
     return [start, end];
+  }
+
+  //placeholder for friends, copilot did this
+  const parseFriends = (games) => {
+    const payload = {
+      games: games,
+      friends: friends,
+    }
+    jwtFetch(`/api/igdb/search/advanced/friends`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => res.json())
+      .then((fin) => {
+        setGames(fin);
+      })
   }
 
   return (
@@ -117,11 +140,11 @@ function GamesIndex() {
                 </label>
                 <label className="wishlist">
                   <input type="checkbox" className="wishlist-checkbox" onClick={() => setWishlist(!wishlist)}/>
-                  <span className="wishlist-span">Wishlist</span>
+                  <span className="wishlist-span">Wishlisted by Friends</span>
                 </label>
                 <label className="library">
                   <input type="checkbox" className="library-checkbox" onClick={() => setLibrary(!library)}/>
-                  <span className="library-span">Library</span>
+                  <span className="library-span">Owned by friends</span>
                 </label>
               </div>
             </div>
