@@ -6,7 +6,6 @@ import wishlist from './wishlist';
 import ownedGames from './ownedGames';
 import friends from './friends';
 import friendships from './friendships';
-import otherUsers from './otherUsers';
 
 const rootReducer = combineReducers({
   user: session,
@@ -15,7 +14,6 @@ const rootReducer = combineReducers({
   friends,
   errors,
   friendships
-  // otherUsers
 });
 
 let enhancer;

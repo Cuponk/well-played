@@ -158,7 +158,6 @@ const initialState = {
 }
 
 const FriendshipsReducer = (state = initialState, action) => {
-	// const newState = { ...state };
 	const newState = {
 		otherUsers: { ...state.otherUsers },
 		pendingRequests: { ...state.pendingRequests },
