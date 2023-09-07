@@ -3,10 +3,7 @@ import "./GameIndexItem.css";
 import defaultImage from "../../assets/images/drawing.jpg";
 import OwnedGamesButton from "../OwnedGamesButton/OwnedGamesButton";
 import WishlistButton from "../WishlistButton/WishlistButton";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchWishlist } from "../../store/wishlist";
-import { fetchOwnedGames } from "../../store/ownedGames";
+
 import LibraryButton from "../../assets/images/add-to-library.svg";
 import FilledLibraryButton from "../../assets/images/filled-library.svg";
 import wishlistButton from "../../assets/images/wishlist.svg";
