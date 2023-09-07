@@ -6,6 +6,9 @@ import jwtFetch from "../../store/jwt";
 import "./GameShow.css";
 import OwnedGamesButton from "../OwnedGamesButton/OwnedGamesButton";
 import WishlistButton from "../WishlistButton/WishlistButton";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOwnedGames } from "../../store/ownedGames";
+import { fetchWishlist } from "../../store/wishlist";
 
 const GameShow = () => {
     const { id } = useParams();
@@ -14,6 +17,10 @@ const GameShow = () => {
     const [cover, setCover] = useState("");
     const [background, setBackground] = useState("");
     const [screenshots, setScreenshots] = useState([]);
+	const wishlist = useSelector(state => state.wishlist);
+	const ownedGames = useSelector(state => state.ownedGames);
+	const currentUser = useSelector(state => state.user);
+	const dispatch = useDispatch();
 
     const parseImages = (url, type) => {
         if (!url) {
@@ -63,6 +70,7 @@ const GameShow = () => {
                     setLoaded(true);
                 };
         });
+		
     }, [id]);
 
     return (
