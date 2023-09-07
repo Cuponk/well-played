@@ -105,20 +105,25 @@ router.get("/search/:query/:page", async (req, res) => {
 
 
 router.post("/search/advanced/", async (req, res) => {
+    const genre = req.body.genre;
+    const year = req.body.year;
+    const name = req.body.search ? req.body.search : '';
+    let queryString = `fields name,involved_companies.company.name,cover.url,genres.name,first_release_date; where parent_game=null;`;
+    
+    if (genre) {
+        queryString += ` where genres = [${genre}];`
+    }
+    if (!!year[0]) {
+        queryString += ` where first_release_date > ${year[0] / 1000} & first_release_date < ${year[1] / 1000};`
+    }
+    if (name) {
+        queryString += ` search "${name}";`
+    }
+
+    queryString += ' limit 20;';
+    console.log(!!year[0])
+    console.log(queryString)
     try {
-        if (req.body.genre === '') {
-            const response = await axios("https://api.igdb.com/v4/games", {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Client-ID": process.env.CLIENT_ID,
-                    Authorization: `Bearer ${process.env.AUTH_TOKEN}`,
-                },
-                data: `fields name,involved_companies.company.name,cover.url,genres.name,first_release_date; search "${req.body.search}"; where parent_game=null; limit 20;`,
-            });
-            return res.json(response.data);
-        }
-        
         const response = await axios("https://api.igdb.com/v4/games", {
             method: "POST",
             headers: {
@@ -126,7 +131,7 @@ router.post("/search/advanced/", async (req, res) => {
                 "Client-ID": process.env.CLIENT_ID,
                 Authorization: `Bearer ${process.env.AUTH_TOKEN}`,
             },
-            data: `fields name,involved_companies.company.name,cover.url,genres.name,first_release_date; search "${req.body.search}"; where parent_game=null & genres = [${req.body.genre}]; limit 20;`,
+            data: queryString,
         });
         return res.json(response.data);
     } catch (error) {
@@ -140,6 +145,7 @@ router.post("/search/advanced/", async (req, res) => {
         }
     }
     });
+
 
 
 module.exports = router;

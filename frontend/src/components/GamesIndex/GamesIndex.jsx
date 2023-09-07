@@ -112,7 +112,7 @@ function GamesIndex() {
                   </select>
                 </label>
                 <label className="year">
-                  <input type="text" className="year-input" placeholder="Year" onChange={(e) => setYear(e.target.value)} value={year}/>
+                  <input type="Number" className="year-input" placeholder="Year" onChange={(e) => setYear(e.target.value)} value={year}/>
                 </label>
                 <label className="wishlist">
                   <input type="checkbox" className="wishlist-checkbox" onClick={() => setWishlist(!wishlist)}/>
