@@ -160,31 +160,36 @@ const initialState = {
 const FriendshipsReducer = (state = initialState, action) => {
 	const newState = { ...state };
 	switch (action.type) {
+		// Loading actions.
 		case RECEIVE_OTHER_USERS:
 			return { ...state, otherUsers: action.otherUsers };
 		case RECEIVE_PENDING_REQUESTS:
 			return { ...state, pendingRequests: action.pendingRequests };
 		case RECEIVE_FRIEND_REQUESTS:
 			return { ...state, friendRequests: action.friendRequests };
+		// Updating actions
 		case SEND_FRIEND_REQUEST:
 			// Add friendship to pending requests and remove from other users.
 			newState.pendingRequests[action.friendship._id] = action.friendship;
-			delete newState.otherUsers[action.friendship.receiver];
+			delete newState.otherUsers[action.friendship.receiver._id];
 			return newState;
 		case ACCEPT_FRIEND_REQUEST:
 			delete newState.friendRequests[action.friendship._id];
 			return newState
+		// Used for cancelling a sent request
 		case CANCEL_FRIEND_REQUEST:
-			// Need ID of the user to get user info from pendingRequests.
-			// Or we can fetch the user info from the backend and attach it to the response
-			// Make the action have friendship info and user info.
-			const userId = newState.pendingRequests[action.friendship._id].receiver._id;
-			const userInfo = newState.pendingRequests[action.friendship_id].receiver;
-			newState.otherUsers[userId] = userInfo;
-			delete newState.pendingRequests[action.friendshipId];
+			// You need userInfo to populate the otherUsers slice of state.
+			const pendingUserId = newState.pendingRequests[action.friendship._id].receiver._id;
+			const pendingUserInfo = newState.pendingRequests[action.friendship._id].receiver;
+			newState.otherUsers[pendingUserId] = pendingUserInfo;
+			delete newState.pendingRequests[action.friendship._id];
 			return newState;
+		// You need userInfo to populate the otherUsers slice of state.
 		case DECLINE_FRIEND_REQUEST:
-			delete newState.friendRequests[action.friendshipId];
+			const userId = newState.friendRequests[action.friendship._id].sender._id;
+			const userInfo = newState.friendRequests[action.friendship._id].sender;
+			newState.otherUsers[userId] = userInfo;
+			delete newState.friendRequests[action.friendship._id];
 			return newState;
 		default:
 			return state;
