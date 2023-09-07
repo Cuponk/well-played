@@ -4,9 +4,9 @@ const RECEIVE_OTHER_USERS = 'RECEIVE_OTHER_USERS';
 const RECEIVE_FRIEND_REQUESTS = 'RECEIVE_FRIEND_REQUESTS';
 const RECEIVE_PENDING_REQUESTS = 'RECEIVE_PENDING_REQUESTS';
 
-const SEND_FRIEND_REQUEST = 'SEND_FRIEND_REQUEST';
-const CANCEL_FRIEND_REQUEST = 'CANCEL_FRIEND_REQUEST';
-const DECLINE_FRIEND_REQUEST = 'DECLINE_FRIEND_REQUEST';
+export const SEND_FRIEND_REQUEST = 'SEND_FRIEND_REQUEST';
+export const CANCEL_FRIEND_REQUEST = 'CANCEL_FRIEND_REQUEST';
+export const DECLINE_FRIEND_REQUEST = 'DECLINE_FRIEND_REQUEST';
 export const ACCEPT_FRIEND_REQUEST = 'ACCEPT_FRIEND_REQUEST';
 export const REMOVE_FRIENDSHIP = 'REMOVE_FRIENDSHIP';
 
@@ -158,7 +158,12 @@ const initialState = {
 }
 
 const FriendshipsReducer = (state = initialState, action) => {
-	const newState = { ...state };
+	// const newState = { ...state };
+	const newState = {
+		otherUsers: { ...state.otherUsers },
+		pendingRequests: { ...state.pendingRequests },
+		friendRequests: { ...state.friendRequests }
+	}
 	switch (action.type) {
 		// Loading actions.
 		case RECEIVE_OTHER_USERS:

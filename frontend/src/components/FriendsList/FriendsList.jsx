@@ -8,9 +8,9 @@ export default function FriendsList() {
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.user);
   const friends = Object.values(useSelector(state => state.friends));
-  const friendRequests = Object.values(useSelector(state => state.friendships.friendRequests, shallowEqual));
-  const pendingRequests = Object.values(useSelector(state => state.friendships.pendingRequests, shallowEqual));
-  const otherUsers = Object.values(useSelector(state => state.friendships.otherUsers, shallowEqual));
+  const friendRequests = Object.values(useSelector(state => state.friendships.friendRequests));
+  const pendingRequests = Object.values(useSelector(state => state.friendships.pendingRequests));
+  const otherUsers = Object.values(useSelector(state => state.friendships.otherUsers));
 
   useEffect(() => {
     dispatch(friendshipActions.fetchFriendRequests(currentUser.id));
