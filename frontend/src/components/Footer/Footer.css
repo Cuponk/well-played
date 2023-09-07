@@ -21,8 +21,19 @@
 .author-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.5rem;
+}
+
+.socials-container {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.social-links {
+	height: 40px;
+	width: 40px;
+	cursor: pointer;
 }
 
 .author-container p {
@@ -30,5 +41,6 @@
 }
 
 .copy-right {
-  margin-top: 1rem
+  margin-top: 2rem
 }
+
