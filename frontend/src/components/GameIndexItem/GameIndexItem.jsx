@@ -1,9 +1,31 @@
+import { useState } from "react";
 import "./GameIndexItem.css";
 import defaultImage from "../../assets/images/drawing.jpg";
 import OwnedGamesButton from "../OwnedGamesButton/OwnedGamesButton";
 import WishlistButton from "../WishlistButton/WishlistButton";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchWishlist } from "../../store/wishlist";
+import { fetchOwnedGames } from "../../store/ownedGames";
+import LibraryButton from "../../assets/images/add-to-library.svg";
+import FilledLibraryButton from "../../assets/images/filled-library.svg";
+import wishlistButton from "../../assets/images/wishlist.svg";
+import FilledWishlistButton from "../../assets/images/filled-heart.svg";
 
-function GameIndexItem({ game, id }) {
+
+function GameIndexItem({ game, id, wishlist, ownedGames }) {
+//   const ownedGames = useSelector(state => state.ownedGames);
+//   const wishlist = useSelector(state => state.wishlist);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.user);
+
+  const [ownedIcon, setOwnedIcon] = useState(() => {
+    return game?.id.toString() in ownedGames ? FilledLibraryButton : LibraryButton;
+  });
+
+  const [wishlistIcon, setWishlistIcon] = useState(() => {
+    return game?.id.toString() in wishlist ? FilledWishlistButton : wishlistButton;
+  });
 
   const parseImages = (url, type) => {
     if (!url) {
@@ -47,8 +69,8 @@ function GameIndexItem({ game, id }) {
             </div>
           </div>
             <div className="game-buttons">
-              <OwnedGamesButton gameData={gameData}/>
-              <WishlistButton gameData={gameData} />
+              <OwnedGamesButton gameData={gameData} icon={ownedIcon} setIcon={setOwnedIcon}/>
+              <WishlistButton gameData={gameData} icon={wishlistIcon} setIcon={setWishlistIcon}/>
             </div>
         </div>
         <div className="game-border"/>

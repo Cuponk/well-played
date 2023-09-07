@@ -5,26 +5,30 @@ import GameListItem from '../GameListItem/GameListItem';
 import FriendListItem from '../FriendListItem/FriendListItem';
 import './Profile.css';
 import FriendsList from '../FriendsList/FriendsList';
+import { fetchWishlist } from '../../store/wishlist';
+import { fetchOwnedGames } from '../../store/ownedGames';
 
 function Profile() {
-	const user = useSelector(state => state.user);
+	const currentUser = useSelector(state => state.user);
 	const wishlist = Object.values(useSelector(state => state.wishlist));
 	const ownedGames = Object.values(useSelector(state => state.ownedGames));
+	const dispatch = useDispatch();
 
 	const handleGamesList = list => {
-		const games = list.map(game => {
+		const games = Object.values(list).map(game => {
 			return <GameListItem game={game} />
 		})
 		return games;
 	}
 
 	useEffect(() => {
-		
-	}, [wishlist, ownedGames])
+		dispatch(fetchWishlist(currentUser?.id));
+		dispatch(fetchOwnedGames(currentUser?.id));
+	}, [])
 
 	return (
 		<>
-			<h2>Welcome, {user.username}</h2>
+			<h2>Welcome, {currentUser.username}</h2>
 			<div className='profile-page-container'>
 				<div className='profile-page-lists'>
 					<h3>Wishlist</h3>
