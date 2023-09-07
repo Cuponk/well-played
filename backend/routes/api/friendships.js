@@ -85,6 +85,7 @@ router.post('/:userId/requestFriendship', async (req, res) => {
       receiver: receiverId,
       accepted: false
     });
+    await friendship.populate('receiver', '_id username');
     return res.json(friendship);
   } catch (error) {
     console.log(error);
@@ -102,6 +103,7 @@ router.post('/:userId/acceptFriendship', async (req, res) => {
       { accepted: true },
       { new: true } // Return the updated document.
     );
+    await friendship.populate('sender', '_id username');
     // On a successful accept, update user's friends list in user instance.
     const userOne = await User.findById(userId);
     const userTwo = await User.findById(senderId);
@@ -128,11 +130,17 @@ router.delete('/:userId/deletePendingFriendship', async (req, res) => {
       receiver: otherUserId,
       accepted: false
     });
+    if (senderFriendships) {
+      await senderFriendships.populate('receiver', '_id username');
+    }
     const receiverFriendships = await Friendship.findOneAndDelete({
       sender: otherUserId,
       receiver: userId,
       accepted: false
     });
+    if (receiverFriendships) {
+      await receiverFriendships.populate('sender', '_id username');
+    }
     const friendship = senderFriendships || receiverFriendships;
     return res.json(friendship);
   } catch (error) {
@@ -146,18 +154,19 @@ router.delete('/:userId/deleteAcceptedFriendship', async (req, res) => {
   // We'll check current user as sender and receiver.
   const { userId } = req.params;
   const { otherUserId } = req.body;
-  console.log(userId, otherUserId)
   try {
     const senderFriendships = await Friendship.findOneAndDelete({
       sender: userId,
       receiver: otherUserId,
       accepted: true
     });
+    await senderFriendships.populate('receiver', '_id username');
     const receiverFriendships = await Friendship.findOneAndDelete({
       sender: otherUserId,
       receiver: userId,
       accepted: true
     });
+    await receiverFriendships.populate('sender', '_id username');
     const friendship = senderFriendships || receiverFriendships;
     const userOne = await User.findById(userId);
     const userTwo = await User.findById(otherUserId);
