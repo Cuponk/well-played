@@ -29,7 +29,6 @@ function GamesIndex() {
       genre: genre,
       year: parseYear(year),
     }
-    console.log(payload); 
     jwtFetch(`/api/igdb/search/advanced/`, {
       method: "POST",
       headers: {
@@ -39,23 +38,27 @@ function GamesIndex() {
     })
       .then((res) => res.json())
       .then((fin) => {
-        console.log(fin)
         setGames(fin);
       })
     setPageButton(true);
-  }
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setDropdown(!dropdown);
-    console.log("clicked");
   }
 
   //igdb has offset option for pagination :D
   const handlePaginate = (e) => {
     e.preventDefault();
     setPage(page + 1);
-    jwtFetch(`/api/igdb/search/${search}/${page}`)
+    const payload = {
+      search: search,
+      genre: genre,
+      year: parseYear(year),
+    }
+    jwtFetch(`/api/igdb/search/advanced/${page}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
       .then((res) => res.json())
       .then((fin) => {
         setGames([...games, ...fin]);
@@ -86,14 +89,7 @@ function GamesIndex() {
                   onChange={(e) => setSearch(e.target.value)}
                   value={search}
                 />
-                <span className="checkbox">
-                  <input type="checkbox" className="actual-checkbox" id="dropdown-checkbox" onClick={handleDrop}/>
-                  <label htmlFor="dropdown-checkbox">
-                  <i className={`fa-solid fa-caret-left ${dropdown ? "rotate" : ""}`}/>
-                  </label>
-                </span>
               </div>
-          { dropdown && (
             <div className="advanced-dropdown">
               <div className="advanced-dropdown-content">
                 <label className="genre"> 
@@ -117,7 +113,7 @@ function GamesIndex() {
                   </select>
                 </label>
                 <label className="year">
-                  <input type="text" className="year-input" placeholder="Year" onChange={(e) => setYear(e.target.value)} value={year}/>
+                  <input type="Number" className="year-input" placeholder="Year" onChange={(e) => setYear(e.target.value)} value={year}/>
                 </label>
                 <label className="wishlist">
                   <input type="checkbox" className="wishlist-checkbox" onClick={() => setWishlist(!wishlist)}/>
@@ -127,16 +123,13 @@ function GamesIndex() {
                   <input type="checkbox" className="library-checkbox" onClick={() => setLibrary(!library)}/>
                   <span className="library-span">Library</span>
                 </label>
-
               </div>
-            </div>)}
+            </div>
         </form>
         <ul className="games-index">
             {games.map((game) => 
               <>
-            
                 <GameIndexItem game={game} key={game.id} wishlist={userWishlist} ownedGames={userOwnedGames}/>
-                
               </>
             )}
         </ul>

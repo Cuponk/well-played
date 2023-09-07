@@ -77,7 +77,7 @@
 
 .search-form {
   margin-top: 5px;
-  margin-bottom: 15px;
+  /* margin-bottom: 3px; */
   gap: 10px;
   display: flex;
   flex-direction: column;
