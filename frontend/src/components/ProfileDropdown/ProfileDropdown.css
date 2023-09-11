@@ -15,22 +15,19 @@
 }
 
 /* Dropdown Menu */
-
 .dropdown {
   position: relative;
-  width: 15vw;
+  width: 240px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  margin: 0px 20px;
 }
 
 .dropdown-content {
   position: absolute;
-  top: 102%;
-  left: 10%;
+  top: 118%;
   width: 240px;
   background: #fff;
   border: 1px solid #ddd;
@@ -38,12 +35,7 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-content {
-  display: none;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
+.dropdown:hover {
   cursor: pointer;
 }
 

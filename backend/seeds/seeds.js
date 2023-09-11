@@ -15,7 +15,7 @@ users.push(
 	new User({
 		username: 'demo-user',
 		email: 'demo-user@google.com',
-		hashedPassword: bcrypt.hashSync('ilikeike', 10),
+		hashedPassword: 'hello123',
 		friends: [],
 		ownedGames: [],
 		wishlistGames: []

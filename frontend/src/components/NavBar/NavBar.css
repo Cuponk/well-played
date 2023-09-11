@@ -3,15 +3,18 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* padding: 1rem 0; */
+  padding-left: 1rem;
   border-bottom: 1px solid var(--theme-black-soft);
 }
 
-.links-nav,
 .links-auth {
   display: flex;
   flex-direction: row;
   padding: 0.5rem;
+}
+
+.links-nav {
+  padding: 0.5rem 0.25rem;
 }
 
 .links-auth a {
