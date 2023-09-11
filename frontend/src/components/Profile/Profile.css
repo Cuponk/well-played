@@ -35,3 +35,8 @@
 .empty-game-link {
 	display: contents;
 }
+
+.no-games-image {
+	height: 320px;
+	width: 17.5%;
+}
