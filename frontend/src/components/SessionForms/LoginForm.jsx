@@ -26,12 +26,9 @@ function LoginForm() {
     dispatch(login({ username, password }));
   }
 
-
-
   return (
     <div className="form-container">
       <div className="form-container-wrapper">
-
         <form className="session-form" onSubmit={handleSubmit}>
           <h2>Log In Form</h2>
           <label>
