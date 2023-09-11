@@ -18,6 +18,9 @@ router.get('/:reviewId', async (req, res) => {
 	}
 })
 
+// Get all reviews for a specific game
+// router.get('/game/:gameId/reviews', async (req, res) => {
+
 // Post a review
 router.post('/', async (req, res) => {
 	try {

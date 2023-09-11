@@ -14,6 +14,10 @@ const reviewSchema = new Schema({
 		type: String,
 		required: true
 	},
+	overallRating: {
+		type: Number,
+		required: true
+	},
 	gameplayRating: {
 		type: Number,
 		required: true
