@@ -43,7 +43,7 @@ function GamesIndex() {
 
     setPageButton(true);
     
-    parseFriends(fin);
+    parseFriends(games);
 
   }
 
