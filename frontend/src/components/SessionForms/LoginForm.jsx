@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './SessionForm.css';
-
 import { login, clearSessionErrors } from '../../store/session';
+import DemoUserLogin from './DemoUserLogin';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -25,6 +25,8 @@ function LoginForm() {
     e.preventDefault();
     dispatch(login({ username, password }));
   }
+
+
 
   return (
     <div className="form-container">
@@ -52,6 +54,9 @@ function LoginForm() {
           </label>
           <button disabled={!username || !password}>Log In</button>
         </form>
+        <div className="session-form">
+          <DemoUserLogin />
+        </div>
       </div>
     </div>
 
