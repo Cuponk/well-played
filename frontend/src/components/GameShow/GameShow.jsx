@@ -13,9 +13,11 @@ import wishlistButton from "../../assets/images/wishlist.svg";
 import FilledWishlistButton from "../../assets/images/filled-heart.svg";
 import { useSelector } from "react-redux";
 import Review from "./Review";
+import CreateReview from "../CreateReview/CreateReview";
 
 const GameShow = () => {
 	const { id } = useParams();
+	const currentUser = useSelector(state => state.user);
 	const [loaded, setLoaded] = useState(false);
 	const [game, setGame] = useState({});
 	const [cover, setCover] = useState("");
@@ -23,7 +25,7 @@ const GameShow = () => {
 	const [screenshots, setScreenshots] = useState([]);
 	const ownedGames = useSelector(state => state.ownedGames);
 	const wishlist = useSelector(state => state.wishlist);
-	const [reviews, setReviews] = useState([]); 
+	const [reviews, setReviews] = useState([]);
 	const [ownedIcon, setOwnedIcon] = useState(() => {
 		return id.toString() in ownedGames ? FilledLibraryButton : LibraryButton;
 	});
@@ -31,6 +33,7 @@ const GameShow = () => {
 	const [wishlistIcon, setWishlistIcon] = useState(() => {
 		return id.toString() in wishlist ? FilledWishlistButton : wishlistButton;
 	});
+	const [showCreateReview, setShowCreateReview] = useState(false);
 
 	const parseImages = (url, type) => {
 		if (!url) {
@@ -86,7 +89,7 @@ const GameShow = () => {
 			.then((data) => {
 				setReviews(data);
 			}
-		);
+			);
 	}, [id]);
 
 	return (
@@ -120,6 +123,10 @@ const GameShow = () => {
 						</div>
 					</div>
 					<div className="reviews">
+						{/* Hide the review button unless a user is logged in */}
+						{currentUser.id &&
+							<button onClick={() => setShowCreateReview(true)}>Create a Review</button>}
+						{showCreateReview && <CreateReview gameId={id} closeModal={() => setShowCreateReview(false)} user={currentUser} />}
 						{reviews.map((review) => (
 							<Review review={review} />
 						))}

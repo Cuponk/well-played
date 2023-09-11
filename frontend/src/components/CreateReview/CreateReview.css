@@ -1,0 +1,25 @@
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+
+  z-index: 11;
+  width: 50vw;
+  /* max-width: 1080px; */
+  height: 86vh;
+  /* max-height: 720px; */
+
+  display: flex;
+}
