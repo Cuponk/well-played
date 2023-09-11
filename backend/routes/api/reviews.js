@@ -45,7 +45,6 @@ router.post('/', async (req, res) => {
 router.delete('/:reviewId', async (req, res) => {
 	try {
 		const review = await Review.findById(req.params.reviewId)
-		console.log(review);
 		if(!review) {
 			return res.json({ message: 'Review not found'})
 		}
