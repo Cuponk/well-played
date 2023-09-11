@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const { faker } = require('@faker-js/faker');
 const CustomGame = require("../models/CustomGame");
 const Friendship = require("../models/Friendship");
+const Review = require("../models/Review");
 
 const NUM_SEED_USERS = 10;
 
@@ -88,6 +89,20 @@ customGames.push(
 	})
 )
 
+let reviews = [];
+
+reviews.push(
+	new Review({
+		authorId: '64ff814c12ee7d5e25950b19',
+		gameId: '72',
+		description: 'This game is great!',
+		overallRating: 5,
+		gameplayRating: 5,
+		storyRating: 5,
+		visualsRating: 5
+	})
+)
+
 
 // Connect to database
 mongoose
@@ -109,6 +124,7 @@ const insertSeeds = () => {
 		.then(() => Friendship.collection.drop())
 		.then(() => User.insertMany(users))
 		.then(() => CustomGame.insertMany(customGames))
+		.then(() => Review.insertMany(reviews))
 		.then(() => {
 			console.log("Done!");
 			mongoose.disconnect();

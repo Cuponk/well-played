@@ -7,7 +7,8 @@ const Review = mongoose.model("Review");
 router.get('/:reviewId', async (req, res) => {
 	const reviewId = req.params.reviewId;
 	try {
-		const review = await Review.findById(reviewId);
+		const review = await Review.findById(reviewId)
+		.populate('authorId')
 		if (review) {
 			res.json(review);
 		} else {
@@ -15,6 +16,24 @@ router.get('/:reviewId', async (req, res) => {
 		}
 	} catch (err) {
 		res.json({ message: `Error getting ${reviewId} review` })
+	}
+})
+
+// Get all reviews for a specific game
+router.get('/reviews/:gameId', async (req, res) => {
+	const gameId = req.params.gameId;
+	try {
+		const review = await Review.find({gameId: gameId})
+									.populate('authorId')
+		if (review) {
+			res.json(review);
+		} else {
+			res.json({ message: `No review found for gameId: ${gameId}` })
+		}
+		
+	}
+	catch (err) {
+		res.json({ message: `Error getting reviews for gameId: ${gameId}` })
 	}
 })
 
@@ -42,7 +61,6 @@ router.post('/', async (req, res) => {
 router.delete('/:reviewId', async (req, res) => {
 	try {
 		const review = await Review.findById(req.params.reviewId)
-		console.log(review);
 		if(!review) {
 			return res.json({ message: 'Review not found'})
 		}
@@ -64,5 +82,6 @@ router.get('/', async (req, res) => {
 		res.json({ message: 'Error getting all reviews' })
 	}
 })
+
 
 module.exports = router;

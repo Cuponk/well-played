@@ -42,8 +42,10 @@ function GamesIndex() {
       })
 
     setPageButton(true);
-    
-    parseFriends(games);
+    // if (currentUser) {
+      
+    //   parseFriends(games);
+    // }
 
   }
 
@@ -51,12 +53,14 @@ function GamesIndex() {
   const handlePaginate = (e) => {
     e.preventDefault();
     setPage(page + 1);
+    console.log(page)
     const payload = {
       search: search,
       genre: genre,
       year: parseYear(year),
     }
-    jwtFetch(`/api/igdb/search/advanced/${page}`, {
+    console.log(payload);
+    jwtFetch(`/api/igdb/search/advanced/page/${page}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -80,23 +84,24 @@ function GamesIndex() {
   }
 
   //placeholder for friends, copilot did this
-  const parseFriends = (games) => {
-    const payload = {
-      games: games,
-      friends: friends,
-    }
-    jwtFetch(`/api/igdb/search/advanced/friends`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((res) => res.json())
-      .then((fin) => {
-        setGames(fin);
-      })
-  }
+  // const parseFriends = (games) => {
+  //   const payload = {
+  //     games: games,
+  //     friends: friends,
+  //   }
+  //   jwtFetch(`/api/igdb/search/advanced/friends`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(payload),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((fin) => {
+  //       setGames(fin);
+  //     })
+      
+  // }
 
   return (
     <>
