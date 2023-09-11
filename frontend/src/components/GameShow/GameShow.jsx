@@ -12,6 +12,7 @@ import FilledLibraryButton from "../../assets/images/filled-library.svg";
 import wishlistButton from "../../assets/images/wishlist.svg";
 import FilledWishlistButton from "../../assets/images/filled-heart.svg";
 import { useSelector } from "react-redux";
+import Review from "./Review";
 
 const GameShow = () => {
 	const { id } = useParams();
@@ -22,7 +23,7 @@ const GameShow = () => {
 	const [screenshots, setScreenshots] = useState([]);
 	const ownedGames = useSelector(state => state.ownedGames);
 	const wishlist = useSelector(state => state.wishlist);
-
+	const [reviews, setReviews] = useState([]); 
 	const [ownedIcon, setOwnedIcon] = useState(() => {
 		return id.toString() in ownedGames ? FilledLibraryButton : LibraryButton;
 	});
@@ -80,6 +81,12 @@ const GameShow = () => {
 				};
 			});
 
+		jwtFetch(`/api/reviews/reviews/${id}`)
+			.then((res) => res.json())
+			.then((data) => {
+				setReviews(data);
+			}
+		);
 	}, [id]);
 
 	return (
@@ -104,7 +111,20 @@ const GameShow = () => {
 						</div>
 					</div>
 				</div>
-				<div className="bottom-half"></div>
+				<div className="bottom-half">
+					<h2 className="reviews-title">Reviews</h2>
+					<div className="total-rating-base">
+						<div className="total-rating">
+						</div>
+						<div className="total-sub-rating">
+						</div>
+					</div>
+					<div className="reviews">
+						{reviews.map((review) => (
+							<Review review={review} />
+						))}
+					</div>
+				</div>
 			</>
 		)
 	);
