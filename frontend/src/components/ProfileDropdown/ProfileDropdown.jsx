@@ -21,6 +21,7 @@ export default function ProfileDropdown() {
     <div
       className="dropdown"
       onClick={() => setIsOpen(!isOpen)}
+    //   onMouseLeave={() => setIsOpen(false)}
     >
       <li className="user-container">
         <h2>{currentUser.username}</h2>
