@@ -53,7 +53,6 @@ export default function FriendsList() {
 
       <div className="friends-mini-section">
         <h3>Search for Friends</h3>
-        <h3>({otherUsers.length})</h3>
       </div>
       <div className="friends-content last-friends-content">
         {otherUsers.length > 0 ? otherUsers?.map(user => {
