@@ -6,7 +6,7 @@ function DemoUserLogin() {
   const dispatch = useDispatch();
 
   const loginDemoUser = () => {
-    dispatch(login({ username: 'demo5-user', password: 'hello123' }));
+    dispatch(login({ username: 'demo-user', password: 'hello123' }));
   }
 
   return (
