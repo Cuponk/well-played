@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from '../../store/session';
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
@@ -31,7 +31,6 @@ export default function ProfileDropdown() {
         <div className="dropdown-content">
           <li><NavLink to="/profile">View Profile</NavLink></li>
           <li><NavLink to="/search">Search Games</NavLink></li>
-        
           <li onClick={logoutUser}>Log Out</li>
         </div>
       )}
