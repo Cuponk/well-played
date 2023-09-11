@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './SessionForm.css';
 import { signup, clearSessionErrors } from '../../store/session';
+import DemoUserLogin from './DemoUserLogin';
 
 function SignupForm() {
   const [email, setEmail] = useState('');
@@ -95,8 +96,10 @@ function SignupForm() {
             />
           </label>
           <button disabled={!email || !username || !password || password !== password2}>Sign Up</button>
-
         </form>
+        <div className="session-form">
+          <DemoUserLogin />
+        </div>
       </div>
     </div>
   );
