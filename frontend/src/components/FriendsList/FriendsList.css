@@ -2,3 +2,26 @@
   display: flex;
   flex-direction: column;
 }
+
+.friends-mini-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 300px;
+  width: 100%;
+}
+
+.friends-mini-section h3 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.friends-placeholder {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.last-friends-content {
+  margin-top: 0.25rem;
+}
