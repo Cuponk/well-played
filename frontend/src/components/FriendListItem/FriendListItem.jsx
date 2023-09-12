@@ -35,17 +35,16 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 		<div className='friend-item-container'>
 			{friendship && (
 				<>
-					<div className='user-icon'>
+					<div className='friends-user-icon'>
 						<i className='fa-regular fa-user'></i>
 						<p className='username-text'>{user.username}</p>
 					</div>
-					<i className='fa-regular fa-user'></i>
 					<button className='negative-friend-button' onClick={removeFriend}>Remove</button>
 				</>
 			)}
 			{!friendship && status === 'request' && (
 				<>
-					<div className='user-icon'>
+					<div className='friends-user-icon'>
 						<i className='fa-regular fa-user'></i>
 						<p className='username-text'>{user.sender.username}</p>
 					</div>
@@ -57,7 +56,7 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 			)}
 			{!friendship && status === 'pending' && (
 				<>
-					<div className='user-icon'>
+					<div className='friends-user-icon'>
 						<i className='fa-regular fa-user'></i>
 						<p className='username-text'>{user.receiver.username}</p>
 					</div>
@@ -68,7 +67,7 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 			)}
 			{!friendship && status === 'none' && (
 				<>
-					<div className='user-icon'>
+					<div className='friends-user-icon'>
 						<i className='fa-regular fa-user'></i>
 						<p className='username-text'>{user.username}</p>
 					</div>

@@ -13,6 +13,7 @@ import wishlistButton from "../../assets/images/wishlist.svg";
 import FilledWishlistButton from "../../assets/images/filled-heart.svg";
 import { useSelector } from "react-redux";
 import Review from "../ReviewItem/ReviewItem";
+import CreateReview from "../CreateReview/CreateReview";
 import { getReviews } from "../../store/reviews";
 import CreateReview from "../CreateReview/CreateReview";
 import RatingsBar from "../RatingsBar/RatingsBar";
@@ -142,7 +143,7 @@ const GameShow = () => {
 					<div className="reviews">
 						{/* Hide the add review button unless a user is logged in */}
 						{currentUser.id &&
-							<button onClick={() => setShowCreateReview(true)}>Create a Review</button>}
+							<button className="add-review" onClick={() => setShowCreateReview(true)}>Create a Review</button>}
 						{showCreateReview && <CreateReview game={game} closeModal={() => setShowCreateReview(false)} user={currentUser} />}
 						{reviews.map((review) => (
 							<Review review={review} />
