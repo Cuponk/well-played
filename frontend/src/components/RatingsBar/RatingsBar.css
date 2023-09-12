@@ -7,12 +7,14 @@
 
 .ratings-type {
 	font-size: 16px;
+	font-weight: 500;
 	width: 15%;
 }
 
 .ratings-ratings {
 	font-size: 16px;
-	padding-left: 10px;
+	font-weight: 500;
+	padding-left: 1rem;
 }
 
 

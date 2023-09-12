@@ -16,6 +16,7 @@ import Review from "../ReviewItem/ReviewItem";
 import { getReviews } from "../../store/reviews";
 import CreateReview from "../CreateReview/CreateReview";
 import RatingsBar from "../RatingsBar/RatingsBar";
+import { AiFillStar } from "react-icons/ai";
 
 const GameShow = () => {
 	const { id } = useParams();
@@ -62,16 +63,15 @@ const GameShow = () => {
 	}
 
 	const handleRating = (type) => {
-		if (reviews) {
+		if (reviews.length > 0) {
 			let sum = 0;
 			reviews.map(review => {
 				sum += review[type];
 			})
 			const avg = sum / reviews.length;
 			return avg.toFixed(2);
-		} else {
-			return "No ratings yet"
 		}
+		return 0;
 	}
 
 	useEffect(() => {
@@ -130,7 +130,8 @@ const GameShow = () => {
 				<div className="game-user-info">
 					<div className="total-rating-base">
 						<div className="total-rating">
-							{handleRating('overallRating')}
+							<p className="overall-rating-text">{handleRating('overallRating')} </p>
+							<AiFillStar className="total-rating-star-icon"/>
 						</div>
 						<div className="total-sub-rating">
 							<RatingsBar type={"Gameplay"} rating={handleRating('gameplayRating')}/> 

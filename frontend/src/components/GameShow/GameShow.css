@@ -40,14 +40,25 @@
 }
 
 .total-rating-base {
-	margin-top: 24vh;
+	margin-top: 12rem;
 	width: 800px;
 }
 
 .total-rating {
+	display: flex;
+	align-items: center;
 	text-align: left;
+}
+
+.overall-rating-text {
 	font-weight: 700;
-	font-size: 40px;
+	font-size: 36px;
+}
+
+.total-rating-star-icon {
+	font-size: 2rem;
+	margin: 0.25rem;
+	color: var(--theme-purple);
 }
 
 .reviews {
