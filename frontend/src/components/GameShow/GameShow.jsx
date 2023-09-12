@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import Review from "../ReviewItem/ReviewItem";
 import { getReviews } from "../../store/reviews";
 import CreateReview from "../CreateReview/CreateReview";
+import RatingsBar from "../RatingsBar/RatingsBar";
 
 const GameShow = () => {
 	const { id } = useParams();
@@ -129,12 +130,12 @@ const GameShow = () => {
 				<div className="game-user-info">
 					<div className="total-rating-base">
 						<div className="total-rating">
-							Total Rating is: {handleRating('overallRating')}
+							{handleRating('overallRating')}
 						</div>
 						<div className="total-sub-rating">
-							Gameplay Rating is: {handleRating('gameplayRating')}<br />
-							Story Rating is: {handleRating('storyRating')}   <br />
-							Visuals Rating is: {handleRating('visualsRating')} <br />
+							<RatingsBar type={"Gameplay"} rating={handleRating('gameplayRating')}/> 
+							<RatingsBar type={"Story"} rating={handleRating('storyRating')}/>
+							<RatingsBar type={"Visuals"} rating={handleRating('visualsRating')}/>
 						</div>
 					</div>
 					<div className="reviews">

@@ -41,6 +41,13 @@
 
 .total-rating-base {
 	margin-top: 24vh;
+	width: 800px;
+}
+
+.total-rating {
+	text-align: left;
+	font-weight: 700;
+	font-size: 40px;
 }
 
 .reviews {
