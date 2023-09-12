@@ -22,6 +22,10 @@
     padding: 0 10px;
 }
 
+.fa-star {
+    color: var(--theme-purple);
+}
+
 .name-overall {
     display: flex;
     flex-direction: column;
