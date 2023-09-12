@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./CreateReview.css";
 import { useDispatch } from "react-redux";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { createReview } from "../../store/reviews";
 
 function CreateReview({ game, closeModal, user }) {
   const dispatch = useDispatch();
@@ -23,16 +24,15 @@ function CreateReview({ game, closeModal, user }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const reviewData = {
-      userId: user.id,
+      authorId: user.id,
       gameId: game.id,
       description: body,
       overallRating: ratingValue.Overall,
       gameplayRating: ratingValue.Gameplay,
-      visualsRating: ratingValue.Visuals,
-      storyRating: ratingValue.Story
+      storyRating: ratingValue.Story,
+      visualsRating: ratingValue.Visuals
     }
-    // TODO replace with actual thunk action
-    // dispatch(createReview(reviewData));
+    dispatch(createReview(reviewData));
     closeModal();
   }
 
