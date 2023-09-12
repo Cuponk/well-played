@@ -39,7 +39,6 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 						<i className='fa-regular fa-user'></i>
 						<p className='username-text'>{user.username}</p>
 					</div>
-					<i className='fa-regular fa-user'></i>
 					<button className='negative-friend-button' onClick={removeFriend}>Remove</button>
 				</>
 			)}
