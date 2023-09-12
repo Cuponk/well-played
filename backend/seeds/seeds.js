@@ -93,13 +93,25 @@ let reviews = [];
 
 reviews.push(
 	new Review({
-		authorId: '64ff814c12ee7d5e25950b19',
+		authorId: users[0]._id,
 		gameId: '72',
 		description: 'This game is great!',
 		overallRating: 5,
 		gameplayRating: 5,
 		storyRating: 5,
 		visualsRating: 5
+	})
+)
+
+reviews.push(
+	new Review({
+		authorId: users[1]._id,
+		gameId: '72',
+		description: 'This game is garbage, absolute trash!',
+		overallRating: 1,
+		gameplayRating: 1,
+		storyRating: 1,
+		visualsRating: 1
 	})
 )
 
@@ -121,6 +133,7 @@ const insertSeeds = () => {
 	console.log("Resetting db and seeding users...");
 	User.collection.drop()
 		.then(() => CustomGame.collection.drop())
+		.then(() => Review.collection.drop())
 		.then(() => Friendship.collection.drop())
 		.then(() => User.insertMany(users))
 		.then(() => CustomGame.insertMany(customGames))
