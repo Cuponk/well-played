@@ -17,9 +17,6 @@
 
   z-index: 11;
   width: 50vw;
-  /* max-width: 1080px; */
-  height: 86vh;
-  /* max-height: 720px; */
   border-radius: 5px;
 }
 
@@ -28,7 +25,6 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
-  padding: 1rem;
 }
 
 .create-review-header {
@@ -37,6 +33,7 @@
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #e6e6e6;
+  padding: 1rem;
 }
 
 .create-review-game-title {
@@ -45,11 +42,39 @@
 }
 
 /* Ratings star stuff */
+.create-review-rating {
+  padding: 2rem;
+}
+
 .create-review-rating-category-stars {
   display: flex;
   flex-direction: row;
 }
 
+.create-review-rating-category-star {
+  font-size: 2rem;
+  margin: 0.5rem;
+}
+
 .create-review-rating-category-star-icon {
   color: var(--theme-purple);
+}
+
+.create-review-body {
+  padding: 1rem;
+}
+
+.create-review-body textarea {
+  width: 100%;
+  height: 100px;
+  box-sizing: border-box;
+  padding: 0.5rem;
+}
+
+.create-review-submit {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  box-sizing: border-box;
 }
