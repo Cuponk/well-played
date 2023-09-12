@@ -16,7 +16,13 @@ export const getReviews = (id) => async (dispatch) => {
 const reviewsReducer = (state = {}, action) => {
     switch (action.type) {
         case RECEIVE_REVIEWS:
-            return {...action.reviews};
+			const newState = {};
+			if (action.reviews.length > 0) {
+				action.reviews.forEach((review) => {
+					newState[review._id] = review;
+				})
+			}
+            return newState;
         default:
             return state;
     }

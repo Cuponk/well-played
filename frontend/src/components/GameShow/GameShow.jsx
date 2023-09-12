@@ -14,6 +14,7 @@ import FilledWishlistButton from "../../assets/images/filled-heart.svg";
 import { useSelector } from "react-redux";
 import Review from "../ReviewItem/ReviewItem";
 import { getReviews } from "../../store/reviews";
+import CreateReview from "../CreateReview/CreateReview";
 
 const GameShow = () => {
 	const { id } = useParams();
@@ -25,7 +26,7 @@ const GameShow = () => {
 	const [screenshots, setScreenshots] = useState([]);
 	const ownedGames = useSelector(state => state.ownedGames);
 	const wishlist = useSelector(state => state.wishlist);
-	const reviews = useSelector(state => Object.values(state.reviews)); 
+	const reviews = useSelector(state => state.reviews); 
 
 	const [ownedIcon, setOwnedIcon] = useState(() => {
 		return id.toString() in ownedGames ? FilledLibraryButton : LibraryButton;
@@ -59,6 +60,13 @@ const GameShow = () => {
 		releaseYear: parseDate(game?.first_release_date)
 	}
 
+	const handleTotalRating = () => {
+		let sum;
+		reviews.forEach(review => {
+			sum += review
+		})
+	}
+
 	useEffect(() => {
 		jwtFetch(`/api/igdb/${id}`)
 			.then((res) => res.json())
@@ -88,7 +96,6 @@ const GameShow = () => {
 
 	useEffect(() => {
 		dispatch(getReviews(id));
-		console.log(reviews);
 	}, [dispatch, id]);
 
 	return (
@@ -116,8 +123,10 @@ const GameShow = () => {
 				<div className="game-user-info">
 					<div className="total-rating-base">
 						<div className="total-rating">
+							{console.log(reviews)}
 						</div>
 						<div className="total-sub-rating">
+
 						</div>
 					</div>
 					<div className="reviews">
@@ -125,7 +134,7 @@ const GameShow = () => {
 						{currentUser.id &&
 							<button onClick={() => setShowCreateReview(true)}>Create a Review</button>}
 						{showCreateReview && <CreateReview game={game} closeModal={() => setShowCreateReview(false)} user={currentUser} />}
-						{reviews.map((review) => (
+						{Object.values(reviews).map((review) => (
 							<Review review={review} />
 						))}
 					</div>

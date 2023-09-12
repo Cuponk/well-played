@@ -5,7 +5,7 @@ const Review = ({review}) => {
 
     let starIcon;
 
-    switch (review.overallRating) {
+    switch (review?.overallRating) {
         case 1:
             starIcon = 
             <>
@@ -66,14 +66,14 @@ const Review = ({review}) => {
             <div className="author">
                 <i className='fa-regular fa-user'></i>
                 {starIcon}
-                <p>{review.authorId.username}</p>
+                <p>{review?.authorId?.username}</p>
             </div>
             <div className="sub-ratings">
-                <h3>Gameplay: {review.gameplayRating}</h3>
-                <h3>Visuals: {review.visualsRating}</h3>
-                <h3>Story: {review.storyRating}</h3>
+                <h3>Gameplay: {review?.gameplayRating}</h3>
+                <h3>Visuals: {review?.visualsRating}</h3>
+                <h3>Story: {review?.storyRating}</h3>
             </div>
-            <p>{review.description}</p>
+            <p>{review?.description}</p>
         </div>
     )
 }
