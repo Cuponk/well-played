@@ -26,7 +26,7 @@ const GameShow = () => {
 	const [screenshots, setScreenshots] = useState([]);
 	const ownedGames = useSelector(state => state.ownedGames);
 	const wishlist = useSelector(state => state.wishlist);
-	const reviews = useSelector(state => state.reviews); 
+	const reviews = useSelector(state => Object.values(state.reviews));
 
 	const [ownedIcon, setOwnedIcon] = useState(() => {
 		return id.toString() in ownedGames ? FilledLibraryButton : LibraryButton;
@@ -60,11 +60,17 @@ const GameShow = () => {
 		releaseYear: parseDate(game?.first_release_date)
 	}
 
-	const handleTotalRating = () => {
-		let sum;
-		reviews.forEach(review => {
-			sum += review
-		})
+	const handleRating = (type) => {
+		if (reviews) {
+			let sum = 0;
+			reviews.map(review => {
+				sum += review[type];
+			})
+			const avg = sum / reviews.length;
+			return avg.toFixed(2);
+		} else {
+			return "No ratings yet"
+		}
 	}
 
 	useEffect(() => {
@@ -123,10 +129,12 @@ const GameShow = () => {
 				<div className="game-user-info">
 					<div className="total-rating-base">
 						<div className="total-rating">
-							{console.log(reviews)}
+							Total Rating is: {handleRating('overallRating')}
 						</div>
 						<div className="total-sub-rating">
-
+							Gameplay Rating is: {handleRating('gameplayRating')}<br />
+							Story Rating is: {handleRating('storyRating')}   <br />
+							Visuals Rating is: {handleRating('visualsRating')} <br />
 						</div>
 					</div>
 					<div className="reviews">
@@ -134,7 +142,7 @@ const GameShow = () => {
 						{currentUser.id &&
 							<button onClick={() => setShowCreateReview(true)}>Create a Review</button>}
 						{showCreateReview && <CreateReview game={game} closeModal={() => setShowCreateReview(false)} user={currentUser} />}
-						{Object.values(reviews).map((review) => (
+						{reviews.map((review) => (
 							<Review review={review} />
 						))}
 					</div>

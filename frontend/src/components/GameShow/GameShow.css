@@ -39,6 +39,10 @@
     flex-grow: 1;
 }
 
+.total-rating-base {
+	margin-top: 24vh;
+}
+
 .reviews {
     width: 100%;
     display: flex;
