@@ -28,10 +28,18 @@
 .profile-page-friends {
 	display: flex;
 	flex-direction: column;
-	width: 33%;
+	min-width: 300px;
+	width: 30%;
 	background-color: var(--theme-gray);
+	margin: 0.75rem;
+	border-radius: 5px;
 }
 
 .empty-game-link {
 	display: contents;
+}
+
+.no-games-image {
+	height: 320px;
+	width: 17.5%;
 }

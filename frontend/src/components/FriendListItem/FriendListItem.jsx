@@ -35,13 +35,20 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 		<div className='friend-item-container'>
 			{friendship && (
 				<>
-					<p>{user.username}</p>
+					<div className='user-icon'>
+						<i className='fa-regular fa-user'></i>
+						<p className='username-text'>{user.username}</p>
+					</div>
+					<i className='fa-regular fa-user'></i>
 					<button className='negative-friend-button' onClick={removeFriend}>Remove</button>
 				</>
 			)}
 			{!friendship && status === 'request' && (
 				<>
-					<p>{user.sender.username}</p>
+					<div className='user-icon'>
+						<i className='fa-regular fa-user'></i>
+						<p className='username-text'>{user.sender.username}</p>
+					</div>
 					<div className='friend-buttons double-button'>
 						<button className='accept-friend-button' onClick={acceptFriendRequest}>Accept</button>
 						<button className='negative-friend-button' onClick={declineFriendRequest}>Decline</button>
@@ -50,7 +57,10 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 			)}
 			{!friendship && status === 'pending' && (
 				<>
-					<p>{user.receiver.username}</p>
+					<div className='user-icon'>
+						<i className='fa-regular fa-user'></i>
+						<p className='username-text'>{user.receiver.username}</p>
+					</div>
 					<div className='friend-buttons'>
 						<button className='negative-friend-button' onClick={cancelFriendRequest}>Cancel</button>
 					</div>
@@ -58,7 +68,10 @@ const FriendListItem = ({ user, friendship = false, status = '' }) => {
 			)}
 			{!friendship && status === 'none' && (
 				<>
-					<p>{user.username}</p>
+					<div className='user-icon'>
+						<i className='fa-regular fa-user'></i>
+						<p className='username-text'>{user.username}</p>
+					</div>
 					<div className='friend-buttons'>
 						<button className='accept-friend-button' onClick={sendFriendRequest}>Request</button>
 					</div>

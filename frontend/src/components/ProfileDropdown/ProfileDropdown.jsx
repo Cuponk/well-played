@@ -23,6 +23,7 @@ export default function ProfileDropdown() {
       onClick={() => setIsOpen(!isOpen)}
     >
       <li className="user-container">
+        <i className="fa-solid fa-user-circle profile-avatar"></i>
         <h2>{currentUser.username}</h2>
         <i className="fa-solid fa-chevron-down dropdown-arrow"></i>
       </li>

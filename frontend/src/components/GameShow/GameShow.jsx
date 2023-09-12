@@ -17,6 +17,7 @@ import { getReviews } from "../../store/reviews";
 
 const GameShow = () => {
 	const { id } = useParams();
+	const currentUser = useSelector(state => state.user);
 	const [loaded, setLoaded] = useState(false);
 	const [game, setGame] = useState({});
 	const [cover, setCover] = useState("");
@@ -25,6 +26,7 @@ const GameShow = () => {
 	const ownedGames = useSelector(state => state.ownedGames);
 	const wishlist = useSelector(state => state.wishlist);
 	const reviews = useSelector(state => Object.values(state.reviews)); 
+
 	const [ownedIcon, setOwnedIcon] = useState(() => {
 		return id.toString() in ownedGames ? FilledLibraryButton : LibraryButton;
 	});
@@ -32,6 +34,7 @@ const GameShow = () => {
 	const [wishlistIcon, setWishlistIcon] = useState(() => {
 		return id.toString() in wishlist ? FilledWishlistButton : wishlistButton;
 	});
+	const [showCreateReview, setShowCreateReview] = useState(false);
 
 	const parseImages = (url, type) => {
 		if (!url) {
@@ -118,6 +121,10 @@ const GameShow = () => {
 						</div>
 					</div>
 					<div className="reviews">
+						{/* Hide the add review button unless a user is logged in */}
+						{currentUser.id &&
+							<button onClick={() => setShowCreateReview(true)}>Create a Review</button>}
+						{showCreateReview && <CreateReview game={game} closeModal={() => setShowCreateReview(false)} user={currentUser} />}
 						{reviews.map((review) => (
 							<Review review={review} />
 						))}

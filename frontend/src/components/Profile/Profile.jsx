@@ -5,6 +5,7 @@ import GameListItem from '../GameListItem/GameListItem';
 import FriendListItem from '../FriendListItem/FriendListItem';
 import './Profile.css';
 import FriendsList from '../FriendsList/FriendsList';
+import noGamesImage from '../../assets/images/empty-list.png';
 
 function Profile() {
 	const currentUser = useSelector(state => state.user);
@@ -28,7 +29,7 @@ function Profile() {
 					<div className='profile-page-wishlist'>
 						{wishlist.length === 0 && (
 							<NavLink to={'/search'} className='empty-game-link'>
-								<GameListItem />
+								<img src={noGamesImage} alt='' className='no-games-image'/>
 							</NavLink>
 						)}
 						{handleGamesList(wishlist)}
@@ -38,7 +39,7 @@ function Profile() {
 					<div className='profile-page-library'>
 						{ownedGames.length === 0 && (
 							<NavLink to={'/search'} className='empty-game-link'>
-								<GameListItem />
+								<img src={noGamesImage} alt='' className='no-games-image'/>
 							</NavLink>
 						)}
 						{handleGamesList(ownedGames)}
