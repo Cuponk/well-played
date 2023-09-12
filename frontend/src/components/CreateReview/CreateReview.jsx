@@ -12,8 +12,8 @@ function CreateReview({ game, closeModal, user }) {
     "Visuals": 0,
     "Story": 0
   });
-  // const [hoverRatingValue, setHoverRatingValue] = useState({ rating: '', num: 0 });
   const [ratingValue, setRating] = useState({ Overall: 0, Gameplay: 0, Visuals: 0, Story: 0 });
+  const [body, setBody] = useState("");
 
   const handleBackgroundClick = (e) => {
     e.stopPropagation();
@@ -22,14 +22,18 @@ function CreateReview({ game, closeModal, user }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const review = {
-    //   userId: user.id,
-    //   gameId: game.id,
-    //   rating: ratingValue,
-    //   body: e.target.body.value
-    // }
-    // dispatch(createReview(review));
-    // closeModal();
+    const reviewData = {
+      userId: user.id,
+      gameId: game.id,
+      description: body,
+      overallRating: ratingValue.Overall,
+      gameplayRating: ratingValue.Gameplay,
+      visualsRating: ratingValue.Visuals,
+      storyRating: ratingValue.Story
+    }
+    // TODO replace with actual thunk action
+    // dispatch(createReview(reviewData));
+    closeModal();
   }
 
   return (
@@ -75,7 +79,7 @@ function CreateReview({ game, closeModal, user }) {
             })}
           </div>
           <div className="create-review-body">
-            <textarea className="create-review-body-textarea" placeholder="Write your review here..."></textarea>
+            <textarea className="create-review-body-textarea" placeholder="Write your review here..." onChange={e => setBody(e.currentTarget.value)}></textarea>
           </div>
           <div className="create-review-submit">
             <button>Submit Review</button>

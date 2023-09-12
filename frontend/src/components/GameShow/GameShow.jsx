@@ -33,7 +33,7 @@ const GameShow = () => {
 	const [wishlistIcon, setWishlistIcon] = useState(() => {
 		return id.toString() in wishlist ? FilledWishlistButton : wishlistButton;
 	});
-	const [showCreateReview, setShowCreateReview] = useState(true);
+	const [showCreateReview, setShowCreateReview] = useState(false);
 
 	const parseImages = (url, type) => {
 		if (!url) {
