@@ -33,7 +33,7 @@ const GameShow = () => {
 	const [wishlistIcon, setWishlistIcon] = useState(() => {
 		return id.toString() in wishlist ? FilledWishlistButton : wishlistButton;
 	});
-	const [showCreateReview, setShowCreateReview] = useState(false);
+	const [showCreateReview, setShowCreateReview] = useState(true);
 
 	const parseImages = (url, type) => {
 		if (!url) {
@@ -123,10 +123,10 @@ const GameShow = () => {
 						</div>
 					</div>
 					<div className="reviews">
-						{/* Hide the review button unless a user is logged in */}
+						{/* Hide the add review button unless a user is logged in */}
 						{currentUser.id &&
 							<button onClick={() => setShowCreateReview(true)}>Create a Review</button>}
-						{showCreateReview && <CreateReview gameId={id} closeModal={() => setShowCreateReview(false)} user={currentUser} />}
+						{showCreateReview && <CreateReview game={game} closeModal={() => setShowCreateReview(false)} user={currentUser} />}
 						{reviews.map((review) => (
 							<Review review={review} />
 						))}

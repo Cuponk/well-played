@@ -20,6 +20,36 @@
   /* max-width: 1080px; */
   height: 86vh;
   /* max-height: 720px; */
+  border-radius: 5px;
+}
 
+.create-review-form {
   display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+}
+
+.create-review-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.create-review-game-title {
+  color: #6f7287;
+  margin: 0.5rem;
+}
+
+/* Ratings star stuff */
+.create-review-rating-category-stars {
+  display: flex;
+  flex-direction: row;
+}
+
+.create-review-rating-category-star-icon {
+  color: var(--theme-purple);
 }
