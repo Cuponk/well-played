@@ -34,7 +34,13 @@ export const createReview = (review) => async (dispatch) => {
 const reviewsReducer = (state = {}, action) => {
     switch (action.type) {
         case RECEIVE_REVIEWS:
-            return { ...action.reviews };
+			const newState = {};
+			if (action.reviews.length > 0) {
+				action.reviews.forEach((review) => {
+					newState[review._id] = review;
+				})
+			}
+            return newState;
         case ADD_REVIEW:
             return { ...state, [action.review._id]: action.review };
         default:

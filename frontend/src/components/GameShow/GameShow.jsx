@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 import Review from "../ReviewItem/ReviewItem";
 import CreateReview from "../CreateReview/CreateReview";
 import { getReviews } from "../../store/reviews";
+import RatingsBar from "../RatingsBar/RatingsBar";
+import { AiFillStar } from "react-icons/ai";
 
 const GameShow = () => {
 	const { id } = useParams();
@@ -60,6 +62,18 @@ const GameShow = () => {
 		releaseYear: parseDate(game?.first_release_date)
 	}
 
+	const handleRating = (type) => {
+		if (reviews.length > 0) {
+			let sum = 0;
+			reviews.map(review => {
+				sum += review[type];
+			})
+			const avg = sum / reviews.length;
+			return avg.toFixed(2);
+		}
+		return 0;
+	}
+
 	useEffect(() => {
 		jwtFetch(`/api/igdb/${id}`)
 			.then((res) => res.json())
@@ -89,7 +103,6 @@ const GameShow = () => {
 
 	useEffect(() => {
 		dispatch(getReviews(id));
-		console.log(reviews);
 	}, [dispatch, id]);
 
 	return (
@@ -116,16 +129,24 @@ const GameShow = () => {
 				</div>
 				<div className="game-user-info">
 					<div className="total-rating-base">
+						<div className="rating-header">
+							<p>Ratings and Reviews</p>
+							{currentUser.id &&
+							<button className="add-review" onClick={() => setShowCreateReview(true)}>Create a Review</button>}
+							{/* Hide the add review button unless a user is logged in */}
+							{showCreateReview && <CreateReview game={game} closeModal={() => setShowCreateReview(false)} user={currentUser} />}
+						</div>
 						<div className="total-rating">
+							<p className="overall-rating-text">{handleRating('overallRating')} </p>
+							<AiFillStar className="total-rating-star-icon"/>
 						</div>
 						<div className="total-sub-rating">
+							<RatingsBar type={"Gameplay"} rating={handleRating('gameplayRating')}/> 
+							<RatingsBar type={"Story"} rating={handleRating('storyRating')}/>
+							<RatingsBar type={"Visuals"} rating={handleRating('visualsRating')}/>
 						</div>
 					</div>
 					<div className="reviews">
-						{/* Hide the add review button unless a user is logged in */}
-						{currentUser.id &&
-							<button className="add-review" onClick={() => setShowCreateReview(true)}>Create a Review</button>}
-						{showCreateReview && <CreateReview game={game} closeModal={() => setShowCreateReview(false)} user={currentUser} />}
 						{reviews.map((review) => (
 							<Review review={review} />
 						))}
