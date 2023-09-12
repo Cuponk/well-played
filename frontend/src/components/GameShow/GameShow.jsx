@@ -15,7 +15,6 @@ import { useSelector } from "react-redux";
 import Review from "../ReviewItem/ReviewItem";
 import CreateReview from "../CreateReview/CreateReview";
 import { getReviews } from "../../store/reviews";
-import CreateReview from "../CreateReview/CreateReview";
 import RatingsBar from "../RatingsBar/RatingsBar";
 import { AiFillStar } from "react-icons/ai";
 
@@ -130,6 +129,13 @@ const GameShow = () => {
 				</div>
 				<div className="game-user-info">
 					<div className="total-rating-base">
+						<div className="rating-header">
+							<p>Ratings and Reviews</p>
+							{currentUser.id &&
+							<button className="add-review" onClick={() => setShowCreateReview(true)}>Create a Review</button>}
+							{/* Hide the add review button unless a user is logged in */}
+							{showCreateReview && <CreateReview game={game} closeModal={() => setShowCreateReview(false)} user={currentUser} />}
+						</div>
 						<div className="total-rating">
 							<p className="overall-rating-text">{handleRating('overallRating')} </p>
 							<AiFillStar className="total-rating-star-icon"/>
@@ -141,10 +147,6 @@ const GameShow = () => {
 						</div>
 					</div>
 					<div className="reviews">
-						{/* Hide the add review button unless a user is logged in */}
-						{currentUser.id &&
-							<button className="add-review" onClick={() => setShowCreateReview(true)}>Create a Review</button>}
-						{showCreateReview && <CreateReview game={game} closeModal={() => setShowCreateReview(false)} user={currentUser} />}
 						{reviews.map((review) => (
 							<Review review={review} />
 						))}
