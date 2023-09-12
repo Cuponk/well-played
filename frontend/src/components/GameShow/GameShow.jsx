@@ -12,7 +12,7 @@ import FilledLibraryButton from "../../assets/images/filled-library.svg";
 import wishlistButton from "../../assets/images/wishlist.svg";
 import FilledWishlistButton from "../../assets/images/filled-heart.svg";
 import { useSelector } from "react-redux";
-import Review from "./Review";
+import Review from "../ReviewItem/ReviewItem";
 import { getReviews } from "../../store/reviews";
 
 const GameShow = () => {
@@ -110,8 +110,7 @@ const GameShow = () => {
 						</div>
 					</div>
 				</div>
-				<div className="bottom-half">
-					<h2 className="reviews-title">Reviews</h2>
+				<div className="game-user-info">
 					<div className="total-rating-base">
 						<div className="total-rating">
 						</div>

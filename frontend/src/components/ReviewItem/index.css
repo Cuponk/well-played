@@ -1,0 +1,25 @@
+.review-box {
+    width: 800px;
+    height: 200px;
+    border: 1px solid black;
+    margin: 10px;
+}
+
+.author {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 50px;
+    padding: 0 10px;
+}
+
+.fa-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--theme-white-soft);
+    font-size: 30px;
+}
