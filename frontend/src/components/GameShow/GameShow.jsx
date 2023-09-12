@@ -6,14 +6,14 @@ import jwtFetch from "../../store/jwt";
 import "./GameShow.css";
 import OwnedGamesButton from "../OwnedGamesButton/OwnedGamesButton";
 import WishlistButton from "../WishlistButton/WishlistButton";
-
+import { useDispatch } from "react-redux";
 import LibraryButton from "../../assets/images/add-to-library.svg";
 import FilledLibraryButton from "../../assets/images/filled-library.svg";
 import wishlistButton from "../../assets/images/wishlist.svg";
 import FilledWishlistButton from "../../assets/images/filled-heart.svg";
 import { useSelector } from "react-redux";
-import Review from "./Review";
-import CreateReview from "../CreateReview/CreateReview";
+import Review from "../ReviewItem/ReviewItem";
+import { getReviews } from "../../store/reviews";
 
 const GameShow = () => {
 	const { id } = useParams();
@@ -25,11 +25,12 @@ const GameShow = () => {
 	const [screenshots, setScreenshots] = useState([]);
 	const ownedGames = useSelector(state => state.ownedGames);
 	const wishlist = useSelector(state => state.wishlist);
-	const [reviews, setReviews] = useState([]);
+	const reviews = useSelector(state => Object.values(state.reviews)); 
+
 	const [ownedIcon, setOwnedIcon] = useState(() => {
 		return id.toString() in ownedGames ? FilledLibraryButton : LibraryButton;
 	});
-
+	const dispatch = useDispatch();
 	const [wishlistIcon, setWishlistIcon] = useState(() => {
 		return id.toString() in wishlist ? FilledWishlistButton : wishlistButton;
 	});
@@ -83,14 +84,12 @@ const GameShow = () => {
 					setLoaded(true);
 				};
 			});
-
-		jwtFetch(`/api/reviews/reviews/${id}`)
-			.then((res) => res.json())
-			.then((data) => {
-				setReviews(data);
-			}
-			);
 	}, [id]);
+
+	useEffect(() => {
+		dispatch(getReviews(id));
+		console.log(reviews);
+	}, [dispatch, id]);
 
 	return (
 		loaded && (
@@ -114,8 +113,7 @@ const GameShow = () => {
 						</div>
 					</div>
 				</div>
-				<div className="bottom-half">
-					<h2 className="reviews-title">Reviews</h2>
+				<div className="game-user-info">
 					<div className="total-rating-base">
 						<div className="total-rating">
 						</div>

@@ -53,13 +53,11 @@ function GamesIndex() {
   const handlePaginate = (e) => {
     e.preventDefault();
     setPage(page + 1);
-    console.log(page)
     const payload = {
       search: search,
       genre: genre,
       year: parseYear(year),
     }
-    console.log(payload);
     jwtFetch(`/api/igdb/search/advanced/page/${page}`, {
       method: "POST",
       headers: {
