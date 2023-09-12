@@ -27,13 +27,13 @@
 	gap: 5px;
 }
 
-.user-icon {
+.friends-user-icon {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.user-icon .fa-user {
+.friends-user-icon .fa-user {
 	font-size: 1.5rem;
 	width: auto;
 	height: auto;
