@@ -1,5 +1,5 @@
 import jwtFetch from "./jwt";
-import { RECEIVE_CURRENT_USER } from "./session";
+import { RECEIVE_CURRENT_USER, RECEIVE_USER_LOGOUT } from "./session";
 
 const RECEIVE_WISHLIST_ITEM = "RECEIVE_WISHLIST_ITEM";
 const REMOVE_WISHLIST_ITEM = "REMOVE_WISHLIST_ITEM";
@@ -54,6 +54,8 @@ const wishlistReducer = (state = {}, action) => {
       const nextState = { ...state };
       delete nextState[action.gameId];
       return nextState;
+    case RECEIVE_USER_LOGOUT:
+      return {};
     default:
       return state;
   }

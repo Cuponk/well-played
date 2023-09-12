@@ -13,6 +13,7 @@ import wishlistButton from "../../assets/images/wishlist.svg";
 import FilledWishlistButton from "../../assets/images/filled-heart.svg";
 import { useSelector } from "react-redux";
 import Review from "../ReviewItem/ReviewItem";
+import CreateReview from "../CreateReview/CreateReview";
 import { getReviews } from "../../store/reviews";
 
 const GameShow = () => {
@@ -25,7 +26,7 @@ const GameShow = () => {
 	const [screenshots, setScreenshots] = useState([]);
 	const ownedGames = useSelector(state => state.ownedGames);
 	const wishlist = useSelector(state => state.wishlist);
-	const reviews = useSelector(state => Object.values(state.reviews)); 
+	const reviews = useSelector(state => Object.values(state.reviews));
 
 	const [ownedIcon, setOwnedIcon] = useState(() => {
 		return id.toString() in ownedGames ? FilledLibraryButton : LibraryButton;
@@ -123,7 +124,7 @@ const GameShow = () => {
 					<div className="reviews">
 						{/* Hide the add review button unless a user is logged in */}
 						{currentUser.id &&
-							<button onClick={() => setShowCreateReview(true)}>Create a Review</button>}
+							<button className="add-review" onClick={() => setShowCreateReview(true)}>Create a Review</button>}
 						{showCreateReview && <CreateReview game={game} closeModal={() => setShowCreateReview(false)} user={currentUser} />}
 						{reviews.map((review) => (
 							<Review review={review} />

@@ -1,5 +1,5 @@
 import jwtFetch from "./jwt";
-import { RECEIVE_CURRENT_USER } from "./session";
+import { RECEIVE_CURRENT_USER, RECEIVE_USER_LOGOUT } from "./session";
 
 const RECEIVE_OWNED_GAMES_ITEM = "RECEIVE_OWNED_GAMES_ITEM";
 const REMOVE_OWNED_GAMES_ITEM = "REMOVE_OWNED_GAMES_ITEM";
@@ -55,6 +55,8 @@ const ownedGamesReducer = (state = {}, action) => {
       const nextState = { ...state };
       delete nextState[action.gameId];
       return nextState;
+    case RECEIVE_USER_LOGOUT:
+      return {};
     default:
       return state;
   }

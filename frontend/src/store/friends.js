@@ -1,4 +1,4 @@
-import { RECEIVE_CURRENT_USER } from "./session";
+import { RECEIVE_CURRENT_USER, RECEIVE_USER_LOGOUT } from "./session";
 import { ACCEPT_FRIEND_REQUEST, REMOVE_FRIENDSHIP } from "./friendships";
 
 const friendsReducer = (state = {}, action) => {
@@ -19,6 +19,8 @@ const friendsReducer = (state = {}, action) => {
       const nextState = { ...state };
       delete nextState[action.friendshipId];
       return nextState;
+    case RECEIVE_USER_LOGOUT:
+      return {};
     default:
       return state;
   }
