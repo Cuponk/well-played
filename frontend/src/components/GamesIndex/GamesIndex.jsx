@@ -42,10 +42,9 @@ function GamesIndex() {
       })
 
     setPageButton(true);
-    // if (currentUser) {
-      
-    //   parseFriends(games);
-    // }
+    if (currentUser.id && wishlist) {
+      parseWishFriends(games);
+    }
 
   }
 
@@ -81,25 +80,17 @@ function GamesIndex() {
     return [start, end];
   }
 
-  //placeholder for friends, copilot did this
-  // const parseFriends = (games) => {
-  //   const payload = {
-  //     games: games,
-  //     friends: friends,
-  //   }
-  //   jwtFetch(`/api/igdb/search/advanced/friends`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(payload),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((fin) => {
-  //       setGames(fin);
-  //     })
-      
-  // }
+  //filter games by friends wishlist
+  const parseWishFriends = (games) => {
+    const friendWishlist = [];
+    friends.forEach((friend) => {
+      friendWishlist.push(...friend.wishlist);
+    })
+    const filteredGames = games.filter((game) => {
+      return friendWishlist.includes(game.id);
+    })
+    setGames(filteredGames);
+  }
 
   return (
     <>
