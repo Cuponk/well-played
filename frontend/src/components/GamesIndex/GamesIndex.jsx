@@ -127,7 +127,25 @@ function GamesIndex() {
     return filteredGames;
   };
 
-
+  useEffect(() => {
+    const payload = {
+      search: '',
+      genre: '',
+      year: parseYear('2023'),
+    }
+    jwtFetch(`/api/igdb/search/advanced/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => res.json())
+      .then((fin) => {
+        setGames(fin);
+        setPageButton(true);
+      })
+  }, [])
   
 
   return (
