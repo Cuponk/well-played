@@ -64,11 +64,10 @@
   align-items: center;
   justify-content: space-around;
   gap: 10px;
-  /* margin-bottom: 20px; */
   border-radius: 5px;
 }
 
-.advanced-setttings {
+.advanced-settings {
   display: flex;
   gap: 10px;
   justify-content: space-between;
