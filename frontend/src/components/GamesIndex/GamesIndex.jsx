@@ -133,53 +133,51 @@ function GamesIndex() {
   return (
     <>
       <div className="games-index-container">
+          <h2>Search for a game</h2>
         <form className="search-form" onSubmit={handleSubmit}>
-              <h2>Search for a game</h2>
-              <div className="search-form-top">
-                <button onClick={handleSubmit} className="submit-button"><i className="fa-solid fa-search"/></button>
-                <input
-                  className="search-input"
-                  type="text"
-                  placeholder="Search for a game"
-                  onChange={(e) => setSearch(e.target.value)}
-                  value={search}
-                />
-              </div>
-            <div className="advanced-dropdown">
-              <div className="advanced-dropdown-content">
-                <label className="genre"> 
-                  <select className="genre-select" onChange={(e) => setGenre(e.target.value)} value={genre}>
-                    <option value="">Genre</option>
-                    <option value="4">Fighting</option>
-                    <option value="5">Shooter</option>
-                    <option value="7">Music</option>
-                    <option value="8">Platform</option>
-                    <option value="9">Puzzle</option>
-                    <option value="10">Racing</option>
-                    <option value="12">Role-playing (RPG)</option>
-                    <option value="14">Sports</option>
-                    <option value="15">Strategy</option>
-                    <option value="25">Hack and slash/Beat 'em up</option>
-                    <option value="31">Adventure</option>
-                    <option value="32">Indie</option>
-                    <option value="34">Visual Novel</option>
-                    <option value="33">Arcade</option>
-                    <option value="36">MOBA</option>
-                  </select>
-                </label>
-                <label className="year">
-                  <input type="Number" className="year-input" placeholder="Year" onChange={(e) => setYear(e.target.value)} value={year}/>
-                </label>
-                <label className="wishlist">
-                  <input type="checkbox" className="wishlist-checkbox" onClick={() => setWishlist(!wishlist)}/>
-                  <span className="wishlist-span">Wishlisted by Friends</span>
-                </label>
-                <label className="library">
-                  <input type="checkbox" className="library-checkbox" onClick={() => setLibrary(!library)}/>
-                  <span className="library-span">Owned by friends</span>
-                </label>
-              </div>
-            </div>
+          <div className="search-form-top">
+            <button onClick={handleSubmit} className="submit-button"><i className="fa-solid fa-search"/></button>
+            <input
+              className="search-input"
+              type="text"
+              placeholder="Search for a game"
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+            />
+          </div>
+          <div className="advanced-settings">
+            <label className="genre">
+              <select className="genre-select" onChange={(e) => setGenre(e.target.value)} value={genre}>
+                <option value="">Genre</option>
+                <option value="4">Fighting</option>
+                <option value="5">Shooter</option>
+                <option value="7">Music</option>
+                <option value="8">Platform</option>
+                <option value="9">Puzzle</option>
+                <option value="10">Racing</option>
+                <option value="12">Role-playing (RPG)</option>
+                <option value="14">Sports</option>
+                <option value="15">Strategy</option>
+                <option value="25">Hack and slash/Beat 'em up</option>
+                <option value="31">Adventure</option>
+                <option value="32">Indie</option>
+                <option value="34">Visual Novel</option>
+                <option value="33">Arcade</option>
+                <option value="36">MOBA</option>
+              </select>
+            </label>
+            <label className="year">
+              <input type="Number" className="year-input" placeholder="Year" onChange={(e) => setYear(e.target.value)} value={year}/>
+            </label>
+            <label className="wishlist">
+              <input type="checkbox" className="wishlist-checkbox" onClick={() => setWishlist(!wishlist)}/>
+              <span className="wishlist-span">Wishlisted by Friends</span>
+            </label>
+            <label className="library">
+              <input type="checkbox" className="library-checkbox" onClick={() => setLibrary(!library)}/>
+              <span className="library-span">Owned by friends</span>
+            </label>
+          </div>
         </form>
         <ul className="games-index">
             {games.map((game) => 
