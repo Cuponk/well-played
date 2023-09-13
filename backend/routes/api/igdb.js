@@ -88,7 +88,7 @@ router.post("/search/advanced/", async (req, res) => {
     if (genre) {
         queryString += ` where genres = [${genre}];`
     }
-    if (year && Array.isArray(year) && year.length > 0) {
+    if (year && Array.isArray(year) && year[0] !== '') {
         queryString += ` where first_release_date > ${year[0] / 1000} & first_release_date < ${year[1] / 1000};`
     }
     if (name) {

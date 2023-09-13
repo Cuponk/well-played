@@ -48,7 +48,6 @@ function GamesIndex() {
     
     setGames(finalGames);
     setPageButton(true);
-    console.log(finalGames);
   }
 
   //igdb has offset option for pagination :D
