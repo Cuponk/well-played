@@ -131,7 +131,7 @@ function GamesIndex() {
     const payload = {
       search: '',
       genre: '',
-      year: parseYear('2023'),
+      year: parseYear(2023),
     }
     jwtFetch(`/api/igdb/search/advanced/`, {
       method: "POST",
@@ -147,7 +147,6 @@ function GamesIndex() {
       })
   }, [])
   
-
   return (
     <>
       <div className="games-index-container">
