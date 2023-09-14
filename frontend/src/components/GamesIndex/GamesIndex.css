@@ -50,21 +50,36 @@
 }
 
 .search-input {
-  width: 600px;
+  width: 720px;
   border: none;
   background-color: var(--theme-gray);
+  border-radius: 7px;
 }
 
 .search-form-top {
   width: 700px;
-  height: 35px;
+  height: 40px;
   background-color: var(--theme-gray);
   display: flex;
   align-items: center;
   justify-content: space-around;
   gap: 10px;
-  /* margin-bottom: 20px; */
   border-radius: 5px;
+}
+
+.advanced-settings {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.genre-select {
+  width: 100px;
+}
+
+.year-input {
+  width: 100px;
 }
 
 .background {
@@ -82,6 +97,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 720px;
+  border: none;
+  background-color: var(--theme-gray);
+  border-radius: 7px;
+  gap: 5px;
 }
 
 .hidden {

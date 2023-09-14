@@ -3,7 +3,6 @@ import "./GamesIndex.css";
 import GameIndexItem from "../GameIndexItem/GameIndexItem";
 import jwtFetch from "../../store/jwt";
 import { useDispatch, useSelector } from "react-redux";
-// import axios from "axios";
 import { fetchWishlist } from "../../store/wishlist";
 import { fetchOwnedGames } from "../../store/ownedGames";
 
@@ -19,34 +18,36 @@ function GamesIndex() {
   const userWishlist = useSelector(state => state.wishlist);
   const userOwnedGames = useSelector(state => state.ownedGames); 
   const currentUser = useSelector(state => state.user);
-  const friends = useSelector(state => state.friends);
+  const friends = useSelector(state => Object.values(state.friends));
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const payload = {
       search: search,
       genre: genre,
       year: parseYear(year),
     }
-    jwtFetch(`/api/igdb/search/advanced/`, {
+    const res = await jwtFetch(`/api/igdb/search/advanced/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
     })
-      .then((res) => res.json())
-      .then((fin) => {
-        setGames(fin);
-      })
+    const fin = await res.json();
+    let finalGames = fin;
 
+    if(wishlist) {
+      finalGames = await parseWishFriends(finalGames);
+    }
+
+    if(library) {
+      finalGames = await parseLibraryFriends(finalGames);
+    }
+    
+    setGames(finalGames);
     setPageButton(true);
-    // if (currentUser) {
-      
-    //   parseFriends(games);
-    // }
-
   }
 
   //igdb has offset option for pagination :D
@@ -81,76 +82,118 @@ function GamesIndex() {
     return [start, end];
   }
 
-  //placeholder for friends, copilot did this
-  // const parseFriends = (games) => {
-  //   const payload = {
-  //     games: games,
-  //     friends: friends,
-  //   }
-  //   jwtFetch(`/api/igdb/search/advanced/friends`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(payload),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((fin) => {
-  //       setGames(fin);
-  //     })
-      
-  // }
+  const fetchFriendWishlist = async (friend) => {
+    const res = await jwtFetch(`/api/users/${friend._id}/wishlistGames`);
+    const fin = await res.json();
+    return fin;
+  };
+  
+  const parseWishFriends = async (games) => {
+    const friendWishlistPromises = friends.map((friend) => fetchFriendWishlist(friend));
+    const friendWishlistArray = await Promise.all(friendWishlistPromises);
+  
+    let friendWishlist = [];
+    friendWishlistArray.forEach((list) => {
+      friendWishlist.push(...list);
+    });
+  
+    const filteredGames = games.filter((game) => {
+      return friendWishlist.some((wish) => wish.gameId === game.id);
+    });
+  
+    return filteredGames;
+  };
 
+  const fetchFriendLibrary = async (friend) => {
+    const res = await jwtFetch(`/api/users/${friend._id}/ownedGames`);
+    const fin = await res.json();
+    return fin;
+  };
+
+  const parseLibraryFriends = async (games) => {
+    const friendLibraryPromises = friends.map((friend) => fetchFriendLibrary(friend));
+    const friendLibraryArray = await Promise.all(friendLibraryPromises);
+
+    let friendLibrary = [];
+    friendLibraryArray.forEach((list) => {
+      friendLibrary.push(...list);
+    });
+
+    const filteredGames = games.filter((game) => {
+      return friendLibrary.some((owned) => owned.gameId === game.id);
+    });
+
+    return filteredGames;
+  };
+
+  useEffect(() => {
+    const payload = {
+      search: '',
+      genre: '',
+      year: parseYear(2023),
+    }
+    jwtFetch(`/api/igdb/search/advanced/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => res.json())
+      .then((fin) => {
+        setGames(fin);
+        setPageButton(true);
+      })
+  }, [])
+  
   return (
     <>
       <div className="games-index-container">
+          <h2>Search for a game</h2>
         <form className="search-form" onSubmit={handleSubmit}>
-              <h2>Search for a game</h2>
-              <div className="search-form-top">
-                <button onClick={handleSubmit} className="submit-button"><i className="fa-solid fa-search"/></button>
-                <input
-                  className="search-input"
-                  type="text"
-                  placeholder="Search for a game"
-                  onChange={(e) => setSearch(e.target.value)}
-                  value={search}
-                />
-              </div>
-            <div className="advanced-dropdown">
-              <div className="advanced-dropdown-content">
-                <label className="genre"> 
-                  <select className="genre-select" onChange={(e) => setGenre(e.target.value)} value={genre}>
-                    <option value="">Genre</option>
-                    <option value="4">Fighting</option>
-                    <option value="5">Shooter</option>
-                    <option value="7">Music</option>
-                    <option value="8">Platform</option>
-                    <option value="9">Puzzle</option>
-                    <option value="10">Racing</option>
-                    <option value="12">Role-playing (RPG)</option>
-                    <option value="14">Sports</option>
-                    <option value="15">Strategy</option>
-                    <option value="25">Hack and slash/Beat 'em up</option>
-                    <option value="31">Adventure</option>
-                    <option value="32">Indie</option>
-                    <option value="34">Visual Novel</option>
-                    <option value="33">Arcade</option>
-                    <option value="36">MOBA</option>
-                  </select>
-                </label>
-                <label className="year">
-                  <input type="Number" className="year-input" placeholder="Year" onChange={(e) => setYear(e.target.value)} value={year}/>
-                </label>
-                <label className="wishlist">
-                  <input type="checkbox" className="wishlist-checkbox" onClick={() => setWishlist(!wishlist)}/>
-                  <span className="wishlist-span">Wishlisted by Friends</span>
-                </label>
-                <label className="library">
-                  <input type="checkbox" className="library-checkbox" onClick={() => setLibrary(!library)}/>
-                  <span className="library-span">Owned by friends</span>
-                </label>
-              </div>
-            </div>
+          <div className="search-form-top">
+            <button onClick={handleSubmit} className="submit-button"><i className="fa-solid fa-search"/></button>
+            <input
+              className="search-input"
+              type="text"
+              placeholder="Search for a game"
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+            />
+          </div>
+          <div className="advanced-settings">
+            <label className="genre">
+              <select className="genre-select" onChange={(e) => setGenre(e.target.value)} value={genre}>
+                <option value="">Genre</option>
+                <option value="4">Fighting</option>
+                <option value="5">Shooter</option>
+                <option value="7">Music</option>
+                <option value="8">Platform</option>
+                <option value="9">Puzzle</option>
+                <option value="10">Racing</option>
+                <option value="12">Role-playing (RPG)</option>
+                <option value="14">Sports</option>
+                <option value="15">Strategy</option>
+                <option value="25">Hack and slash/Beat 'em up</option>
+                <option value="31">Adventure</option>
+                <option value="32">Indie</option>
+                <option value="34">Visual Novel</option>
+                <option value="33">Arcade</option>
+                <option value="36">MOBA</option>
+              </select>
+            </label>
+            <label className="year">
+              <input type="Number" className="year-input" placeholder="Year" onChange={(e) => setYear(e.target.value)} value={year}/>
+            </label>
+            <label className="wishlist">
+              <input type="checkbox" className="wishlist-checkbox" onClick={() => setWishlist(!wishlist)}/>
+              <span className="wishlist-span">Wishlisted by Friends</span>
+            </label>
+            <label className="library">
+              <input type="checkbox" className="library-checkbox" onClick={() => setLibrary(!library)}/>
+              <span className="library-span">Owned by friends</span>
+            </label>
+          </div>
         </form>
         <ul className="games-index">
             {games.map((game) => 

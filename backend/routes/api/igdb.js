@@ -88,7 +88,7 @@ router.post("/search/advanced/", async (req, res) => {
     if (genre) {
         queryString += ` where genres = [${genre}];`
     }
-    if (!!year && year[0].length > 0) {
+    if (year && Array.isArray(year) && year[0] !== '') {
         queryString += ` where first_release_date > ${year[0] / 1000} & first_release_date < ${year[1] / 1000};`
     }
     if (name) {
@@ -96,6 +96,7 @@ router.post("/search/advanced/", async (req, res) => {
     }
 
     queryString += ' limit 20;';
+    console.log(queryString);
     try {
         const response = await axios("https://api.igdb.com/v4/games", {
             method: "POST",
@@ -141,7 +142,6 @@ router.post("/search/advanced/page/:page", async (req, res) => {
     if (req.params?.page) {
         queryString += ` offset ${page * 20 + 1};`;
     }
-    console.log(queryString);
     try {
         const response = await axios("https://api.igdb.com/v4/games", {
             method: "POST",
