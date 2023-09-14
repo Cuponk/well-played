@@ -8,53 +8,53 @@ const getStars = (num) => {
         switch (review.overallRating) {
             case 1:
                 starIcon = 
-                <>
+                <div className='stars'>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-regular fa-star'></i>
                     <i className='fa-regular fa-star'></i>
                     <i className='fa-regular fa-star'></i>
                     <i className='fa-regular fa-star'></i>
-                </>
+                </div>
                 break;
             case 2:
                 starIcon = 
-                <>
+                <div className='stars'>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-regular fa-star'></i>
                     <i className='fa-regular fa-star'></i>
                     <i className='fa-regular fa-star'></i>
-                </>
+                </div>
                 break;
             case 3:
                 starIcon =
-                <>
+                <div className='stars'>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-regular fa-star'></i>
                     <i className='fa-regular fa-star'></i>
-                </>
+                </div>
                 break;
             case 4:
                 starIcon =
-                <>
+                <div className='stars'>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-regular fa-star'></i>
-                </>
+                </div>
                 break;
             case 5:
                 starIcon =
-                <>
+                <div className='stars'>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
-                </>
+                </div>
                 break;
             default:
                 starIcon = null;
@@ -74,9 +74,10 @@ const getStars = (num) => {
                     </div>
                 </div>
                 <div className="sub-ratings">
-                    <h3>Gameplay: {getStars(review?.gameplayRating)}</h3>
-                    <h3>Visuals: {getStars(review?.visualsRating)}</h3>
-                    <h3>Story: {getStars(review?.storyRating)}</h3>
+                    <h3>Gameplay <br/> {getStars(review?.gameplayRating)}</h3>
+                    <h3>Visuals <br/> {getStars(review?.visualsRating)}</h3>
+                    <h3>Story <br/> {getStars(review?.storyRating)}</h3>
+
                 </div>
             </div>
             <div className='review-description'>{review?.description}</div>
