@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './index.css';
 
 const Review = ({review}) => {
 const getStars = (num) => {
     let starIcon;
 
-        switch (review.overallRating) {
+        switch (num) {
             case 1:
                 starIcon = 
                 <div className='stars'>

@@ -1,5 +1,5 @@
 # Well Played
-
+[<img src='captures/logo.PNG' width='400'>](https://well-played.onrender.com/)
 
 ## Background and overview 
 
@@ -12,7 +12,7 @@ Well Played is a video game social media review app where users can add their fr
 
 ## Technologies Used
 
-Well Played is built on the MERN stack.
+Well Played is built on the **MERN** stack.
 
 ### Backend:
 
@@ -35,28 +35,91 @@ Well Played is built on the MERN stack.
 
 ### Video Game Search
 Users are able to search for video games with or without filters. In the search page, results are returned with basic information. Upon clicking the game, users are able to see more details about a game. In both the search page and in the game show page, users are able to add and remove the game from their wishlist and library by clicking on their respective buttons.
-<!-- gif here -->
+![](captures/search.gif)
 
 ### User Wishlist and Library 
-In the search page and in the game show page, users are able to add games to their wishlist and library by click on the icons. Whenever they are clicked, depending on whether or not the video game is currently in the user's lists, the corresponding game is added or removed to the user's list.
-<!-- gif here -->
+In the search page and in the game show page, users are able to add games to their wishlist and library by clicking on the icons. Whenever they are clicked, depending on whether or not the video game is currently in the user's lists, the corresponding game is added or removed to the user's list.
+![](captures/lists.gif)
 
 ### Game Reviews and Ratings
 In the game show page, users are able to see user reviews for the game as well as leave their own review. Reviews consist of a description as well as different ratings pertaining to: gameplay, story, and visuals.
-<!-- gif here -->
+![](captures/review.gif)
 
 ### User Profile 
-The user profile contains both the user's wishlist and library lists of games. Users are also able to manage their friends in the friendslist.
-<!-- gif here -->
+The user profile contains both the user's wishlist and library lists of games. Users are also able to manage their friends in their friends list. 
+![](captures/profile.gif)
 
 ### Friends
 Users are able to send and receive friend requests. The receiver is able to accept or deny the friend request. Users are also able to remove friends from their friendlist.
-<!-- gif here -->
+![](captures/friends.gif)
 
 ## Featured Code
+
+The most important part of the application is how we are fetching all of the user information. Upon logging in, an action is fired off into several reducers at the same time, populating our store with all relevant information such as the user's wishlist, library, and friends.
+
 ```
-Insert Code Here
+// session.js 
+export const RECEIVE_CURRENT_USER = "session/RECEIVE_CURRENT_USER";
+
+const receiveCurrentUser = currentUser => ({
+  type: RECEIVE_CURRENT_USER,
+  currentUser
+});
+
+const sessionReducer = (state = {}, action) => {
+  switch (action.type) {
+    case RECEIVE_CURRENT_USER:
+      if (!action.currentUser) return state;
+      return {
+        username: action.currentUser.username,
+        email: action.currentUser.email,
+        id: action.currentUser._id
+      };
+    case RECEIVE_USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
 ```
+
+```
+// wishlist.js
+const wishlistReducer = (state = {}, action) => {
+  switch (action.type) {
+    // Load wishlist when a user logs in or session is restored.
+    case RECEIVE_CURRENT_USER:
+      const newState = {};
+      if (!action.currentUser) return newState;
+      // Populate state with gameId: gameData key-value pairs.
+      if (action.currentUser.wishlistGames.length > 0) {
+        action.currentUser.wishlistGames.forEach((wishlistItem) => {
+          newState[wishlistItem.gameId] = wishlistItem;
+        });
+      }
+      return newState;
+    case RECEIVE_WISHLIST_ITEM:
+      return {
+        ...state,
+        [action.wishlistItem.gameId]: action.wishlistItem,
+      }
+    case REMOVE_WISHLIST_ITEM:
+      const nextState = { ...state };
+      delete nextState[action.gameId];
+      return nextState;
+    case RECEIVE_USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+}
+
+```
+
+
+Example of the store:
+
+<img src='captures/store.PNG' width='400'>
 
 
 ## Future Features

@@ -79,6 +79,9 @@
 
 .index-cover {
 	/* cursor: pointer; */
+	max-width: 96px;
+	max-height: 128px;
+	object-fit: cover;
 }
 
 .game-item-all {
