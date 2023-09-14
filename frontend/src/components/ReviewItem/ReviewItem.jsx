@@ -7,53 +7,53 @@ const getStars = (num) => {
         switch (review.overallRating) {
             case 1:
                 starIcon = 
-                <>
+                <div className='stars'>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-regular fa-star'></i>
                     <i className='fa-regular fa-star'></i>
                     <i className='fa-regular fa-star'></i>
                     <i className='fa-regular fa-star'></i>
-                </>
+                </div>
                 break;
             case 2:
                 starIcon = 
-                <>
+                <div className='stars'>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-regular fa-star'></i>
                     <i className='fa-regular fa-star'></i>
                     <i className='fa-regular fa-star'></i>
-                </>
+                </div>
                 break;
             case 3:
                 starIcon =
-                <>
+                <div className='stars'>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-regular fa-star'></i>
                     <i className='fa-regular fa-star'></i>
-                </>
+                </div>
                 break;
             case 4:
                 starIcon =
-                <>
+                <div className='stars'>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-regular fa-star'></i>
-                </>
+                </div>
                 break;
             case 5:
                 starIcon =
-                <>
+                <div className='stars'>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
                     <i className='fa-solid fa-star'></i>
-                </>
+                </div>
                 break;
             default:
                 starIcon = null;
