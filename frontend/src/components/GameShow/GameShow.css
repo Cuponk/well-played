@@ -36,8 +36,44 @@
     align-items: center;
     gap: 10px;
     min-height: 60vh;
-    margin-top: 175px;
     flex-grow: 1;
+}
+
+.total-rating-base {
+	margin-top: 12rem;
+	width: 800px;
+}
+
+.rating-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 4px;
+	padding-bottom: 4px;
+
+	> p {
+		font-weight: 700;
+		font-size: 22px;
+	}
+}
+
+
+.total-rating {
+	display: flex;
+	align-items: center;
+	text-align: left;
+	margin-top: 0.5rem;
+}
+
+.overall-rating-text {
+	font-weight: 700;
+	font-size: 36px;
+}
+
+.total-rating-star-icon {
+	font-size: 2rem;
+	margin: 0.25rem;
+	color: var(--theme-purple);
 }
 
 .reviews {
@@ -92,9 +128,10 @@
 }
 
 .reviews {
-    margin-top: 4em;
+    margin-top: 1em;
 }
 
 .add-review {
-    margin-top: 8em;
+    /* margin-top: 2em; */
+	padding: 0 10px 1px;
 }

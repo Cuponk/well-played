@@ -4,6 +4,7 @@ import './index.css';
 const Review = ({review}) => {
 const getStars = (num) => {
     let starIcon;
+
         switch (review.overallRating) {
             case 1:
                 starIcon = 
@@ -68,17 +69,18 @@ const getStars = (num) => {
                 <div className="author">
                     <i className='fa-regular fa-user'/>
                     <div className="name-overall">
-                        <div className="stars">{getStars(review.overallRating)}</div>
-                        <p>{review.authorId.username}</p>
+                        <div className="stars">{getStars(review?.overallRating)}</div>
+                        <p>{review?.authorId?.username}</p>
                     </div>
                 </div>
                 <div className="sub-ratings">
                     <h3>Gameplay <br/> {getStars(review?.gameplayRating)}</h3>
                     <h3>Visuals <br/> {getStars(review?.visualsRating)}</h3>
                     <h3>Story <br/> {getStars(review?.storyRating)}</h3>
+
                 </div>
             </div>
-            <div className='review-description'>{review.description}</div>
+            <div className='review-description'>{review?.description}</div>
         </div>
     )
 }

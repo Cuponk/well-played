@@ -1,0 +1,32 @@
+.ratings-full-container {
+	display: flex;
+	align-items: center;
+	padding-top: 10px;
+	/* padding-bottom: 10px; */
+}
+
+.ratings-type {
+	font-size: 16px;
+	font-weight: 500;
+	width: 15%;
+}
+
+.ratings-ratings {
+	font-size: 16px;
+	font-weight: 500;
+	padding-left: 1rem;
+}
+
+
+.ratings-bar-background {
+	background-color: var(--theme-gray);
+	height: 10px;
+	border-radius: 6px;
+	width: 60%;
+}
+
+.ratings-bar-progress-bar {
+	background-color: var(--theme-purple);
+	height: 10px;
+	border-radius: 6px;
+}
