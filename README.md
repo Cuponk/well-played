@@ -35,23 +35,23 @@ Well Played is built on the MERN stack.
 
 ### Video Game Search
 Users are able to search for video games with or without filters. In the search page, results are returned with basic information. Upon clicking the game, users are able to see more details about a game. In both the search page and in the game show page, users are able to add and remove the game from their wishlist and library by clicking on their respective buttons.
-<!-- gif here -->
+![](captures/search.gif)
 
 ### User Wishlist and Library 
 In the search page and in the game show page, users are able to add games to their wishlist and library by click on the icons. Whenever they are clicked, depending on whether or not the video game is currently in the user's lists, the corresponding game is added or removed to the user's list.
-<!-- gif here -->
+![](captures/lists.gif)
 
 ### Game Reviews and Ratings
 In the game show page, users are able to see user reviews for the game as well as leave their own review. Reviews consist of a description as well as different ratings pertaining to: gameplay, story, and visuals.
-<!-- gif here -->
+![](captures/review.gif)
 
 ### User Profile 
 The user profile contains both the user's wishlist and library lists of games. Users are also able to manage their friends in the friendslist.
-<!-- gif here -->
+![](captures/profile.gif)
 
 ### Friends
 Users are able to send and receive friend requests. The receiver is able to accept or deny the friend request. Users are also able to remove friends from their friendlist.
-<!-- gif here -->
+![](captures/friends.gif)
 
 ## Featured Code
 ```
