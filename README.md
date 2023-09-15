@@ -1,5 +1,5 @@
 # Well Played
-[<img src='captures/logo.PNG' width='400'>](https://well-played.onrender.com/)
+[<img src='captures/logo.PNG' width='400'>](https://well-played-3bbfe2f31839.herokuapp.com/)
 
 ## Background and overview 
 
@@ -8,7 +8,7 @@ Well Played is a video game social media review app where users can add their fr
 <!--- group up with friends or other users to find a new game to play together -->
 
 
-## [Live Link](https://well-played.onrender.com/)
+## [Live Link](https://well-played-3bbfe2f31839.herokuapp.com/)
 
 ## Technologies Used
 
