@@ -130,17 +130,11 @@ router.delete('/:userId/deletePendingFriendship', async (req, res) => {
       receiver: otherUserId,
       accepted: false
     });
-    if (senderFriendships) {
-      await senderFriendships.populate('receiver', '_id username');
-    }
     const receiverFriendships = await Friendship.findOneAndDelete({
       sender: otherUserId,
       receiver: userId,
       accepted: false
     });
-    if (receiverFriendships) {
-      await receiverFriendships.populate('sender', '_id username');
-    }
     const friendship = senderFriendships || receiverFriendships;
     return res.json(friendship);
   } catch (error) {
@@ -160,13 +154,11 @@ router.delete('/:userId/deleteAcceptedFriendship', async (req, res) => {
       receiver: otherUserId,
       accepted: true
     });
-    await senderFriendships.populate('receiver', '_id username');
     const receiverFriendships = await Friendship.findOneAndDelete({
       sender: otherUserId,
       receiver: userId,
       accepted: true
     });
-    await receiverFriendships.populate('sender', '_id username');
     const friendship = senderFriendships || receiverFriendships;
     const userOne = await User.findById(userId);
     const userTwo = await User.findById(otherUserId);
