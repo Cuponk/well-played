@@ -26,6 +26,7 @@ const customGamesRouter = require('./routes/api/customGames');
 const friendshipsRouter = require('./routes/api/friendships');
 const csrfRouter = require('./routes/api/csrf');
 
+
 const app = express();
 
 app.use(logger('dev'));

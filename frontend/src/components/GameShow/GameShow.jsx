@@ -16,7 +16,6 @@ import Review from "../ReviewItem/ReviewItem";
 import CreateReview from "../CreateReview/CreateReview";
 import { getReviews } from "../../store/reviews";
 import RatingsBar from "../RatingsBar/RatingsBar";
-import { AiFillStar } from "react-icons/ai";
 
 const GameShow = () => {
 	const { id } = useParams();
@@ -138,7 +137,7 @@ const GameShow = () => {
 						</div>
 						<div className="total-rating">
 							<p className="overall-rating-text">{handleRating('overallRating')} </p>
-							<AiFillStar className="total-rating-star-icon"/>
+							<i className="fa-solid fa-star total-rating-star-icon"/>
 						</div>
 						<div className="total-sub-rating">
 							<RatingsBar type={"Gameplay"} rating={handleRating('gameplayRating')}/> 
