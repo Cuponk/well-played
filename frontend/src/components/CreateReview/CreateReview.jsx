@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./CreateReview.css";
 import { useDispatch } from "react-redux";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { createReview } from "../../store/reviews";
 
 function CreateReview({ game, closeModal, user }) {
@@ -60,13 +59,15 @@ function CreateReview({ game, closeModal, user }) {
                           onMouseLeave={() => setHoverRatingValue({ rating: '', num: 0 })}
                         >
                           {num <= hoverRatingValue[category] || num <= ratingValue[category] ? (
-                            <AiFillStar
-                              className="create-review-rating-category-star-icon"
+                            <i
+
+                              className="fa-solid fa-star create-review-rating-category-star-icon"
                               onClick={() => setRating({ ...ratingValue, [category]: num })}
                             />
                           ) : (
-                            <AiOutlineStar
-                              className="create-review-rating-category-star-icon"
+                            <i
+                              className="fa-regular fa-star create-review-rating-category-star-icon"
+                              
                               onClick={() => setRating({ ...ratingValue, [category]: num })}
                             />
                           )}
