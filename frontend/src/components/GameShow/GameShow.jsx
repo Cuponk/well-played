@@ -16,7 +16,6 @@ import Review from "../ReviewItem/ReviewItem";
 import CreateReview from "../CreateReview/CreateReview";
 import { getReviews } from "../../store/reviews";
 import RatingsBar from "../RatingsBar/RatingsBar";
-import { AiFillStar } from "react-icons/ai";
 
 const GameShow = () => {
 	const { id } = useParams();
