@@ -193,6 +193,7 @@ function GamesIndex() {
               <input type="checkbox" className="library-checkbox" onClick={() => setLibrary(!library)}/>
               <span className="library-span">Owned by friends</span>
             </label>
+            <button onClick={handleSubmit}>Search</button>
           </div>
         </form>
         <ul className="games-index">
