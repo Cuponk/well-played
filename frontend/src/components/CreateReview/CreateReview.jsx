@@ -24,7 +24,7 @@ function CreateReview({ game, closeModal, user }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (ratingValue.Overall === 0 || ratingValue.Gameplay === 0 || ratingValue.Visuals === 0 || ratingValue.Story === 0) {
-      setErrors(["Please fill out all ratings and try submitting again."]);
+      setErrors(["Please fill out all of the ratings and try submitting again."]);
       return;
     }
     const reviewData = {
