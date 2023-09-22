@@ -22,7 +22,6 @@ function Profile() {
 
 	return (
 		<>
-			<h2>Welcome, {currentUser.username}</h2>
 			<div className='profile-page-container'>
 				<div className='profile-page-lists'>
 					<h3>Wishlist</h3>

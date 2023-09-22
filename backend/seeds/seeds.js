@@ -37,6 +37,16 @@ for (let i = 1; i < NUM_SEED_USERS; i++) {
 		})
 	)
 }
+// Have first fake user request demo user
+const friendships = [];
+
+friendships.push(
+	new Friendship({
+		sender: users[1]._id,
+		receiver: users[0]._id,
+		accepted: false
+	})
+)
 
 // fake custom game seeds
 const customGames = [];
@@ -138,6 +148,7 @@ const insertSeeds = () => {
 		.then(() => User.insertMany(users))
 		.then(() => CustomGame.insertMany(customGames))
 		.then(() => Review.insertMany(reviews))
+		.then(() => Friendship.insertMany(friendships))
 		.then(() => {
 			console.log("Done!");
 			mongoose.disconnect();
