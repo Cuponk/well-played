@@ -14,6 +14,7 @@ function CreateReview({ game, closeModal, user }) {
   });
   const [ratingValue, setRating] = useState({ Overall: 0, Gameplay: 0, Visuals: 0, Story: 0 });
   const [body, setBody] = useState("");
+  const [errors, setErrors] = useState([]);
 
   const handleBackgroundClick = (e) => {
     e.stopPropagation();
@@ -22,6 +23,10 @@ function CreateReview({ game, closeModal, user }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (ratingValue.Overall === 0 || ratingValue.Gameplay === 0 || ratingValue.Visuals === 0 || ratingValue.Story === 0) {
+      setErrors(["Please fill out all ratings and try submitting again."]);
+      return;
+    }
     const reviewData = {
       authorId: user.id,
       gameId: game.id,
@@ -67,7 +72,7 @@ function CreateReview({ game, closeModal, user }) {
                           ) : (
                             <i
                               className="fa-regular fa-star create-review-rating-category-star-icon"
-                              
+
                               onClick={() => setRating({ ...ratingValue, [category]: num })}
                             />
                           )}
@@ -80,8 +85,9 @@ function CreateReview({ game, closeModal, user }) {
             })}
           </div>
           <div className="create-review-body">
-            <textarea className="create-review-body-textarea" placeholder="Write your review here..." onChange={e => setBody(e.currentTarget.value)}></textarea>
+            <textarea className="create-review-body-textarea" placeholder="Write your review here..." onChange={e => setBody(e.currentTarget.value)} required></textarea>
           </div>
+          <div className="inputErrors"><p>{errors}</p></div>
           <div className="create-review-submit">
             <button>Submit Review</button>
           </div>
